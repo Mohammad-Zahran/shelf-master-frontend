@@ -15,6 +15,7 @@ body {
   height: 100%;
   border-color: charcoal;
   user-select: none;
+  @apply text-black bg-white font-poppins;
 }
 
 canvas {
