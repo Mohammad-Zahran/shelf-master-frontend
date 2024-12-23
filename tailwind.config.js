@@ -13,7 +13,10 @@ export default {
         charcoal: '#36454F',
         cerebralGray: '#CCCCCC',
         white: '#FFFFFF'
-      }
+      },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'], 
+      },
     },
   },
   plugins: [

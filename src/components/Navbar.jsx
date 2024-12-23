@@ -5,11 +5,11 @@ const Navbar = () => {
   const navItems = (
     <>
       <li>
-        <a>Item 1</a>
+        <a>Home</a>
       </li>
       <li>
         <details>
-          <summary>Parent</summary>
+          <summary>Services</summary>
           <ul className="p-2">
             <li>
               <a>Submenu 1</a>
@@ -21,7 +21,16 @@ const Navbar = () => {
         </details>
       </li>
       <li>
-        <a>Item 3</a>
+        <a>Add Review</a>
+      </li>
+      <li>
+        <a>3d Floor Planner</a>
+      </li>
+      <li>
+        <a>Shelf Assistant AI</a>
+      </li>
+      <li>
+        <a>Contact Us</a>
       </li>
     </>
   );
