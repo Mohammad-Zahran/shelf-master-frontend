@@ -12,6 +12,7 @@ export default {
         black: '#000000',
         charcoal: '#36454F',
         cerebralGray: '#CCCCCC',
+        white: '#FFFFFF'
       }
     },
   },
