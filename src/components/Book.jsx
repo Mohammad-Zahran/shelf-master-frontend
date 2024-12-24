@@ -98,3 +98,9 @@ const pageMaterials = [
     color: whiteColor,
   }),
 ];
+
+pages.forEach((page) => {
+  useTexture.preload(`/public/assets/textures/${page.front}.jpg`);
+  useTexture.preload(`/public/assets/textures/${page.back}.jpg`);
+  useTexture.preload(`/public/assets/textures/book-cover-roughness.jpg`);
+});
