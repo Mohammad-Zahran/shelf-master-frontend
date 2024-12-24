@@ -19,8 +19,8 @@ const Footer = () => {
 
         {/* Column 2: Information Section */}
         <div>
-          <h3>Information</h3>
-          <ul>
+          <h3 className="font-bold text-lg mb-4">Information</h3>
+          <ul className="space-y-2">
             <li>FAQ</li>
             <li>Blog</li>
             <li>Support</li>
@@ -29,8 +29,8 @@ const Footer = () => {
 
         {/* Column 3: Company Section */}
         <div>
-          <h3>Company</h3>
-          <ul>
+          <h3 className="font-bold text-lg mb-4">Company</h3>
+          <ul className="space-y-2">
             <li>About</li>
             <li>Careers</li>
             <li>Contact</li>
