@@ -135,4 +135,35 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
       }
     }
     const skeleton = new Skeleton(bones);
+
+    const materials = [
+        ...pageMaterials,
+        new MeshStandardMaterial({
+          color: whiteColor,
+          map: picture,
+          ...(number === 0
+            ? {
+                roughnessMap: pictureRoughness,
+              }
+            : {
+                roughness: 0.1,
+              }),
+          emissive: emissiveColor,
+          emissiveIntensity: 0,
+        }),
+        new MeshStandardMaterial({
+          color: whiteColor,
+          map: picture2,
+          ...(number === pages.length - 1
+            ? {
+                roughnessMap: pictureRoughness,
+              }
+            : {
+                roughness: 0.1,
+              }),
+          emissive: emissiveColor,
+          emissiveIntensity: 0,
+        }),
+      ];
+  
 };
