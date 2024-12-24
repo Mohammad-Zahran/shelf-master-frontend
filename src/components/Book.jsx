@@ -105,6 +105,13 @@ pages.forEach((page) => {
   useTexture.preload(`/public/assets/textures/book-cover-roughness.jpg`);
 });
 
+const playPageFlipSound = () => {
+    const audio = new Audio("/public/assets/audios/page-flip-01a.mp3");
+    audio.volume = 0.8; // Set volume if needed
+    audio.play();
+  };
+  
+
 const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
   const [picture, picture2, pictureRoughness] = useTexture([
     `/public/assets/textures/${front}.jpg`,
@@ -290,6 +297,11 @@ export const Book = ({ ...props }) => {
             },
             Math.abs(page - delayedPage) > 2 ? 50 : 150
           );
+           // Play the page-flipping sound when the page changes
+           if (page !== delayedPage) {
+            playPageFlipSound();
+          }
+
           if (page > delayedPage) {
             return delayedPage + 1;
           }
