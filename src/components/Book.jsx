@@ -53,3 +53,20 @@ const pageGeometry = new BoxGeometry(
 );
 
 pageGeometry.translate(PAGE_WIDTH / 2, 0, 0);
+
+const position = pageGeometry.attributes.position;
+const vertex = new Vector3();
+const skinIndexes = [];
+const skinWeights = [];
+
+for (let i = 0; i < position.count; i++) {
+  // ALL VERTICES
+  vertex.fromBufferAttribute(position, i); // get the vertex
+  const x = vertex.x; // get the x position of the vertex
+
+  const skinIndex = Math.max(0, Math.floor(x / SEGMENT_WIDTH)); // calculate the skin index
+  let skinWeight = (x % SEGMENT_WIDTH) / SEGMENT_WIDTH; // calculate the skin weight
+
+  skinIndexes.push(skinIndex, skinIndex + 1, 0, 0); // set the skin indexes
+  skinWeights.push(1 - skinWeight, skinWeight, 0, 0); // set the skin weights
+}
