@@ -26,6 +26,17 @@ const Footer = () => {
             <li>Support</li>
           </ul>
         </div>
+
+        {/* Column 3: Company Section */}
+        <div>
+          <h3>Company</h3>
+          <ul>
+            <li>About</li>
+            <li>Careers</li>
+            <li>Contact</li>
+            <li>Lift Media</li>
+          </ul>
+        </div>
       </div>
     </footer>
   );
