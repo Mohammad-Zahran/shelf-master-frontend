@@ -65,13 +65,19 @@ const Footer = () => {
       </div>
 
       {/* Footer Bottom Section */}
-      <div>
-        <div>
+      <div className="border-t border-blue-500 mt-8 pt-4 text-sm text-center">
+        <div className="flex justify-between items-center flex-wrap">
           <p>&copy; 2024 Shelf Master. All Rights Reserved.</p>
-          <div>
-            <a href="">Terms</a>
-            <a href="">Privacy</a>
-            <a href="">Cookies</a>
+          <div className="space-x-4">
+            <a href="#" className="hover:underline">
+              Terms
+            </a>
+            <a href="#" className="hover:underline">
+              Privacy
+            </a>
+            <a href="#" className="hover:underline">
+              Cookies
+            </a>
           </div>
           <div className="flex space-x-4">
             {/* Social Media Icons */}
