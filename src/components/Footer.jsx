@@ -37,6 +37,31 @@ const Footer = () => {
             <li>Lift Media</li>
           </ul>
         </div>
+
+        {/* Column 4: Subscribe Section */}
+        <div>
+          <h3>Subscribe</h3>
+          <p>
+            Hello, we are Shelf Master. Our goal is to make a positive effects
+            from revolutionizing how companies engage with our shelfs for all
+            the companies.
+          </p>
+          <form>
+            <div>
+              <input
+                type="text"
+                placeholder="Email address"
+                className="px-4 py-2 rounded-l-md border-none w-full"
+              />
+              <button
+                type="submit"
+                className="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-r-md text-white"
+              >
+                →
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </footer>
   );
