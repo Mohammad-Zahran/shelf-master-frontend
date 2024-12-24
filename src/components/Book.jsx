@@ -104,3 +104,35 @@ pages.forEach((page) => {
   useTexture.preload(`/public/assets/textures/${page.back}.jpg`);
   useTexture.preload(`/public/assets/textures/book-cover-roughness.jpg`);
 });
+
+const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
+  const [picture, picture2, pictureRoughness] = useTexture([
+    `/public/assets/textures/${front}.jpg`,
+    `/public/assets/textures/${back}.jpg`,
+    ...(number === 0 || number === pages.length - 1
+      ? [`/public/assets/textures/book-cover-roughness.jpg`]
+      : []),
+  ]);
+  picture.colorSpace = picture2.colorSpace = SRGBColorSpace;
+  const group = useRef();
+  const turnedAt = useRef(0);
+  const lastOpened = useRef(opened);
+
+  const skinnedMeshRef = useRef();
+
+  const manualSkinnedMesh = useMemo(() => {
+    const bones = [];
+    for (let i = 0; i <= PAGE_SEGMENTS; i++) {
+      let bone = new Bone();
+      bones.push(bone);
+      if (i === 0) {
+        bone.position.x = 0;
+      } else {
+        bone.position.x = SEGMENT_WIDTH;
+      }
+      if (i > 0) {
+        bones[i - 1].add(bone); 
+      }
+    }
+    const skeleton = new Skeleton(bones);
+};
