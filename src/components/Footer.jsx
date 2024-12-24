@@ -63,6 +63,30 @@ const Footer = () => {
           </form>
         </div>
       </div>
+
+      {/* Footer Bottom Section */}
+      <div>
+        <div>
+          <p>&copy; 2024 Shelf Master. All Rights Reserved.</p>
+          <div>
+            <a href="">Terms</a>
+            <a href="">Privacy</a>
+            <a href="">Cookies</a>
+          </div>
+          <div className="flex space-x-4">
+            {/* Social Media Icons */}
+            <a href="#" className="hover:text-gray-300">
+              <i className="fab fa-linkedin"></i>
+            </a>
+            <a href="#" className="hover:text-gray-300">
+              <i className="fab fa-twitter"></i>
+            </a>
+            <a href="#" className="hover:text-gray-300">
+              <i className="fab fa-facebook"></i>
+            </a>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 };
