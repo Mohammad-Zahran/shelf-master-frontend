@@ -40,16 +40,16 @@ const Footer = () => {
 
         {/* Column 4: Subscribe Section */}
         <div>
-          <h3>Subscribe</h3>
-          <p>
-            Hello, we are Shelf Master. Our goal is to make a positive effects
-            from revolutionizing how companies engage with our shelfs for all
-            the companies.
+          <h3 className="font-bold text-lg mb-4">Subscribe</h3>
+          <p className="mb-4">
+            Hello, we are Lift Media. Our goal is to translate the positive
+            effects from revolutionizing how companies engage with their clients
+            & their team.
           </p>
           <form>
-            <div>
+            <div className="flex items-center">
               <input
-                type="text"
+                type="email"
                 placeholder="Email address"
                 className="px-4 py-2 rounded-l-md border-none w-full"
               />
