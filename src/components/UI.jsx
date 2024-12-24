@@ -45,10 +45,38 @@ export const UI = () => {
 
   return (
     <section className="bg-white flex flex-col items-center justify-between py-4">
-        <div className="z-10 flex flex-col items-center">
-
+      <div className="z-10 flex flex-col items-center">
+        <a className="pointer-events-auto mb-4">
+          <img
+            className="w-20"
+            src="/public/assets/images/logo.png"
+            alt="Logo"
+          />
+        </a>
+        <div className="w-full flex justify-center">
+          <div className="flex items-center gap-4 max-w-full px-4">
+            {[...pages].map((_, index) => (
+              <button
+                key={index}
+                className={`btn ${
+                  index === page ? "bg-steelBlue text-white" : ""
+                }`}
+                onClick={() => setPage(index)}
+              >
+                {index === 0 ? "Cover" : `Page ${index}`}
+              </button>
+            ))}
+            <button
+              className={`btn ${
+                page === pages.length ? "bg-steelBlue text-white" : ""
+              }`}
+              onClick={() => setPage(pages.length)}
+            >
+              Back Cover
+            </button>
+          </div>
         </div>
+      </div>
     </section>
   );
-
 };
