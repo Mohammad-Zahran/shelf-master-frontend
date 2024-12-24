@@ -39,3 +39,16 @@ pages.push({
   front: pictures[pictures.length - 1],
   back: "book-back",
 });
+
+export const UI = () => {
+  const [page, setPage] = useAtom(pageAtom);
+
+  return (
+    <section className="bg-white flex flex-col items-center justify-between py-4">
+        <div className="z-10 flex flex-col items-center">
+
+        </div>
+    </section>
+  );
+
+};
