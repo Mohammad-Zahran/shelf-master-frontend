@@ -119,3 +119,15 @@ canvas {
     @apply opacity-0 translate-y-[100px];
   }
 }
+
+.btn-cart {
+  @apply bg-transparent text-black border-none shadow-none transition-all;
+}
+
+.btn-cart:hover svg {
+  @apply stroke-steelBlue;
+}
+
+.btn-cart:hover {
+  @apply border border-steelBlue;
+}

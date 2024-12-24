@@ -80,7 +80,7 @@ const Navbar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle mr-3 flex items-center justify-center"
+              className="btn-cart btn-circle mr-3 flex items-center justify-center"
             >
               <div className="indicator">
                 <svg
@@ -100,6 +100,7 @@ const Navbar = () => {
                 <span className="badge badge-sm indicator-item">8</span>
               </div>
             </div>
+
             <a className="btn">
               <FaRegUser /> Login
             </a>
