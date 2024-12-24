@@ -1,5 +1,5 @@
 import React from "react";
-import { TiSocialLinkedinCircular } from "react-icons/ti";
+import { FaLinkedinIn } from "react-icons/fa";
 import { CiFacebook } from "react-icons/ci";
 import { FaInstagram } from "react-icons/fa";
 
@@ -106,7 +106,7 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Email address"
-                className="px-4 py-2 rounded-l-md border-none w-full"
+                className="px-4 py-2 rounded-l-md text-black border-none w-full"
               />
               <button
                 type="submit"
@@ -120,7 +120,7 @@ const Footer = () => {
       </div>
 
       {/* Footer Bottom Section */}
-      <div className="border-t border-blue-500 mt-8 pt-4 text-sm text-center">
+      <div className="border-t border-white-500 mt-8 pt-4 text-sm text-center">
         <div className="flex justify-between items-center flex-wrap">
           {/* Logo */}
           <div>
@@ -145,9 +145,9 @@ const Footer = () => {
           </div>
 
           {/* Social Media Icons */}
-          <div className="flex space-x-4 text-2xl">
+          <div className="flex space-x-3 text-2xl">
             <a href="#" className="hover:text-gray-300">
-              <TiSocialLinkedinCircular />
+              <FaLinkedinIn />
             </a>
             <a href="#" className="hover:text-gray-300">
               <CiFacebook />
