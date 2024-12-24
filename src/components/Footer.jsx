@@ -1,4 +1,7 @@
 import React from "react";
+import { TiSocialLinkedinCircular } from "react-icons/ti";
+import { CiFacebook } from "react-icons/ci";
+import { FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -8,12 +11,36 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-lg mb-4">Product</h3>
           <ul className="space-y-2">
-            <li>Employee database</li>
-            <li>Payroll</li>
-            <li>Absences</li>
-            <li>Time tracking</li>
-            <li>Shift planner</li>
-            <li>Recruiting</li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Employee database
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Payroll
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Absences
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Time tracking
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Shift planner
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Recruiting
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -21,9 +48,21 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-lg mb-4">Information</h3>
           <ul className="space-y-2">
-            <li>FAQ</li>
-            <li>Blog</li>
-            <li>Support</li>
+            <li>
+              <a href="#" className="hover:underline block">
+                FAQ
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Blog
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Support
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -31,10 +70,26 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-lg mb-4">Company</h3>
           <ul className="space-y-2">
-            <li>About</li>
-            <li>Careers</li>
-            <li>Contact</li>
-            <li>Lift Media</li>
+            <li>
+              <a href="#" className="hover:underline block">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Careers
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Contact
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline block">
+                Lift Media
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -67,7 +122,16 @@ const Footer = () => {
       {/* Footer Bottom Section */}
       <div className="border-t border-blue-500 mt-8 pt-4 text-sm text-center">
         <div className="flex justify-between items-center flex-wrap">
-          <p>&copy; 2024 Shelf Master. All Rights Reserved.</p>
+          {/* Logo */}
+          <div>
+            <img
+              src="/public/assets/images/logo.png"
+              alt="Logo"
+              className="h-10"
+            />
+          </div>
+
+          {/* Footer Links */}
           <div className="space-x-4">
             <a href="#" className="hover:underline">
               Terms
@@ -79,16 +143,17 @@ const Footer = () => {
               Cookies
             </a>
           </div>
-          <div className="flex space-x-4">
-            {/* Social Media Icons */}
+
+          {/* Social Media Icons */}
+          <div className="flex space-x-4 text-2xl">
             <a href="#" className="hover:text-gray-300">
-              <i className="fab fa-linkedin"></i>
+              <TiSocialLinkedinCircular />
             </a>
             <a href="#" className="hover:text-gray-300">
-              <i className="fab fa-twitter"></i>
+              <CiFacebook />
             </a>
             <a href="#" className="hover:text-gray-300">
-              <i className="fab fa-facebook"></i>
+              <FaInstagram />
             </a>
           </div>
         </div>
