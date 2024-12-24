@@ -305,5 +305,18 @@ export const Book = ({ ...props }) => {
     };
   }, [page]);
 
-  
+  return (
+    <group {...props} rotation-y={-Math.PI / 2} scale={[1.5, 1.5, 1.5]}>
+      {[...pages].map((pageData, index) => (
+        <Page
+          key={index}
+          page={delayedPage}
+          number={index}
+          opened={delayedPage > index}
+          bookClosed={delayedPage === 0 || delayedPage === pages.length}
+          {...pageData}
+        />
+      ))}
+    </group>
+  );
 };
