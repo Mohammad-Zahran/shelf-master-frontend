@@ -131,39 +131,46 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
         bone.position.x = SEGMENT_WIDTH;
       }
       if (i > 0) {
-        bones[i - 1].add(bone); 
+        bones[i - 1].add(bone);
       }
     }
     const skeleton = new Skeleton(bones);
 
     const materials = [
-        ...pageMaterials,
-        new MeshStandardMaterial({
-          color: whiteColor,
-          map: picture,
-          ...(number === 0
-            ? {
-                roughnessMap: pictureRoughness,
-              }
-            : {
-                roughness: 0.1,
-              }),
-          emissive: emissiveColor,
-          emissiveIntensity: 0,
-        }),
-        new MeshStandardMaterial({
-          color: whiteColor,
-          map: picture2,
-          ...(number === pages.length - 1
-            ? {
-                roughnessMap: pictureRoughness,
-              }
-            : {
-                roughness: 0.1,
-              }),
-          emissive: emissiveColor,
-          emissiveIntensity: 0,
-        }),
-      ];
-  
+      ...pageMaterials,
+      new MeshStandardMaterial({
+        color: whiteColor,
+        map: picture,
+        ...(number === 0
+          ? {
+              roughnessMap: pictureRoughness,
+            }
+          : {
+              roughness: 0.1,
+            }),
+        emissive: emissiveColor,
+        emissiveIntensity: 0,
+      }),
+      new MeshStandardMaterial({
+        color: whiteColor,
+        map: picture2,
+        ...(number === pages.length - 1
+          ? {
+              roughnessMap: pictureRoughness,
+            }
+          : {
+              roughness: 0.1,
+            }),
+        emissive: emissiveColor,
+        emissiveIntensity: 0,
+      }),
+    ];
+    const mesh = new SkinnedMesh(pageGeometry, materials);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    mesh.frustumCulled = false;
+    mesh.add(skeleton.bones[0]);
+    mesh.bind(skeleton);
+    return mesh;
+  }, []);
 };
