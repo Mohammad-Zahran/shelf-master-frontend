@@ -70,3 +70,14 @@ for (let i = 0; i < position.count; i++) {
   skinIndexes.push(skinIndex, skinIndex + 1, 0, 0); // set the skin indexes
   skinWeights.push(1 - skinWeight, skinWeight, 0, 0); // set the skin weights
 }
+
+
+// This code adds skinning data (bone indices and weights) to the pageGeometry object as attributes. These attributes are required for skeletal animation in Three.js, enabling smooth deformation of the geometry during animations like bending or turning.
+pageGeometry.setAttribute(
+  "skinIndex",
+  new Uint16BufferAttribute(skinIndexes, 4)
+);
+pageGeometry.setAttribute(
+  "skinWeight",
+  new Float32BufferAttribute(skinWeights, 4)
+);
