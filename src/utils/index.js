@@ -10,6 +10,7 @@ import highlightThirdmv from "/assets/videos/hightlight-sec.mp4";
 import highlightFourthmv from "/assets/videos/hightlight-fourth.mp4";
 import exploremv from "/assets/videos/explore.mp4";
 import framemv from "/assets/videos/frame.mp4";
+import shelf from "/assets/videos/shelf.mp4";
 
 import logo from "/assets/images/logo.png";
 import search from "/assets/images/search.svg";
@@ -37,6 +38,7 @@ export const highlightThirdVideo = highlightThirdmv;
 export const highlightFourthVideo = highlightFourthmv;
 export const exploreVideo = exploremv;
 export const frameVideo = framemv;
+export const shelfVideo = shelf;
 
 export const logoImg = logo;
 export const searchImg = search;

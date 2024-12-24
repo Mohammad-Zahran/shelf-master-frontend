@@ -1,7 +1,7 @@
 {
   "name": "vite-project",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,10 +11,21 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.1",
+    "@react-three/drei": "^9.108.1",
+    "@react-three/fiber": "^8.16.8",
+    "@types/three": "0.152.1",
+    "autoprefixer": "^10.4.20",
     "gsap": "^3.12.5",
+    "jotai": "^2.8.4",
+    "leva": "^0.9.35",
+    "maath": "^0.10.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-icons": "^5.4.0"
+    "react-icons": "^5.4.0",
+    "tailwindcss": "^3.4.17",
+    "three": "^0.166.1",
+    "three-stdlib": "^2.30.4",
+    "wiggle": "^0.0.17"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
