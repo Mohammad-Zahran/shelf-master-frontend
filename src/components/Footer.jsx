@@ -2,12 +2,12 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer>
-      <div>
+    <footer className="bg-steelBlue text-white py-10">
+      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Column 1: Product Section */}
         <div>
-          <h3>Product</h3>
-          <ul>
+          <h3 className="font-bold text-lg mb-4">Product</h3>
+          <ul className="space-y-2">
             <li>Employee database</li>
             <li>Payroll</li>
             <li>Absences</li>
