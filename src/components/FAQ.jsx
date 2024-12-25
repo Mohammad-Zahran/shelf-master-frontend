@@ -27,6 +27,15 @@ const FAQ = () => {
     },
   ];
 
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const answerRef = useRef(null);
+  const faqRef = useRef(null);
+
+  const handleSelect = (index) => {
+    setSelectedIndex(index);
+
+    
+  }
   return <div>FAQ</div>;
 };
 
