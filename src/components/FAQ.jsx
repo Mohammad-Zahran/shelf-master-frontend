@@ -54,8 +54,35 @@ const FAQ = () => {
   return (
     <section className="bg-white py-12 px-4">
       <div className="text-center py-8">
-        <p className="text-steelBlue text-lg"> See the most asked questions in the community</p>
-        <h1 className="text-4xl md:text-5xl font-bold text-charcoal">Frequentley Asked Questions</h1>
+        <p className="text-steelBlue text-lg">
+          {" "}
+          See the most asked questions in the community
+        </p>
+        <h1 className="text-4xl md:text-5xl font-bold text-charcoal">
+          Frequentley Asked Questions
+        </h1>
+      </div>
+
+      <div className="max-w-7xl mx-auto grid grid-cols-2 gap-6 relative">
+        {/* Left Side: Questions */}
+        <div
+          className="bg-white rounded-lg shadow-lg p-8 border border-gray-300 z-10"
+          ref={faqRef}
+        >
+          <ul className="space-y-4">
+            {faqs.map((faq, index) => (
+              <li
+                key={index}
+                className={`relative flex items-center justify-between p-4 rounded-lg cursor-pointer transition duration-200 ${
+                  selectedIndex === index
+                    ? "bg-steelBlue text-white"
+                    : "bg-white text-gray-700 hover:bg-[#FAFBFF]"
+                }`}
+                onClick={() => handleSelect(index)}
+              ></li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );
