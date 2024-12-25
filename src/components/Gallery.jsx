@@ -10,10 +10,10 @@ const Gallery = () => {
     <>
       <div className="text-center py-8">
         <p className="text-steelBlue text-lg">
-          See what our customers have to say about us
+          See our latest models of the shelves
         </p>
         <h1 className="text-4xl md:text-5xl font-bold text-charcoal">
-          Customer Reviews
+          Shelves Gallery
         </h1>
       </div>
       {/* Book section */}
