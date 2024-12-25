@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   motion,
   useMotionTemplate,
   useMotionValue,
   useSpring,
 } from "framer-motion";
+import { gsap } from "gsap";
 
 const ROTATION_RANGE = 15;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -17,25 +18,25 @@ const Company = () => {
         {/* Stat 1 */}
         <TiltCard
           icon="/assets/images/exp1.svg"
-          number="123"
+          number={123}
           label="Shelves Inserted"
         />
         {/* Stat 2 */}
         <TiltCard
           icon="/assets/images/exp2.svg"
-          number="84"
+          number={84}
           label="Happy Clients"
         />
         {/* Stat 3 */}
         <TiltCard
           icon="/assets/images/exp3.svg"
-          number="37"
+          number={37}
           label="Awards Win"
         />
         {/* Stat 4 */}
         <TiltCard
           icon="/assets/images/exp4.svg"
-          number="15"
+          number={15}
           label="Years in Business"
         />
       </div>
@@ -57,7 +58,8 @@ const Company = () => {
 
 // TiltCard Component
 const TiltCard = ({ icon, number, label }) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
+  const numberRef = useRef(null);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -86,6 +88,27 @@ const TiltCard = ({ icon, number, label }) => {
     y.set(0);
   };
 
+  // GSAP Animation for Number Increment
+  useEffect(() => {
+    if (numberRef.current) {
+      gsap.fromTo(
+        numberRef.current,
+        { textContent: 0 },
+        {
+          textContent: number,
+          duration: 2,
+          ease: "power3.out",
+          snap: { textContent: 1 },
+          onUpdate: function () {
+            numberRef.current.textContent = Math.floor(
+              this.targets()[0].textContent
+            );
+          },
+        }
+      );
+    }
+  }, [number]);
+
   return (
     <motion.div
       ref={ref}
@@ -110,7 +133,12 @@ const TiltCard = ({ icon, number, label }) => {
           transform: "translateZ(40px)",
         }}
       >
-        <p className="text-3xl font-bold text-steelBlue">{number}</p>
+        <p
+          ref={numberRef}
+          className="text-3xl font-bold text-steelBlue"
+        >
+          {number}
+        </p>
         <p className="text-charcoal text-sm mt-1">{label}</p>
       </div>
     </motion.div>
