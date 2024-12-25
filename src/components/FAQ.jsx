@@ -34,6 +34,7 @@ const FAQ = () => {
   const handleSelect = (index) => {
     setSelectedIndex(index);
 
+    // Add bounce effect to the selected FAQ container
     gsap.fromTo(
       faqRef.current,
       { scale: 1 },
@@ -43,6 +44,7 @@ const FAQ = () => {
 
   useEffect(() => {
     if (selectedIndex !== null) {
+      // Animate the right container to "emerge" from the left
       gsap.fromTo(
         answerRef.current,
         { x: -50, opacity: 0, scale: 0.95 },
@@ -55,14 +57,12 @@ const FAQ = () => {
     <section className="bg-white py-12 px-4">
       <div className="text-center py-8">
         <p className="text-steelBlue text-lg">
-          {" "}
           See the most asked questions in the community
         </p>
         <h1 className="text-4xl md:text-5xl font-bold text-charcoal">
           Frequentley Asked Questions
         </h1>
       </div>
-
       <div className="max-w-7xl mx-auto grid grid-cols-2 gap-6 relative">
         {/* Left Side: Questions */}
         <div
@@ -99,6 +99,20 @@ const FAQ = () => {
             ))}
           </ul>
         </div>
+
+        {/* Right Side: Answer */}
+        {selectedIndex !== null && (
+          <div
+            ref={answerRef}
+            style={{ left: "44%" }} // Set the specific left position here
+            className="absolute bottom-6 transform -translate-x-20 translate-y-10 bg-[#FAFBFF] rounded-lg shadow-lg p-8 border-2 border-gray-300 w-[55%] h-[110%]"
+          >
+            <h3 className="text-2xl font-bold text-steelBlue mb-6 pl-20">
+              {faqs[selectedIndex].question}
+            </h3>
+            <p className="text-gray-600 pl-20">{faqs[selectedIndex].answer}</p>
+          </div>
+        )}
       </div>
     </section>
   );
