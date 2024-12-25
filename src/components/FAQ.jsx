@@ -41,6 +41,16 @@ const FAQ = () => {
     );
   };
 
+  useEffect(() => {
+    if (selectedIndex !== null) {
+      gsap.fromTo(
+        answerRef.current,
+        { x: -50, opacity: 0, scale: 0.95 },
+        { x: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [selectedIndex]);
+
   return <div>FAQ</div>;
 };
 
