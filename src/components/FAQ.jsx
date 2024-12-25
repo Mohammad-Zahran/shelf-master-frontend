@@ -52,10 +52,10 @@ const FAQ = () => {
   }, [selectedIndex]);
 
   return (
-    <section>
-      <div>
-        <p> See the most asked questions in the community</p>
-        <h1>Frequentley Asked Questions</h1>
+    <section className="bg-white py-12 px-4">
+      <div className="text-center py-8">
+        <p className="text-steelBlue text-lg"> See the most asked questions in the community</p>
+        <h1 className="text-4xl md:text-5xl font-bold text-charcoal">Frequentley Asked Questions</h1>
       </div>
     </section>
   );
