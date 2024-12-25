@@ -34,8 +34,13 @@ const FAQ = () => {
   const handleSelect = (index) => {
     setSelectedIndex(index);
 
-    
-  }
+    gsap.fromTo(
+      faqRef.current,
+      { scale: 1 },
+      { scale: 1.05, duration: 0.2, yoyo: true, repeat: 1, ease: "power2.out" }
+    );
+  };
+
   return <div>FAQ</div>;
 };
 
