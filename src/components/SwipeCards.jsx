@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
-
-
 const SwipeCards = () => {
+  const [cards, setCards] = useState(cardData);
+  
   return (
     <div>SwipeCards</div>
   )
