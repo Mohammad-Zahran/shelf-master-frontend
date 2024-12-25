@@ -23,6 +23,8 @@ const SwipeCards = () => {
 const Card = ({ id, url, setCards, cards }) => {
   const x = useMotionValue(0);
   const rotateRaw = useTransform(x, [-150, 150], [-18, 18]);
+  const opacity = useTransform(x, [-150, 0, 150], [0, 1, 0]);
+
   const isFront = id === cards[cards.length - 1].id;
 
   const rotate = useTransform(() => {
