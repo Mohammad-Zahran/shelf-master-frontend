@@ -64,7 +64,7 @@ const Card = React.forwardRef(
     return (
       <motion.div
         ref={ref}
-        className="h-auto w-[450px] bg-white rounded-lg shadow-md p-6 flex flex-col space-y-4"
+        className="h-[400px] w-[550px] bg-white border-2 border-steelBlue rounded-lg shadow-md p-8 flex flex-col space-y-6"
         style={{
           gridRow: 1,
           gridColumn: 1,
@@ -83,20 +83,22 @@ const Card = React.forwardRef(
         dragConstraints={{ left: -300, right: 300 }}
         onDragEnd={handleDragEnd}
       >
+        {/* Top Section: Profile Picture and Name */}
         <div className="flex items-center">
           <img
             src={picture}
             alt={name}
-            className="w-16 h-16 rounded-full object-cover"
+            className="w-20 h-20 rounded-full object-cover"
           />
-          <div className="ml-4">
-            <h3 className="font-bold text-lg">{name}</h3>
-            <p className="text-yellow-500">
+          <div className="ml-6">
+            <h3 className="font-bold text-xl">{name}</h3>
+            <p className="text-yellow-500 text-2xl">
               {"★".repeat(rating) + "☆".repeat(5 - rating)}
             </p>
           </div>
         </div>
-        <p className="text-gray-600 text-sm mt-4">{review}</p>
+        {/* Review Text */}
+        <p className="text-gray-700 text-base mt-4 leading-relaxed">{review}</p>
       </motion.div>
     );
   }
