@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import gsap from "gsap";
+import swipeAudioFile from "../../public/assets/audios/swipe-236674.mp3";
 
 const SwipeCards = () => {
   const [cards, setCards] = useState(cardData);
@@ -44,8 +45,14 @@ const Card = React.forwardRef(
       return `${rotateRaw.get() + offset}deg`;
     });
 
+    const swipeAudio = new Audio(swipeAudioFile);
+
     const handleDragEnd = (_, info) => {
       if (Math.abs(info.offset.x) > 100) {
+        // Play swipe audio
+        swipeAudio.play();
+
+        // Remove the card
         setCards((prevCards) => prevCards.filter((v) => v.id !== id));
       }
     };
