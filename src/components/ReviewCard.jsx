@@ -2,7 +2,7 @@ import React from 'react'
 
 const ReviewCard = () => {
   return (
-    <div className=''>
+    <div className='w-[426px]'>
 
     </div>
   )
