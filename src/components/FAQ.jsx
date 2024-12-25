@@ -79,7 +79,23 @@ const FAQ = () => {
                     : "bg-white text-gray-700 hover:bg-[#FAFBFF]"
                 }`}
                 onClick={() => handleSelect(index)}
-              ></li>
+              >
+                <div className="flex items-center">
+                  {/* Circle Indicator */}
+                  <div
+                    className={`absolute left-2 w-3 h-3 rounded-full ${
+                      selectedIndex === index ? "bg-white" : "bg-steelBlue"
+                    }`}
+                  ></div>
+                  <span className="ml-6 text-lg">{faq.question}</span>
+                </div>
+                {/* Arrow Icon */}
+                <IoIosArrowForward
+                  className={`text-2xl transition-transform duration-200 ${
+                    selectedIndex === index ? "text-white" : "text-steelBlue"
+                  }`}
+                />
+              </li>
             ))}
           </ul>
         </div>
