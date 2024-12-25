@@ -22,6 +22,31 @@ const Card = ({ id, url, setCards, cards }) => {
       setCards((prevCards) => prevCards.filter((v) => v.id !== id));
     }
   };
+
+  return (
+    <motion.img
+      src={url}
+      alt="Placeholder alt"
+      className="h-96 w-72 origin-bottom rounded-lg bg-white object-cover hover:cursor-grab active:cursor-grabbing"
+      style={{
+        gridRow: 1,
+        gridColumn: 1,
+        x,
+        opacity,
+        rotate,
+        transition: "0.125s transform",
+        boxShadow: isFront
+          ? "0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5)"
+          : undefined,
+      }}
+      animate={{
+        scale: isFront ? 1 : 0.98,
+      }}
+      drag="x"
+      dragConstraints={{ left: -300, right: 300 }}
+      onDragEnd={handleDragEnd}
+    />
+  );
 };
 
 export default SwipeCards;
