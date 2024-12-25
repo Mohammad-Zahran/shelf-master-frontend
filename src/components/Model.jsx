@@ -1,5 +1,6 @@
 import React from "react";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const Model = () => {
   useGSAP(() => {
@@ -11,6 +12,12 @@ const Model = () => {
         <h1 id="heading" className="section-heading">
           Take a close look.
         </h1>
+
+        <div className="flex flex-col items-center mt-5">
+          <div className="w-full h-[75vh] md:h-[90vh] overflow-hidden relative">
+            
+          </div>
+        </div>
       </div>
     </div>
   );
