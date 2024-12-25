@@ -1,6 +1,7 @@
 import { PerspectiveCamera, View } from "@react-three/drei";
 import React, { Suspense } from "react";
 import Lights from "./Lights";
+import Shelf from "./Shelf"
 
 const ModelView = ({
   index,
@@ -25,7 +26,7 @@ const ModelView = ({
       <Lights />
 
       <Suspense fallback={<div>Loading</div>}>
-
+      <Shelf />
       </Suspense>
     </View>
   );

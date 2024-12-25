@@ -9,8 +9,8 @@ Title: Floating Wall Shelf Unit
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Model(props) {
-  const { nodes, materials } = useGLTF('/floating_wall_shelf_unit/scene.gltf')
+function Model(props) {
+  const { nodes, materials } = useGLTF('/assets/models/floating_wall_shelf_unit/scene.gltf')
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
@@ -31,4 +31,6 @@ export function Model(props) {
   )
 }
 
-useGLTF.preload('/floating_wall_shelf_unit/scene.gltf')
+export default Model;
+
+useGLTF.preload('/assets/models/floating_wall_shelf_unit/scene.gltf')
