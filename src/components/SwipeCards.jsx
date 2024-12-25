@@ -99,3 +99,41 @@ const Card = React.forwardRef(({ id, name, review, rating, picture, setCards, ca
 
 export default SwipeCards;
 
+// Dummy data for reviews
+const cardData = [
+  {
+    id: 1,
+    name: "Rim Zahran",
+    review: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium.",
+    rating: 4,
+    picture: "https://randomuser.me/api/portraits/women/1.jpg",
+  },
+  {
+    id: 2,
+    name: "John Doe",
+    review: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.",
+    rating: 5,
+    picture: "https://randomuser.me/api/portraits/men/2.jpg",
+  },
+  {
+    id: 3,
+    name: "Jane Smith",
+    review: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+    rating: 3,
+    picture: "https://randomuser.me/api/portraits/women/3.jpg",
+  },
+  {
+    id: 4,
+    name: "Alice Brown",
+    review: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
+    rating: 5,
+    picture: "https://randomuser.me/api/portraits/women/4.jpg",
+  },
+  {
+    id: 5,
+    name: "Bob Johnson",
+    review: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+    rating: 4,
+    picture: "https://randomuser.me/api/portraits/men/5.jpg",
+  },
+];
