@@ -10,8 +10,8 @@ const SwipeCards = () => {
     if (cardsRef.current.length) {
       gsap.fromTo(
         cardsRef.current,
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: "power3.out" }
+        { y: 30, opacity: 0, scale: 0.9 },
+        { y: 0, opacity: 1, scale: 1, duration: 1, stagger: 0.15, ease: "power2.out" }
       );
     }
   }, []);
@@ -34,13 +34,13 @@ const SwipeCards = () => {
 const Card = React.forwardRef(
   ({ id, name, review, rating, picture, setCards, cards }, ref) => {
     const x = useMotionValue(0);
-    const rotateRaw = useTransform(x, [-150, 150], [-18, 18]);
+    const rotateRaw = useTransform(x, [-150, 150], [-12, 12]);
     const opacity = useTransform(x, [-150, 0, 150], [0, 1, 0]);
 
     const isFront = id === cards[cards.length - 1].id;
 
     const rotate = useTransform(() => {
-      const offset = isFront ? 0 : id % 2 ? 6 : -6;
+      const offset = isFront ? 0 : id % 2 ? 4 : -4;
       return `${rotateRaw.get() + offset}deg`;
     });
 
@@ -50,37 +50,30 @@ const Card = React.forwardRef(
       }
     };
 
-    // GSAP animation for individual card
-    useEffect(() => {
-      if (ref.current) {
-        gsap.fromTo(
-          ref.current,
-          { y: 50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
-        );
-      }
-    }, [ref]);
-
     return (
       <motion.div
         ref={ref}
-        className="h-[400px] w-[550px] bg-white border-2 border-steelBlue rounded-lg shadow-md p-8 flex flex-col space-y-6"
+        className="h-[400px] w-[550px] bg-white border-2 border-blue-500 rounded-lg shadow-md p-8 flex flex-col space-y-6"
         style={{
           gridRow: 1,
           gridColumn: 1,
           x,
           opacity,
           rotate,
-          transition: "0.125s transform",
+          transition: "transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1)",
           boxShadow: isFront
             ? "0 20px 35px -5px rgba(0, 0, 0, 0.7), 0 10px 15px -6px rgba(0, 0, 0, 0.5)"
             : "0 5px 10px rgba(0, 0, 0, 0.3)",
         }}
         animate={{
-          scale: isFront ? 1 : 0.98,
+          scale: isFront ? 1 : 0.95,
         }}
         drag="x"
         dragConstraints={{ left: -300, right: 300 }}
+        dragTransition={{
+          bounceStiffness: 100,
+          bounceDamping: 10,
+        }}
         onDragEnd={handleDragEnd}
       >
         {/* Top Section: Profile Picture and Name */}
