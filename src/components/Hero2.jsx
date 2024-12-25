@@ -6,30 +6,22 @@ const Hero2 = () => {
   const model = useGLTF('/scene.gltf'); // Ensure the path is correct
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 5%', height: '500px' }}>
+    <div className="flex items-center justify-between px-36 h-[500px]">
       {/* Left Section: Text and Button */}
-      <div style={{ flex: 1 }}>
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#333' }}>Shelves for Sale Now</h1>
-        <p style={{ fontSize: '1rem', marginBottom: '1.5rem', color: '#666' }}>
+      <div className="flex-1 space-y-4">
+        <h1 className="text-3xl lg:text-4xl font-bold text-gray-800">
+          Shelves for Sale Now
+        </h1>
+        <p className="text-lg text-gray-600">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
-        <button
-          style={{
-            padding: '0.8rem 2rem',
-            fontSize: '1rem',
-            backgroundColor: '#007BFF',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-          }}
-        >
+        <button className="btn">
           Shop Now
         </button>
       </div>
 
       {/* Right Section: 3D Model */}
-      <div style={{ flex: 1 }}>
+      <div className="flex-1 h-full">
         <Canvas
           camera={{
             position: [0, 3, 25], // Move the camera farther back
