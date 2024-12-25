@@ -1,4 +1,13 @@
 import React from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
+
+const ROTATION_RANGE = 15;
+const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
 
 const Company = () => {
   return (
@@ -6,56 +15,29 @@ const Company = () => {
       {/* Left Section: Stats */}
       <div className="flex flex-col gap-4 w-full lg:w-1/2">
         {/* Stat 1 */}
-        <div className="flex items-center ml-auto bg-white shadow-md rounded-lg p-6 w-[300px] h-[140px]">
-          <img
-            src="/assets/images/exp1.svg"
-            alt="Shelves Inserted"
-            className="w-16 h-16 mr-4"
-          />
-          <div>
-            <p className="text-3xl font-bold text-steelBlue">123</p>
-            <p className="text-charcoal text-sm mt-1">Shelves Inserted</p>
-          </div>
-        </div>
-
+        <TiltCard
+          icon="/assets/images/exp1.svg"
+          number="123"
+          label="Shelves Inserted"
+        />
         {/* Stat 2 */}
-        <div className="flex items-center ml-52 bg-white shadow-md rounded-lg p-6 w-[300px] h-[140px]">
-          <img
-            src="/assets/images/exp2.svg"
-            alt="Happy Clients"
-            className="w-16 h-16 mr-4"
-          />
-          <div>
-            <p className="text-3xl font-bold text-steelBlue">84</p>
-            <p className="text-charcoal text-sm mt-1">Happy Clients</p>
-          </div>
-        </div>
-
+        <TiltCard
+          icon="/assets/images/exp2.svg"
+          number="84"
+          label="Happy Clients"
+        />
         {/* Stat 3 */}
-        <div className="flex items-center ml-auto bg-white shadow-md rounded-lg p-6 w-[300px] h-[140px]">
-          <img
-            src="/assets/images/exp3.svg"
-            alt="Awards Win"
-            className="w-16 h-16 mr-4"
-          />
-          <div>
-            <p className="text-3xl font-bold text-steelBlue">37</p>
-            <p className="text-charcoal text-sm mt-1">Awards Win</p>
-          </div>
-        </div>
-
+        <TiltCard
+          icon="/assets/images/exp3.svg"
+          number="37"
+          label="Awards Win"
+        />
         {/* Stat 4 */}
-        <div className="flex items-center ml-52 bg-white shadow-md rounded-lg p-6 w-[300px] h-[140px]">
-          <img
-            src="/assets/images/exp4.svg"
-            alt="Years in Business"
-            className="w-16 h-16 mr-4"
-          />
-          <div>
-            <p className="text-3xl font-bold text-steelBlue">15</p>
-            <p className="text-charcoal text-sm mt-1">Years in Business</p>
-          </div>
-        </div>
+        <TiltCard
+          icon="/assets/images/exp4.svg"
+          number="15"
+          label="Years in Business"
+        />
       </div>
 
       {/* Right Section: Experience Text */}
@@ -70,6 +52,68 @@ const Company = () => {
         <button className="btn">Contact Us</button>
       </div>
     </div>
+  );
+};
+
+// TiltCard Component
+const TiltCard = ({ icon, number, label }) => {
+  const ref = React.useRef(null);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const xSpring = useSpring(x, { stiffness: 200, damping: 20 });
+  const ySpring = useSpring(y, { stiffness: 200, damping: 20 });
+
+  const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+    const mouseX = (e.clientX - rect.left) * ROTATION_RANGE;
+    const mouseY = (e.clientY - rect.top) * ROTATION_RANGE;
+
+    const rX = (mouseY / rect.height - HALF_ROTATION_RANGE) * -1;
+    const rY = mouseX / rect.width - HALF_ROTATION_RANGE;
+
+    x.set(rX);
+    y.set(rY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transformStyle: "preserve-3d",
+        transform,
+      }}
+      className="flex items-center bg-white shadow-md rounded-lg p-6 w-[300px] h-[140px] cursor-pointer"
+    >
+      <img
+        src={icon}
+        alt={label}
+        className="w-16 h-16 mr-4"
+        style={{
+          transform: "translateZ(50px)",
+        }}
+      />
+      <div
+        style={{
+          transform: "translateZ(40px)",
+        }}
+      >
+        <p className="text-3xl font-bold text-steelBlue">{number}</p>
+        <p className="text-charcoal text-sm mt-1">{label}</p>
+      </div>
+    </motion.div>
   );
 };
 
