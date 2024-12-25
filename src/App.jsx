@@ -1,6 +1,6 @@
 import Gallery from './components/Gallery';
 import Hero from './components/Hero';
-import Highlights from './components/Highlights';
+import Model from './components/Model';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FAQ from './components/FAQ';
@@ -12,7 +12,7 @@ const App = () => {
     <>
       <Navbar />
       <Hero />
-      <Highlights />
+      <Model />
       <Company />
       <Reviews />
       <FAQ />
