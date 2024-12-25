@@ -3,11 +3,26 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 
 const SwipeCards = () => {
   const [cards, setCards] = useState(cardData);
-  
-  return (
-    <div>SwipeCards</div>
-  )
-}
+
+  return <div>SwipeCards</div>;
+};
+
+const Card = ({ id, url, setCards, cards }) => {
+  const x = useMotionValue(0);
+  const rotateRaw = useTransform(x, [-150, 150], [-18, 18]);
+  const isFront = id === cards[cards.length - 1].id;
+
+  const rotate = useTransform(() => {
+    const offset = isFront ? 0 : id % 2 ? 6 : -6;
+    return `${rotateRaw.get() + offset}deg`;
+  });
+
+  const handleDragEnd = (_, info) => {
+    if (Math.abs(info.offset.x) > 100) {
+      setCards((prevCards) => prevCards.filter((v) => v.id !== id));
+    }
+  };
+};
 
 export default SwipeCards;
 
