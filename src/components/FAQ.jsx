@@ -51,7 +51,14 @@ const FAQ = () => {
     }
   }, [selectedIndex]);
 
-  return <div>FAQ</div>;
+  return (
+    <section>
+      <div>
+        <p> See the most asked questions in the community</p>
+        <h1>Frequentley Asked Questions</h1>
+      </div>
+    </section>
+  );
 };
 
 export default FAQ;
