@@ -25,14 +25,14 @@ const Hero2 = () => {
         <Canvas
           camera={{
             position: [0, 3, 25], // Move the camera farther back
-            fov: 75, // Field of view adjustment
+            fov: 40, // Field of view adjustment
           }}
         >
           <ambientLight intensity={0.6} />
           <directionalLight position={[5, 10, 5]} intensity={1} />
           <primitive
             object={model.scene}
-            scale={0.08} // Scale the model
+            scale={4.5} // Increased the scale value to make the model bigger
             position={[0, -1.5, 0]} // Center the model
           />
           <OrbitControls enableZoom={false} />
