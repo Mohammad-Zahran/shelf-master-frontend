@@ -9,16 +9,16 @@ const Hero2 = () => {
     <div style={{ width: '100%', height: '500px' }}>
       <Canvas
         camera={{
-          position: [0, 2, 10], // Camera is farther back
-          fov: 50, // Field of view adjustment
+          position: [0, 3, 25], // Move the camera even farther back
+          fov: 75, // Slightly increase the field of view for a more zoomed-out effect
         }}
       >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 5, 5]} />
+        <ambientLight intensity={0.6} />
+        <directionalLight position={[5, 10, 5]} intensity={1} />
         <primitive
           object={model.scene}
-          scale={0.5} // Adjust the size of the model
-          position={[0, 0, -5]} // Move the model farther on the Z-axis
+          scale={0.08} // Reduce the scale slightly more if needed
+          position={[0, -1.5, 0]} // Center the model and adjust its height
         />
         <OrbitControls />
       </Canvas>
