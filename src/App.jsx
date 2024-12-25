@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FAQ from './components/FAQ';
 import Reviews from './components/Reviews';
+import Company from './components/Company';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Navbar />
       <Hero />
       <Highlights />
+      <Company />
       <Reviews />
       <FAQ />
       <Gallery />
