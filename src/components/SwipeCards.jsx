@@ -6,6 +6,7 @@ const SwipeCards = () => {
   const [cards, setCards] = useState(cardData);
   const cardsRef = useRef([]);
 
+  // GSAP animation for card stack on mount
   useEffect(() => {
     if (cardsRef.current.length) {
       gsap.fromTo(
@@ -31,7 +32,7 @@ const SwipeCards = () => {
   );
 };
 
-const Card = React.forwardRef(({ id, url, setCards, cards }, ref) => {
+const Card = React.forwardRef(({ id, name, review, rating, picture, setCards, cards }, ref) => {
   const x = useMotionValue(0);
   const rotateRaw = useTransform(x, [-150, 150], [-18, 18]);
   const opacity = useTransform(x, [-150, 0, 150], [0, 1, 0]);
@@ -49,6 +50,7 @@ const Card = React.forwardRef(({ id, url, setCards, cards }, ref) => {
     }
   };
 
+  // GSAP animation for individual card
   useEffect(() => {
     if (ref.current) {
       gsap.fromTo(
@@ -60,11 +62,9 @@ const Card = React.forwardRef(({ id, url, setCards, cards }, ref) => {
   }, [ref]);
 
   return (
-    <motion.img
+    <motion.div
       ref={ref}
-      src={url}
-      alt="Placeholder alt"
-      className="h-96 w-96 origin-bottom rounded-lg bg-white object-cover hover:cursor-grab active:cursor-grabbing"
+      className="h-[300px] w-[400px] bg-white rounded-lg shadow-md p-4 flex flex-col items-center"
       style={{
         gridRow: 1,
         gridColumn: 1,
@@ -82,43 +82,20 @@ const Card = React.forwardRef(({ id, url, setCards, cards }, ref) => {
       drag="x"
       dragConstraints={{ left: -300, right: 300 }}
       onDragEnd={handleDragEnd}
-    />
+    >
+      <img
+        src={picture}
+        alt={name}
+        className="w-16 h-16 rounded-full mb-4"
+      />
+      <h3 className="font-bold text-lg">{name}</h3>
+      <p className="text-yellow-500">
+        {"★".repeat(rating) + "☆".repeat(5 - rating)}
+      </p>
+      <p className="text-gray-600 text-sm text-center mt-2">{review}</p>
+    </motion.div>
   );
 });
 
 export default SwipeCards;
 
-const cardData = [
-  {
-    id: 1,
-    url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 2,
-    url: "https://images.unsplash.com/photo-1512374382149-233c42b6a83b?q=80&w=2235&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 3,
-    url: "https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=2342&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 4,
-    url: "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2224&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 5,
-    url: "https://images.unsplash.com/photo-1516478177764-9fe5bd7e9717?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 6,
-    url: "https://images.unsplash.com/photo-1570464197285-9949814674a7?q=80&w=2273&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 7,
-    url: "https://images.unsplash.com/photo-1578608712688-36b5be8823dc?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 8,
-    url: "https://images.unsplash.com/photo-1505784045224-1247b2b29cf3?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
