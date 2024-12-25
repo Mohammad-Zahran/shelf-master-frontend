@@ -29,28 +29,39 @@ const Company = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center bg-white py-16 px-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-steelBlue">
+    <div className="flex flex-col lg:flex-row items-center justify-between bg-white py-16 px-8 gap-16">
+      {/* Left Section: Stats */}
+      <div className="flex flex-col gap-8 w-full lg:w-1/2">
+        {stats.map((stat, index) => (
+          <div
+            key={stat.id}
+            className={`flex items-center ${
+              index % 2 === 0 ? "ml-auto" : "mr-auto"
+            } bg-white shadow-md rounded-lg p-6 w-[280px]`}
+          >
+            <img
+              src={stat.icon}
+              alt={stat.label}
+              className="w-12 h-12 mr-4"
+            />
+            <div>
+              <p className="text-3xl font-bold text-steelBlue">{stat.number}</p>
+              <p className="text-charcoal text-sm mt-1">{stat.label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Right Section: Experience Text */}
+      <div className="flex flex-col items-start text-left w-full lg:w-1/2">
+        <h1 className="text-4xl font-bold text-steelBlue mb-4">
           15 Years Experience
         </h1>
-        <p className="text-charcoal mt-4 max-w-md">
+        <p className="text-charcoal text-lg mb-6">
           Our company has been the leading provider of construction services to
           clients throughout the Lebanon since 2015.
         </p>
-        <button className="btn mt-6">Contact Us</button>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {stats.map((stat) => (
-          <div
-            key={stat.id}
-            className="flex flex-col items-center text-center shadow-md rounded-lg p-6 bg-white border border-gray-200"
-          >
-            <img src={stat.icon} alt={stat.label} className="w-20 h-20 mb-4" />
-            <p className="text-3xl font-bold text-steelBlue">{stat.number}</p>
-            <p className="text-charcoal mt-2 text-lg">{stat.label}</p>
-          </div>
-        ))}
+        <button className="btn">Contact Us</button>
       </div>
     </div>
   );
