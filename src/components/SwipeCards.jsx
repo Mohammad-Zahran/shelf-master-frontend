@@ -60,7 +60,7 @@ const Card = React.forwardRef(
     return (
       <motion.div
         ref={ref}
-        className="h-[400px] w-[550px] bg-white border-2 border-blue-500 rounded-lg shadow-md p-8 flex flex-col space-y-6"
+        className="h-[400px] w-[550px] bg-white border-2 border-steelBlue rounded-lg shadow-md p-8 flex flex-col space-y-6"
         style={{
           gridRow: 1,
           gridColumn: 1,
