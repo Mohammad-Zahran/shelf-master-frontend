@@ -7,6 +7,7 @@ import {
   useGLTF,
 } from "@react-three/drei";
 import Lights from "./Lights";
+import models from "../constants/models";
 import * as THREE from "three";
 import gsap from "gsap";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -24,29 +25,6 @@ const Model = ({ path, scale, position, rotation }) => {
 };
 
 const ModelViewer = () => {
-  const models = [
-    {
-      path: "/assets/models/book_shelf/scene1.gltf",
-      title: "Bookshelf Model",
-      scale: [0.01, 0.01, 0.01],
-      position: [0, -1, 0],
-      rotation: [0, 0, 0],
-    },
-    {
-      path: "/assets/models/floating_wall_shelf_unit/scene.gltf",
-      title: "Wall Shelf Model",
-      scale: [4, 4, 4],
-      position: [0, 0, 0],
-      rotation: [0, Math.PI / 4, 0],
-    },
-    {
-      path: "/assets/models/warehouse_shelving_unit/scene.gltf",
-      title: "Warehouse Shelf Model",
-      scale: [0.018, 0.018, 0.018],
-      position: [0, -1, 0],
-    },
-  ];
-
   const [currentModelIndex, setCurrentModelIndex] = useState(0);
   const [rotationState, setRotationState] = useState(0);
 
@@ -82,12 +60,7 @@ const ModelViewer = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white px-4">
-      <div className="text-center py-8">
-        <p className="text-steelBlue text-lg">See our Shelves in 3D!</p>
-        <h1 className="text-4xl md:text-5xl font-bold text-charcoal">
-          Shelf Viewer
-        </h1>
-      </div>
+      <h1 className="hero-title mb-6">3D Model Viewer</h1>
 
       <div className="flex flex-col items-center gap-6 w-full h-[80%]">
         <div className="relative w-full h-full rounded-lg">
