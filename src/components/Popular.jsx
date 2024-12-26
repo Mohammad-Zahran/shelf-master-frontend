@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { CiHeart } from "react-icons/ci";
+import { gsap } from "gsap";
 
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = 32.5 / 2;
 
 const TiltCard = ({ title, price, images }) => {
   const ref = useRef(null);
+  const imageRef = useRef(null);
   const [isLiked, setIsLiked] = useState(false); // Track the "liked" state
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track the current image
   const [isHovered, setIsHovered] = useState(false); // Track hover state
@@ -23,11 +25,27 @@ const TiltCard = ({ title, price, images }) => {
     if (!isHovered) return; // Start interval only when hovered
 
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      transitionToNextImage();
     }, 3000); // Change image every 3 seconds
 
     return () => clearInterval(interval); // Cleanup interval on unmount or hover end
-  }, [isHovered, images.length]);
+  }, [isHovered, currentImageIndex]);
+
+  const transitionToNextImage = () => {
+    const nextIndex = (currentImageIndex + 1) % images.length;
+
+    // GSAP transition effect
+    if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        opacity: 0,
+        duration: 0.5,
+        onComplete: () => {
+          setCurrentImageIndex(nextIndex);
+          gsap.to(imageRef.current, { opacity: 1, duration: 0.5 });
+        },
+      });
+    }
+  };
 
   const handleMouseMove = (e) => {
     if (!ref.current) return;
@@ -71,7 +89,7 @@ const TiltCard = ({ title, price, images }) => {
         transformStyle: "preserve-3d",
         transform,
       }}
-      className="relative h-[400px] w-[352px] rounded-lg bg-white shadow-md transition-all"
+      className="relative h-[600px] w-[352px] rounded-lg bg-white shadow-md transition-all"
     >
       {/* Heart Icon */}
       <div
@@ -86,8 +104,9 @@ const TiltCard = ({ title, price, images }) => {
         <CiHeart />
       </div>
       {/* Image Carousel */}
-      <div className="relative h-[200px] w-full overflow-hidden rounded-t-lg">
+      <div className="relative h-[400px] w-full overflow-hidden rounded-t-lg">
         <img
+          ref={imageRef}
           src={images[currentImageIndex]}
           alt={`${title} - ${currentImageIndex + 1}`}
           className="h-full w-full object-cover"
@@ -110,6 +129,9 @@ const TiltCard = ({ title, price, images }) => {
     </motion.div>
   );
 };
+
+
+
 
 
 const Popular = () => {
