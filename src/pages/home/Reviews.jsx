@@ -1,5 +1,5 @@
 import React from "react";
-import SwipeCards from "./SwipeCards";
+import SwipeCards from "../../components/SwipeCards";
 
 const Reviews = () => {
   const handleReviewButtonClick = () => {

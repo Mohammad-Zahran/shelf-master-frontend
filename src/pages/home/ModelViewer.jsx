@@ -6,8 +6,8 @@ import {
   Html,
   useGLTF,
 } from "@react-three/drei";
-import Lights from "./Lights";
-import models from "../constants/models";
+import Lights from "../../components/Lights";
+import models from "../../constants/models";
 import * as THREE from "three";
 import gsap from "gsap";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
