@@ -1,6 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import { FaHeart } from "react-icons/fa";
 import { gsap } from "gsap";
 
@@ -89,18 +94,21 @@ const Cards = ({ item }) => {
         transformStyle: "preserve-3d",
         transform,
       }}
-      className="relative h-[520px] w-[352px] rounded-lg bg-white shadow-xl transition-all border border-[#C8E6FF]"
+      className="relative h-[550px] w-[352px] rounded-lg bg-white shadow-xl transition-all border border-[#C8E6FF]"
     >
       <div
         onClick={toggleLike}
         style={{ transform: "translateZ(75px)" }}
         className={`absolute top-2 right-2 z-10 cursor-pointer p-2 rounded-full transition-all ${
-          isLiked ? "text-rose-500" : "text-white"
+          isLiked ? "text-steelBlue" : "text-[#C8E6FF]"
         }`}
       >
         <FaHeart className="h-6 w-6" />
       </div>
-      <Link to={`/product/${item._id}`} className="block h-[400px] overflow-hidden rounded-t-lg">
+      <Link
+        to={`/product/${item._id}`}
+        className="block h-[400px] overflow-hidden rounded-t-lg"
+      >
         <img
           ref={imageRef}
           src={item.images[currentImageIndex]}
@@ -119,7 +127,9 @@ const Cards = ({ item }) => {
       >
         <div>
           <h3 className="text-lg font-semibold">{item.name}</h3>
-          <p className="text-sm text-gray-500 line-clamp-2">{item.description}</p>
+          <p className="text-sm text-gray-500 line-clamp-2">
+            {item.description}
+          </p>
         </div>
         <div className="flex justify-between items-center mt-2">
           <p className="text-lg font-semibold">

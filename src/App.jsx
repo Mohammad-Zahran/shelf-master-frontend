@@ -7,14 +7,12 @@ import Reviews from "./components/Reviews";
 import Company from "./components/Company";
 import ModelViewer from "./components/ModelViewer";
 import Popular from "./components/Popular";
-import Test from "./components/Test";
 
 const App = () => {
   return (
     <>
       <Navbar />
       <Hero />
-      <Test />
       <Popular />
       <ModelViewer />
       <Company />

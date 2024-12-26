@@ -132,24 +132,23 @@ canvas {
   @apply border border-steelBlue;
 }
 
-
 .btn {
   @apply px-5 py-2 rounded-3xl bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue;
 }
 
-header, nav{
+header,
+nav {
   z-index: 10001 !important;
 }
 
-.title{
-  @apply  text-4xl text-charcoal md:text-5xl md:leading-snug  font-bold my-2;
+.title {
+  @apply text-4xl text-charcoal md:text-5xl md:leading-snug  font-bold my-2;
 }
 
-.subtitle{
+.subtitle {
   @apply text-steelBlue uppercase tracking-wide text-lg;
 }
 
- 
 .slick-prev {
   z-index: 1;
   /* background-color: red !important; */
@@ -170,22 +169,22 @@ header, nav{
   /* font-size: 12px !important; */
 }
 
-.heartStar{
+.heartStar {
   border-radius: 0px 28px 0px 28px;
 }
 
-.section-container{
-  @apply max-w-screen-2xl container mx-auto xl:px-24 px-4
+.section-container {
+  @apply max-w-screen-2xl container mx-auto xl:px-24 px-4;
 }
 
-.footer-title{
+.footer-title {
   color: black !important;
 }
 
-.active{
+.active {
   text-decoration: underline;
   text-underline-offset: 5px;
-  color: #39DB4A;
+  color: #39db4a;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -194,7 +193,6 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 
 /* Add these styles to your App.css */
 
