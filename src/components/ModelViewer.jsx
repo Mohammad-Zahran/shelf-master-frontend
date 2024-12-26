@@ -1,11 +1,12 @@
-import React, { useState, useRef, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import React, { useState, useRef, Suspense, useEffect } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Html, useGLTF } from '@react-three/drei';
 import Lights from './Lights';
 import * as THREE from 'three';
+import gsap from 'gsap';
 
 const Model = ({ path, scale, position, rotation }) => {
-  const { scene } = useGLTF(path); 
+  const { scene } = useGLTF(path);
   return (
     <primitive
       object={scene}
@@ -33,11 +34,10 @@ const ModelViewer = () => {
       rotation: [0, Math.PI / 4, 0],
     },
     {
-      path: '/assets/models/model3.glb',
+      path: '/assets/models/warehouse_shelving_unit/scene.gltf',
       title: 'Model 3',
-      scale: [1, 1, 1],
-      position: [0, 1, 0],
-      rotation: [Math.PI / 6, 0, 0],
+      scale: [0.018, 0.018, 0.018],
+      position: [0, -1, 0],
     },
   ];
 
@@ -46,6 +46,21 @@ const ModelViewer = () => {
 
   const controlRef = useRef();
   const groupRef = useRef();
+  const cameraRef = useRef();
+
+  useEffect(() => {
+    // Animate camera to focus on the current model
+    if (cameraRef.current) {
+      const model = models[currentModelIndex];
+      gsap.to(cameraRef.current.position, {
+        duration: 1,
+        x: model.position[0] + 2,
+        y: model.position[1] + 2,
+        z: 5,
+        ease: 'power3.out',
+      });
+    }
+  }, [currentModelIndex]);
 
   const handleNext = () => {
     setCurrentModelIndex((prevIndex) => (prevIndex + 1) % models.length);
@@ -66,7 +81,7 @@ const ModelViewer = () => {
       <div className="flex flex-col items-center gap-6 w-full h-[80%]">
         <div className="relative w-full h-full rounded-lg">
           <Canvas className="w-full h-full">
-            <PerspectiveCamera makeDefault position={[0, 0, 4]} />
+            <PerspectiveCamera makeDefault position={[0, 0, 4]} ref={cameraRef} />
             <Lights />
             <OrbitControls
               ref={controlRef}
