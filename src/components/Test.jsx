@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -8,8 +8,14 @@ const Test = () => {
   const slider = React.useRef(null);
 
   useEffect(() => {
-    fetch("/")
-  }, [])
+    fetch("/product.json")
+      .then((res) => res.json())
+      .then((data) => {
+        const specials = data.filter((item) => item.category === "Heavy-Duty");
+        // console.log(specials);
+        setProducts(specials);
+      });
+  }, []);
   const settings = {
     dots: true,
     infinite: false,
@@ -52,30 +58,11 @@ const Test = () => {
       </div>
 
       <Slider {...settings}>
-        <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
-        <div>
-          <h3>7</h3>
-        </div>
-        <div>
-          <h3>8</h3>
-        </div>
+        {
+            products.map((item, i) => (
+                
+            ))
+        }
       </Slider>
     </div>
   );
