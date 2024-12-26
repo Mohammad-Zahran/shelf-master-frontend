@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
-import { CiHeart } from "react-icons/ci";
+import { FaRegHeart } from "react-icons/fa";
 import { gsap } from "gsap";
 
 const ROTATION_RANGE = 32.5;
@@ -9,7 +9,7 @@ const HALF_ROTATION_RANGE = 32.5 / 2;
 const TiltCard = ({ title, price, images }) => {
   const ref = useRef(null);
   const imageRef = useRef(null);
-  const [isLiked, setIsLiked] = useState(false); // Track the "liked" state
+  const [isLiked, setIsLiked] = useState(false); 
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track the current image
   const [isHovered, setIsHovered] = useState(false); // Track hover state
 
@@ -89,19 +89,19 @@ const TiltCard = ({ title, price, images }) => {
         transformStyle: "preserve-3d",
         transform,
       }}
-      className="relative h-[600px] w-[352px] rounded-lg bg-white shadow-md transition-all"
+      className="relative h-[520px] w-[352px] rounded-lg bg-white shadow-md transition-all border border-[#C8E6FF]"
     >
       {/* Heart Icon */}
       <div
         onClick={toggleLike}
         style={{ transform: "translateZ(75px)" }}
-        className={`absolute top-2 right-2 text-xl cursor-pointer transition-all ${
+        className={`absolute top-2 right-2 text-3xl cursor-pointer p-2 rounded-full transition-all ${
           isLiked
-            ? "text-red-500 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]"
-            : "text-gray-500"
+            ? "bg-steelBlue text-white ring-2 ring-steelBlue"
+            : "bg-transparent text-gray-500"
         }`}
       >
-        <CiHeart />
+        <FaRegHeart />
       </div>
       {/* Image Carousel */}
       <div className="relative h-[400px] w-full overflow-hidden rounded-t-lg">
@@ -117,21 +117,23 @@ const TiltCard = ({ title, price, images }) => {
       </div>
       {/* Content */}
       <div
-        className="p-4"
+        className="p-4 flex justify-between items-center"
         style={{
           transform: "translateZ(25px)",
         }}
       >
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-sm text-gray-500">${price}</p>
-        <button className="mt-3 btn">Add to Cart</button>
+        <div>
+          <h3 className="text-lg font-semibold">{title}</h3>
+          <p className="text-sm text-gray-500">${price}</p>
+          <a href="#" className="text-steelBlue text-sm underline">
+            See More
+          </a>
+        </div>
+        <button className="btn">Add to Cart</button>
       </div>
     </motion.div>
   );
 };
-
-
-
 
 
 const Popular = () => {
@@ -159,6 +161,16 @@ const Popular = () => {
       {
         id: 3,
         title: "Wooden Shelf",
+        price: 79,
+        images: [
+          "https://via.placeholder.com/352x200.png?text=Shelf+3+Image+1",
+          "https://via.placeholder.com/352x200.png?text=Shelf+3+Image+2",
+          "https://via.placeholder.com/352x200.png?text=Shelf+3+Image+3",
+        ],
+      },
+      {
+        id: 4,
+        title: "Hey",
         price: 79,
         images: [
           "https://via.placeholder.com/352x200.png?text=Shelf+3+Image+1",
