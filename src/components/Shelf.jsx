@@ -6,8 +6,8 @@ Source: https://sketchfab.com/3d-models/floating-wall-shelf-unit-31b378d7ebd0494
 Title: Floating Wall Shelf Unit
 */
 
-import React, { useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
+import React, { useEffect, useRef } from 'react'
+import { useGLTF, useTexture } from '@react-three/drei'
 
 function Model(props) {
   const { nodes, materials } = useGLTF('/assets/models/floating_wall_shelf_unit/scene.gltf')
