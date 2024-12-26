@@ -6,12 +6,14 @@ import FAQ from "./components/FAQ";
 import Reviews from "./components/Reviews";
 import Company from "./components/Company";
 import ModelViewer from "./components/ModelViewer";
+import Popular from "./components/Popular";
 
 const App = () => {
   return (
     <>
       <Navbar />
       <Hero />
+      <Popular />
       <ModelViewer />
       <Company />
       <Reviews />
