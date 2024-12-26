@@ -9,6 +9,7 @@ const TiltCard = ({ title, price, images }) => {
   const ref = useRef(null);
   const [isLiked, setIsLiked] = useState(false); // Track the "liked" state
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track the current image
+  const [isHovered, setIsHovered] = useState(false); // Track hover state
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -19,12 +20,14 @@ const TiltCard = ({ title, price, images }) => {
   const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
 
   useEffect(() => {
+    if (!isHovered) return; // Start interval only when hovered
+
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 3000); // Change image every 3 seconds
 
-    return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [images.length]);
+    return () => clearInterval(interval); // Cleanup interval on unmount or hover end
+  }, [isHovered, images.length]);
 
   const handleMouseMove = (e) => {
     if (!ref.current) return;
@@ -47,6 +50,11 @@ const TiltCard = ({ title, price, images }) => {
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
+    setIsHovered(false); // Stop image change when mouse leaves
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true); // Start image change on hover
   };
 
   const toggleLike = () => {
@@ -58,6 +66,7 @@ const TiltCard = ({ title, price, images }) => {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouseEnter}
       style={{
         transformStyle: "preserve-3d",
         transform,
@@ -110,9 +119,9 @@ const Popular = () => {
         title: "Heavy Duty Shelf",
         price: 99,
         images: [
-          "https://via.placeholder.com/352x200.png?text=Shelf+1+Image+1",
-          "https://via.placeholder.com/352x200.png?text=Shelf+1+Image+2",
-          "https://via.placeholder.com/352x200.png?text=Shelf+1+Image+3",
+          "/assets/images/image.png",
+          "/assets/images/image (1).png",
+          "/assets/images/image (2).png",
         ],
       },
       {
