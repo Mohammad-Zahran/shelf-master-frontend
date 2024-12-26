@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import { CiHeart } from "react-icons/ci";
 
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = 32.5 / 2;
@@ -49,6 +50,14 @@ const TiltCard = ({ title, price, image }) => {
       }}
       className="relative h-80 w-60 rounded-lg bg-white shadow-md transition-all"
     >
+      {/* Heart Icon */}
+      <div
+        style={{ transform: "translateZ(75px)" }}
+        className="absolute top-2 right-2 text-xl text-gray-500 hover:text-steelBlue cursor-pointer"
+      >
+        <CiHeart />
+      </div>
+      {/* Image */}
       <img
         src={image}
         alt={title}
@@ -57,6 +66,7 @@ const TiltCard = ({ title, price, image }) => {
           transform: "translateZ(50px)",
         }}
       />
+      {/* Content */}
       <div
         className="p-4"
         style={{
@@ -71,43 +81,4 @@ const TiltCard = ({ title, price, image }) => {
   );
 };
 
-const Popular = () => {
-  const shelves = [
-    {
-      id: 1,
-      title: "Heavy Duty Shelf",
-      price: 99,
-      image: "https://via.placeholder.com/200x200.png?text=Shelf+1",
-    },
-    {
-      id: 2,
-      title: "Industrial Shelf",
-      price: 89,
-      image: "https://via.placeholder.com/200x200.png?text=Shelf+2",
-    },
-    {
-      id: 3,
-      title: "Wooden Shelf",
-      price: 79,
-      image: "https://via.placeholder.com/200x200.png?text=Shelf+3",
-    },
-  ];
-
-  return (
-    <section className="scrim-max-width py-10">
-      <h2 className="section-heading text-center mb-10">Popular Shelves</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {shelves.map((shelf) => (
-          <TiltCard
-            key={shelf.id}
-            title={shelf.title}
-            price={shelf.price}
-            image={shelf.image}
-          />
-        ))}
-      </div>
-    </section>
-  );
-};
-
-export default Popular;
+export default TiltCard;
