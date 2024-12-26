@@ -28,6 +28,7 @@ const ModelViewer = () => {
   const [currentModelIndex, setCurrentModelIndex] = useState(0);
   const [rotationState, setRotationState] = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
+  const [backgroundColor, setBackgroundColor] = useState("white");
 
   const controlRef = useRef();
   const groupRef = useRef();
@@ -75,7 +76,10 @@ const ModelViewer = () => {
   const currentModel = models[currentModelIndex];
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-white px-4">
+    <div
+      className="flex flex-col items-center justify-center h-screen px-4"
+      style={{ backgroundColor }}
+    >
       <h1 className="hero-title mb-6">3D Model Viewer</h1>
 
       <div className="flex flex-col items-center gap-6 w-full h-[80%]">
@@ -133,6 +137,17 @@ const ModelViewer = () => {
           className="mt-4 px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
         >
           {autoRotate ? "Stop Rotation" : "Start Rotation"}
+        </button>
+
+        <button
+          onClick={() =>
+            setBackgroundColor((prev) =>
+              prev === "white" ? "#f0f0f0" : "white"
+            )
+          }
+          className="mt-4 px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
+        >
+          Toggle Background
         </button>
       </div>
     </div>
