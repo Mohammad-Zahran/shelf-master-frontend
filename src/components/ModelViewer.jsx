@@ -1,5 +1,5 @@
 import React, { useState, useRef, Suspense, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import {
   OrbitControls,
   PerspectiveCamera,
@@ -27,10 +27,12 @@ const Model = ({ path, scale, position, rotation }) => {
 const ModelViewer = () => {
   const [currentModelIndex, setCurrentModelIndex] = useState(0);
   const [rotationState, setRotationState] = useState(0);
+  const [autoRotate, setAutoRotate] = useState(true);
 
   const controlRef = useRef();
   const groupRef = useRef();
   const cameraRef = useRef();
+  const animationRef = useRef();
 
   useEffect(() => {
     // Animate camera to focus on the current model
@@ -45,6 +47,20 @@ const ModelViewer = () => {
       });
     }
   }, [currentModelIndex]);
+
+  useEffect(() => {
+    // Rotation animation loop
+    const rotateModel = () => {
+      if (autoRotate && groupRef.current) {
+        groupRef.current.rotation.y += 0.01;
+      }
+      animationRef.current = requestAnimationFrame(rotateModel);
+    };
+
+    rotateModel();
+
+    return () => cancelAnimationFrame(animationRef.current);
+  }, [autoRotate]);
 
   const handleNext = () => {
     setCurrentModelIndex((prevIndex) => (prevIndex + 1) % models.length);
@@ -111,6 +127,13 @@ const ModelViewer = () => {
             <IoIosArrowForward className="text-steelBlue text-3xl" />
           </button>
         </div>
+
+        <button
+          onClick={() => setAutoRotate(!autoRotate)}
+          className="mt-4 px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+        >
+          {autoRotate ? "Stop Rotation" : "Start Rotation"}
+        </button>
       </div>
     </div>
   );
