@@ -127,6 +127,78 @@
       "reviews": [],
       "createdAt": "2024-12-20T15:00:00.000+00:00",
       "__v": 2
-    }
+    },
+    {
+        "_id": "67636ee08a5dfa75bbcba6c4",
+        "name": "Industrial Steel Shelf",
+        "description": "Heavy-duty industrial shelf for warehouses.",
+        "images": [
+          "image13.jpg",
+          "image14.jpg",
+          "image15.jpg",
+          "image16.jpg"
+        ],
+        "category": "Heavy-Duty",
+        "dimensions": {
+          "width": 150,
+          "height": 200,
+          "depth": 60
+        },
+        "material": "Steel",
+        "loadCapacity": 1000,
+        "price": 299.99,
+        "stock": 5,
+        "reviews": [],
+        "createdAt": "2024-12-20T15:00:00.000+00:00",
+        "__v": 2
+      },
+      {
+        "_id": "67636ee08a5dfa75bbcba6c4",
+        "name": "Industrial Steel Shelf",
+        "description": "Heavy-duty industrial shelf for warehouses.",
+        "images": [
+          "image13.jpg",
+          "image14.jpg",
+          "image15.jpg",
+          "image16.jpg"
+        ],
+        "category": "Heavy-Duty",
+        "dimensions": {
+          "width": 150,
+          "height": 200,
+          "depth": 60
+        },
+        "material": "Steel",
+        "loadCapacity": 1000,
+        "price": 299.99,
+        "stock": 5,
+        "reviews": [],
+        "createdAt": "2024-12-20T15:00:00.000+00:00",
+        "__v": 2
+      },
+      {
+        "_id": "67636ee08a5dfa75bbcba6c4",
+        "name": "Industrial Steel Shelf",
+        "description": "Heavy-duty industrial shelf for warehouses.",
+        "images": [
+          "image13.jpg",
+          "image14.jpg",
+          "image15.jpg",
+          "image16.jpg"
+        ],
+        "category": "Heavy-Duty",
+        "dimensions": {
+          "width": 150,
+          "height": 200,
+          "depth": 60
+        },
+        "material": "Steel",
+        "loadCapacity": 1000,
+        "price": 299.99,
+        "stock": 5,
+        "reviews": [],
+        "createdAt": "2024-12-20T15:00:00.000+00:00",
+        "__v": 2
+      }
   ]
   

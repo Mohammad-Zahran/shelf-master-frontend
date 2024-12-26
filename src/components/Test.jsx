@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Cards from "./Cards";
 
 const Test = () => {
   const [products, setProducts] = useState([]);
@@ -58,11 +59,9 @@ const Test = () => {
       </div>
 
       <Slider {...settings}>
-        {
-            products.map((item, i) => (
-                
-            ))
-        }
+        {products.map((item, i) => (
+          <Cards key={i} item={item} />
+        ))}
       </Slider>
     </div>
   );
