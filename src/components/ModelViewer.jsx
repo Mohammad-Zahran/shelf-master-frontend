@@ -1,9 +1,15 @@
-import React, { useState, useRef, Suspense, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Html, useGLTF } from '@react-three/drei';
-import Lights from './Lights';
-import * as THREE from 'three';
-import gsap from 'gsap';
+import React, { useState, useRef, Suspense, useEffect } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import {
+  OrbitControls,
+  PerspectiveCamera,
+  Html,
+  useGLTF,
+} from "@react-three/drei";
+import Lights from "./Lights";
+import * as THREE from "three";
+import gsap from "gsap";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Model = ({ path, scale, position, rotation }) => {
   const { scene } = useGLTF(path);
@@ -20,22 +26,22 @@ const Model = ({ path, scale, position, rotation }) => {
 const ModelViewer = () => {
   const models = [
     {
-      path: '/assets/models/book_shelf/scene1.gltf',
-      title: 'Model 1',
-      scale: [0.010, 0.010, 0.010],
+      path: "/assets/models/book_shelf/scene1.gltf",
+      title: "Bookshelf Model",
+      scale: [0.01, 0.01, 0.01],
       position: [0, -1, 0],
       rotation: [0, 0, 0],
     },
     {
-      path: '/assets/models/floating_wall_shelf_unit/scene.gltf',
-      title: 'Model 2',
+      path: "/assets/models/floating_wall_shelf_unit/scene.gltf",
+      title: "Wall Shelf Model",
       scale: [4, 4, 4],
       position: [0, 0, 0],
       rotation: [0, Math.PI / 4, 0],
     },
     {
-      path: '/assets/models/warehouse_shelving_unit/scene.gltf',
-      title: 'Model 3',
+      path: "/assets/models/warehouse_shelving_unit/scene.gltf",
+      title: "Warehouse Shelf Model",
       scale: [0.018, 0.018, 0.018],
       position: [0, -1, 0],
     },
@@ -57,7 +63,7 @@ const ModelViewer = () => {
         x: model.position[0] + 2,
         y: model.position[1] + 2,
         z: 5,
-        ease: 'power3.out',
+        ease: "power3.out",
       });
     }
   }, [currentModelIndex]);
@@ -76,12 +82,21 @@ const ModelViewer = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white px-4">
-      <h1 className="text-2xl font-bold mb-4">3D Model Viewer</h1>
+      <div className="text-center py-8">
+        <p className="text-steelBlue text-lg">See our Shelves in 3D!</p>
+        <h1 className="text-4xl md:text-5xl font-bold text-charcoal">
+          Shelf Viewer
+        </h1>
+      </div>
 
       <div className="flex flex-col items-center gap-6 w-full h-[80%]">
         <div className="relative w-full h-full rounded-lg">
           <Canvas className="w-full h-full">
-            <PerspectiveCamera makeDefault position={[0, 0, 4]} ref={cameraRef} />
+            <PerspectiveCamera
+              makeDefault
+              position={[0, 0, 4]}
+              ref={cameraRef}
+            />
             <Lights />
             <OrbitControls
               ref={controlRef}
@@ -89,7 +104,9 @@ const ModelViewer = () => {
               enablePan={false}
               rotateSpeed={0.4}
               target={new THREE.Vector3(0, 0, 0)}
-              onEnd={() => setRotationState(controlRef.current.getAzimuthalAngle())}
+              onEnd={() =>
+                setRotationState(controlRef.current.getAzimuthalAngle())
+              }
             />
             <Suspense
               fallback={
@@ -111,18 +128,14 @@ const ModelViewer = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <button
-            onClick={handlePrevious}
-            className="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
-          >
-            Previous
+          <button onClick={handlePrevious} className="control-btn">
+            <IoIosArrowBack className="text-steelBlue text-3xl" />
           </button>
-          <p className="text-lg font-medium">{currentModel.title}</p>
-          <button
-            onClick={handleNext}
-            className="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
-          >
-            Next
+          <p className="text-lg font-medium text-charcoal">
+            {currentModel.title}
+          </p>
+          <button onClick={handleNext} className="control-btn">
+            <IoIosArrowForward className="text-steelBlue text-3xl" />
           </button>
         </div>
       </div>
