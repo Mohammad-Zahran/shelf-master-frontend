@@ -181,9 +181,9 @@
         "name": "Industrial Steel Shelf",
         "description": "Heavy-duty industrial shelf for warehouses.",
         "images": [
-         "https://via.placeholder.com/352x200.png?text=Shelf+2+Image+1",
-          "https://via.placeholder.com/352x200.png?text=Shelf+2+Image+2",
-          "https://via.placeholder.com/352x200.png?text=Shelf+2+Image+3"
+         "/assets/images/image.png",
+         "/assets/images/image (1).png",
+         "/assets/images/image (2).png"
         ],
         "category": "Heavy-Duty",
         "dimensions": {

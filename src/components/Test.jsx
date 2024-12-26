@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -7,7 +7,7 @@ import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 
 const Test = () => {
   const [products, setProducts] = useState([]);
-  const slider = React.useRef(null);
+  const slider = useRef(null);
 
   useEffect(() => {
     fetch("/product.json")
@@ -29,34 +29,27 @@ const Test = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
         },
       },
       {
-        breakpoint: 970,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 576,
+        breakpoint: 768,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
     ],
-    arrows: false, // Disable default arrows
+    arrows: false,
   };
 
   return (
     <div className="section-container my-20 relative">
       <div className="text-left mb-8">
-        <p className="subtitle">Popular Shelves</p>
+        <p className="subtitle ">Popular Shelves</p>
         <h2 className="title md:w-[520px]">Best Shelves for Sale</h2>
       </div>
 
@@ -79,7 +72,9 @@ const Test = () => {
 
       <Slider ref={slider} {...settings}>
         {products.map((item, i) => (
-          <Cards key={i} item={item} />
+          <div key={i} className="px-2">
+            <Cards item={item} />
+          </div>
         ))}
       </Slider>
     </div>
