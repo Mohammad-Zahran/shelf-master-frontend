@@ -6,7 +6,8 @@ import { FaInstagram } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-steelBlue text-white py-10">
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+      {/* Top Section */}
+      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Column 1: Product Section */}
         <div>
           <h3 className="font-bold text-lg mb-4">Product</h3>
@@ -97,20 +98,18 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-lg mb-4">Subscribe</h3>
           <p className="mb-4">
-            Hello, we are Lift Media. Our goal is to translate the positive
-            effects from revolutionizing how companies engage with their clients
-            & their team.
+            Hello, we are ShelfMaster. Our goal is to translate the shelf for our customers the best way possible
           </p>
           <form>
-            <div className="flex items-center">
+            <div className="flex flex-wrap md:flex-nowrap items-center">
               <input
                 type="email"
                 placeholder="Email address"
-                className="px-4 py-2 rounded-l-md text-black border-none w-full"
+                className="px-4 py-2 rounded-l-md text-black border-none w-full md:w-auto flex-1 mb-4 md:mb-0"
               />
               <button
                 type="submit"
-                className="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-r-md text-white"
+                className="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-r-md text-white w-full md:w-auto"
               >
                 →
               </button>
@@ -121,18 +120,18 @@ const Footer = () => {
 
       {/* Footer Bottom Section */}
       <div className="border-t border-white-500 mt-8 pt-4 text-sm text-center">
-        <div className="flex justify-between items-center flex-wrap">
+        <div className="flex flex-wrap justify-around items-center gap-6">
           {/* Logo */}
-          <div>
+          <div className="flex-shrink-0">
             <img
               src="/public/assets/images/logo.png"
               alt="Logo"
-              className="h-10"
+              className="h-10 mx-auto md:mx-0"
             />
           </div>
 
           {/* Footer Links */}
-          <div className="space-x-4">
+          <div className="space-x-4 flex-shrink-0">
             <a href="#" className="hover:underline">
               Terms
             </a>
@@ -145,7 +144,7 @@ const Footer = () => {
           </div>
 
           {/* Social Media Icons */}
-          <div className="flex space-x-3 text-2xl">
+          <div className="flex justify-start md:justify-center space-x-4 flex-wrap text-2xl md:pl-4">
             <a href="#" className="hover:text-gray-300">
               <FaLinkedinIn />
             </a>
