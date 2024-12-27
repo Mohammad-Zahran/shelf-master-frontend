@@ -6,61 +6,59 @@ import {
   useSpring,
 } from "framer-motion";
 import { gsap } from "gsap";
+import useIntersectionObserver from "../../hooks/useIntersectionObserver"; // Import the custom hook
 
 const ROTATION_RANGE = 15;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
 
 const Company = () => {
   const sectionRef = useRef(null);
+  const { observe, entries } = useIntersectionObserver({ threshold: 0.3 });
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          const cards = sectionRef.current.querySelectorAll(".tilt-card");
-          cards.forEach((card, index) => {
-            gsap.fromTo(
-              card,
-              { opacity: 0, y: 50 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                delay: index * 0.2,
-                ease: "power3.out",
-                onStart: () => {
-                  const numberElement = card.querySelector(".increment-number");
-                  if (numberElement) {
-                    gsap.fromTo(
-                      numberElement,
-                      { textContent: 0 },
-                      {
-                        textContent: numberElement.getAttribute("data-number"),
-                        duration: 2,
-                        ease: "power3.out",
-                        snap: { textContent: 1 },
-                        onUpdate: function () {
-                          numberElement.textContent = Math.floor(
-                            this.targets()[0].textContent
-                          );
-                        },
-                      }
-                    );
+    if (sectionRef.current) {
+      const cards = Array.from(sectionRef.current.querySelectorAll(".tilt-card"));
+      observe(cards);
+    }
+  }, [observe]);
+
+  useEffect(() => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        gsap.fromTo(
+          entry.target,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            delay: index * 0.2,
+            ease: "power3.out",
+            onStart: () => {
+              const numberElement = entry.target.querySelector(".increment-number");
+              if (numberElement) {
+                gsap.fromTo(
+                  numberElement,
+                  { textContent: 0 },
+                  {
+                    textContent: numberElement.getAttribute("data-number"),
+                    duration: 2,
+                    ease: "power3.out",
+                    snap: { textContent: 1 },
+                    onUpdate: function () {
+                      numberElement.textContent = Math.floor(
+                        this.targets()[0].textContent
+                      );
+                    },
                   }
-                },
+                );
               }
-            );
-          });
-          observer.disconnect(); // Unobserve once the animation is triggered
-        }
-      },
-      { threshold: 0.3 } // Trigger when 30% of the section is visible
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-
-    return () => observer.disconnect();
-  }, []);
+            },
+          }
+        );
+      }
+    });
+  }, [entries]);
 
   return (
     <div
