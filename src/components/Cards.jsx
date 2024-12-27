@@ -100,7 +100,7 @@ const Cards = ({ item }) => {
         onClick={toggleLike}
         style={{ transform: "translateZ(75px)" }}
         className={`absolute top-2 right-2 z-10 cursor-pointer p-2 rounded-full transition-all ${
-          isLiked ? "text-steelBlue" : "text-[#C8E6FF]"
+          isLiked ? "text-steelBlue" : "text-steelBlue"
         }`}
       >
         <FaHeart className="h-6 w-6" />

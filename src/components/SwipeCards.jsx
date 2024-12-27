@@ -18,7 +18,7 @@ const SwipeCards = () => {
   }, []);
 
   return (
-    <div className="grid h-[500px] w-full place-items-center bg-white">
+    <div className="grid h-[500px] w-full place-items-center bg-white px-4 md:px-8">
       {cards.map((card, index) => (
         <Card
           key={card.id}
@@ -60,7 +60,7 @@ const Card = React.forwardRef(
     return (
       <motion.div
         ref={ref}
-        className="h-[400px] w-[550px] bg-white border-2 border-steelBlue rounded-lg shadow-md p-8 flex flex-col space-y-6"
+        className="h-[350px] w-[90%] md:h-[400px] md:w-[500px] lg:w-[550px] bg-white border-2 border-steelBlue rounded-lg shadow-md p-6 md:p-8 flex flex-col space-y-4 md:space-y-6"
         style={{
           gridRow: 1,
           gridColumn: 1,
@@ -88,17 +88,19 @@ const Card = React.forwardRef(
           <img
             src={picture}
             alt={name}
-            className="w-20 h-20 rounded-full object-cover"
+            className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover"
           />
-          <div className="ml-6">
-            <h3 className="font-bold text-xl">{name}</h3>
-            <p className="text-yellow-500 text-2xl">
+          <div className="ml-4 md:ml-6">
+            <h3 className="font-bold text-lg md:text-xl">{name}</h3>
+            <p className="text-yellow-500 text-lg md:text-2xl">
               {"★".repeat(rating) + "☆".repeat(5 - rating)}
             </p>
           </div>
         </div>
         {/* Review Text */}
-        <p className="text-gray-700 text-base mt-4 leading-relaxed">{review}</p>
+        <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+          {review}
+        </p>
       </motion.div>
     );
   }
