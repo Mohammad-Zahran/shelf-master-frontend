@@ -4,7 +4,7 @@ import Popular from "./Popular";
 import ModelViewer from "./ModelViewer";
 import Company from "./Company";
 import Reviews from "./Reviews";
-import FAQ from "../../components/FAQ";
+import FAQ from "./FAQ";
 import Gallery from "./Gallery";
 
 const Home = () => {
