@@ -11,6 +11,7 @@ import models from "../../constants/models";
 import * as THREE from "three";
 import gsap from "gsap";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { FaPlay, FaPause, FaToggleOff, FaToggleOn } from "react-icons/fa";
 
 const Model = ({ path, scale, position, rotation }) => {
   const { scene } = useGLTF(path);
@@ -26,7 +27,6 @@ const Model = ({ path, scale, position, rotation }) => {
 
 const ModelViewer = () => {
   const [currentModelIndex, setCurrentModelIndex] = useState(0);
-  const [rotationState, setRotationState] = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
   const [backgroundColor, setBackgroundColor] = useState("white");
 
@@ -80,8 +80,10 @@ const ModelViewer = () => {
       className="flex flex-col items-center justify-center h-screen px-4"
       style={{ backgroundColor }}
     >
-      <h1 className="hero-title mb-6">3D Model Viewer</h1>
-
+      <div className="text-left mr mb-8">
+        <p className="subtitle">Popular Shelves</p>
+        <h2 className="title md:w-[520px]">Best Shelves for Sale</h2>
+      </div>
       <div className="flex flex-col items-center gap-6 w-full h-[80%]">
         <div className="relative w-full h-full rounded-lg">
           <Canvas className="w-full h-full">
@@ -97,9 +99,6 @@ const ModelViewer = () => {
               enablePan={false}
               rotateSpeed={0.4}
               target={new THREE.Vector3(0, 0, 0)}
-              onEnd={() =>
-                setRotationState(controlRef.current.getAzimuthalAngle())
-              }
             />
             <Suspense
               fallback={
@@ -132,23 +131,45 @@ const ModelViewer = () => {
           </button>
         </div>
 
-        <button
-          onClick={() => setAutoRotate(!autoRotate)}
-          className="mt-4 px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-        >
-          {autoRotate ? "Stop Rotation" : "Start Rotation"}
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setAutoRotate(!autoRotate)}
+            className="btn flex items-center gap-2"
+          >
+            {autoRotate ? (
+              <>
+                <FaPause className="text-lg" />
+                Pause Rotation
+              </>
+            ) : (
+              <>
+                <FaPlay className="text-lg" />
+                Start Rotation
+              </>
+            )}
+          </button>
 
-        <button
-          onClick={() =>
-            setBackgroundColor((prev) =>
-              prev === "white" ? "#f0f0f0" : "white"
-            )
-          }
-          className="mt-4 px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
-        >
-          Toggle Background
-        </button>
+          <button
+            onClick={() =>
+              setBackgroundColor((prev) =>
+                prev === "white" ? "#f0f0f0" : "white"
+              )
+            }
+            className="btn flex items-center gap-2"
+          >
+            {backgroundColor === "white" ? (
+              <>
+                <FaToggleOff className="text-red-500 text-lg" />
+                Dark Background
+              </>
+            ) : (
+              <>
+                <FaToggleOn className="text-green-500 text-lg" />
+                Light Background
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -75,7 +75,7 @@ const Hero = () => {
         </p>
         <button
           ref={buttonRef}
-          className="btn bg-steelBlue text-white px-6 py-3 rounded-lg hover:bg-steelBlue transition"
+          className="btn"
         >
           Shop Now
         </button>
