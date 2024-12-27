@@ -6,7 +6,7 @@ import {
   useSpring,
 } from "framer-motion";
 import { gsap } from "gsap";
-import useIntersectionObserver from "../../hooks/useIntersectionObserver"; // Import the custom hook
+import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 
 const ROTATION_RANGE = 15;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -17,7 +17,9 @@ const Company = () => {
 
   useEffect(() => {
     if (sectionRef.current) {
-      const cards = Array.from(sectionRef.current.querySelectorAll(".tilt-card"));
+      const cards = Array.from(
+        sectionRef.current.querySelectorAll(".tilt-card")
+      );
       observe(cards);
     }
   }, [observe]);
@@ -35,7 +37,8 @@ const Company = () => {
             delay: index * 0.2,
             ease: "power3.out",
             onStart: () => {
-              const numberElement = entry.target.querySelector(".increment-number");
+              const numberElement =
+                entry.target.querySelector(".increment-number");
               if (numberElement) {
                 gsap.fromTo(
                   numberElement,

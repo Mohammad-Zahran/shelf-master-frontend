@@ -1,29 +1,52 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import gsap from "gsap";
+import useIntersectionObserver from "../hooks/useIntersectionObserver"; // Import the custom hook
 import swipeAudioFile from "../../public/assets/audios/swipe-236674.mp3";
 
 const SwipeCards = () => {
-  const [cards, setCards] = useState(cardData);
   const cardsRef = useRef([]);
+  const sectionRef = useRef(null);
+  const { observe, entries } = useIntersectionObserver({ threshold: 0.3 });
 
-  useEffect(() => {
-    if (cardsRef.current.length) {
-      gsap.fromTo(
-        cardsRef.current,
-        { y: 30, opacity: 0, scale: 0.9 },
-        { y: 0, opacity: 1, scale: 1, duration: 1, stagger: 0.15, ease: "power2.out" }
-      );
+  // Observe cards when the section comes into view
+  React.useEffect(() => {
+    if (sectionRef.current) {
+      const cardElements = Array.from(cardsRef.current);
+      observe(cardElements);
     }
-  }, []);
+  }, [observe]);
+
+  // Trigger animations when cards are in view
+  React.useEffect(() => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        gsap.fromTo(
+          entry.target,
+          { y: 30, opacity: 0, scale: 0.9 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            delay: index * 0.15,
+            ease: "power2.out",
+          }
+        );
+      }
+    });
+  }, [entries]);
 
   return (
-    <div className="grid h-[500px] w-full place-items-center bg-white px-4 md:px-8">
-      {cards.map((card, index) => (
+    <div
+      ref={sectionRef}
+      className="grid h-[500px] w-full place-items-center bg-white px-4 md:px-8"
+    >
+      {cardData.map((card, index) => (
         <Card
           key={card.id}
-          cards={cards}
-          setCards={setCards}
+          cards={cardData}
+          setCards={() => {}}
           {...card}
           ref={(el) => (cardsRef.current[index] = el)}
         />
@@ -33,16 +56,13 @@ const SwipeCards = () => {
 };
 
 const Card = React.forwardRef(
-  ({ id, name, review, rating, picture, setCards, cards }, ref) => {
+  ({ id, name, review, rating, picture }, ref) => {
     const x = useMotionValue(0);
     const rotateRaw = useTransform(x, [-150, 150], [-12, 12]);
     const opacity = useTransform(x, [-150, 0, 150], [0, 1, 0]);
 
-    const isFront = id === cards[cards.length - 1].id;
-
     const rotate = useTransform(() => {
-      const offset = isFront ? 0 : id % 2 ? 4 : -4;
-      return `${rotateRaw.get() + offset}deg`;
+      return `${rotateRaw.get()}deg`;
     });
 
     const swipeAudio = new Audio(swipeAudioFile);
@@ -51,9 +71,6 @@ const Card = React.forwardRef(
       if (Math.abs(info.offset.x) > 100) {
         // Play swipe audio
         swipeAudio.play();
-
-        // Remove the card
-        setCards((prevCards) => prevCards.filter((v) => v.id !== id));
       }
     };
 
@@ -68,12 +85,7 @@ const Card = React.forwardRef(
           opacity,
           rotate,
           transition: "transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1)",
-          boxShadow: isFront
-            ? "0 20px 35px -5px rgba(0, 0, 0, 0.7), 0 10px 15px -6px rgba(0, 0, 0, 0.5)"
-            : "0 5px 10px rgba(0, 0, 0, 0.3)",
-        }}
-        animate={{
-          scale: isFront ? 1 : 0.95,
+          boxShadow: "0 20px 35px -5px rgba(0, 0, 0, 0.7)",
         }}
         drag="x"
         dragConstraints={{ left: -300, right: 300 }}
@@ -146,7 +158,7 @@ const cardData = [
     id: 5,
     name: "Bob Johnson",
     review:
-      "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+      "Neque porro quisquam est qui dolorem ipsum quia voluptas sit amet, consectetur, adipisci velit.",
     rating: 4,
     picture: "https://randomuser.me/api/portraits/men/5.jpg",
   },
