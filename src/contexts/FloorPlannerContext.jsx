@@ -12,7 +12,7 @@ export const FloorPlannerProvider = ({ children }) => {
   const [viewMode, setViewMode] = useState("3D");
   const [showSettings, setShowSettings] = useState(false);
   const [selectedFurnitureIndex, setSelectedFurnitureIndex] = useState(null); // New state
-
+  const [showPopup, setShowPopup] = useState(false);
 
   const updateFurniturePosition = (index, position) => {
     setFurnitureItems((prevItems) =>
@@ -25,7 +25,6 @@ export const FloorPlannerProvider = ({ children }) => {
       prevItems.map((item, i) => (i === index ? { ...item, rotation } : item))
     );
   };
-
 
   return (
     <FloorPlannerContext.Provider
@@ -41,7 +40,9 @@ export const FloorPlannerProvider = ({ children }) => {
         showSettings,
         setShowSettings,
         selectedFurnitureIndex,
-        setSelectedFurnitureIndex, 
+        setSelectedFurnitureIndex,
+        showPopup,
+        setShowPopup,
       }}
     >
       {children}
