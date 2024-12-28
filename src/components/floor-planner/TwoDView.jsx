@@ -10,8 +10,17 @@ const TwoDView = () => {
     selectedFurnitureIndex,
     setSelectedFurnitureIndex,
   } = useFloorPlanner();
-  
-  return <div>TwoDView</div>;
+
+  return (
+    <div>
+        <div>
+            <h2>2D Floor Plan</h2>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+  );
 };
 
 export default TwoDView;
