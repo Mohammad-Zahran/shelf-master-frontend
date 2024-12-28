@@ -1,16 +1,9 @@
-import React from "react";
-import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
+import React from 'react'
 
 const Sidebar = () => {
-  const {
-    setAmbientLightIntensity,
-    pointLightIntensity,
-    setPointLightIntensity,
-    pointLightPosition,
-    setPointLightPosition,
-  } = useFloorPlanner();
-  
-  return <div>Sidebar</div>;
-};
+  return (
+    <div>Sidebar</div>
+  )
+}
 
-export default Sidebar;
+export default Sidebar
