@@ -28,8 +28,9 @@ const FloorPlanner = () => {
     setSelectedFurnitureIndex,
     deleteFurniture,
   } = useFloorPlanner();
+
   return (
-    <div>
+    <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
       {/* Sidebar */}
       <Sidebar
         viewMode={viewMode}
@@ -44,6 +45,7 @@ const FloorPlanner = () => {
         selectedFurnitureIndex={selectedFurnitureIndex}
         deleteFurniture={deleteFurniture}
       />
+
       {/* Main View Area */}
       <div style={{ flex: 1, position: "relative" }}>
         {/* Render Settings Panel */}
@@ -77,32 +79,45 @@ const FloorPlanner = () => {
             </button>
             <LightingSettings />
           </div>
-          )}
-          {/* Render Furniture Popup */}
+        )}
+
+        {/* Render Furniture Popup */}
         <FurniturePopup />
 
-{/* 3D View */}
-{viewMode === "3D" && (
-  <Canvas style={{ width: "100%", height: "100%" }}>
-    <ambientLight intensity={ambientLightIntensity} />
-    <pointLight
-      intensity={pointLightIntensity}
-      position={pointLightPosition}
-    />
-    <OrbitControls />
-    <Room width={width} height={height} />
-    {furnitureItems.map((item, index) => (
-      <Furniture
-        key={index}
-        modelPath={item.modelPath}
-        scale={item.scale}
-        index={index}
-        roomWidth={width}
-        roomHeight={height}
-      />
-    ))}
-  </Canvas>
-)}
+        {/* 3D View */}
+        {viewMode === "3D" && (
+          <Canvas style={{ width: "100%", height: "100%" }}>
+            <ambientLight intensity={ambientLightIntensity} />
+            <pointLight
+              intensity={pointLightIntensity}
+              position={pointLightPosition}
+            />
+            <OrbitControls />
+            <Room width={width} height={height} />
+            {furnitureItems.map((item, index) => (
+              <Furniture
+                key={index}
+                modelPath={item.modelPath}
+                scale={item.scale}
+                index={index}
+                roomWidth={width}
+                roomHeight={height}
+              />
+            ))}
+          </Canvas>
+        )}
+
+        {/* 2D View */}
+        {viewMode === "2D" && (
+          <TwoDView
+            width={width}
+            height={height}
+            furnitureItems={furnitureItems}
+            selectedFurnitureIndex={selectedFurnitureIndex}
+            setSelectedFurnitureIndex={setSelectedFurnitureIndex}
+          />
+        )}
+      </div>
     </div>
   );
 };
