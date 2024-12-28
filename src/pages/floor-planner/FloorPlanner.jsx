@@ -28,7 +28,24 @@ const FloorPlanner = () => {
     setSelectedFurnitureIndex,
     deleteFurniture,
   } = useFloorPlanner();
-  return <div>FloorPlanner</div>;
+  return (
+    <div>
+      {/* Sidebar */}
+      <Sidebar
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+        setShowPopup={setShowPopup}
+        showSettings={showSettings}
+        setShowSettings={setShowSettings}
+        width={width}
+        setWidth={setWidth}
+        height={height}
+        setHeight={setHeight}
+        selectedFurnitureIndex={selectedFurnitureIndex}
+        deleteFurniture={deleteFurniture}
+      />
+    </div>
+  );
 };
 
 export default FloorPlanner;
