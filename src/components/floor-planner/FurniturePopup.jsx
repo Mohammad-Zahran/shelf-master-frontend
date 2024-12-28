@@ -21,12 +21,24 @@ const FurniturePopup = () => {
   }, []);
 
   const handleAddFurniture = (modelPath) => {
-    addFurniture(modelPath); 
-    setShowPopup(false); 
+    addFurniture(modelPath);
+    setShowPopup(false);
   };
 
+  return (
+    showPopup && (
+      <div>
+        <button></button>
 
-  return <div>FurniturePopup</div>;
+        <h2></h2>
+
+        <div></div>
+        <div>
+            
+        </div>
+      </div>
+    )
+  );
 };
 
 export default FurniturePopup;
