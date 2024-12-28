@@ -44,6 +44,40 @@ const FloorPlanner = () => {
         selectedFurnitureIndex={selectedFurnitureIndex}
         deleteFurniture={deleteFurniture}
       />
+      {/* Main View Area */}
+      <div style={{ flex: 1, position: "relative" }}>
+        {/* Render Settings Panel */}
+        {showSettings && (
+          <div
+            style={{
+              position: "absolute",
+              top: "20px",
+              left: "20px",
+              zIndex: 20,
+              backgroundColor: "#fff",
+              padding: "20px",
+              borderRadius: "10px",
+              boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+              maxWidth: "300px",
+            }}
+          >
+            <button
+              style={{
+                background: "none",
+                border: "none",
+                fontSize: "18px",
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                cursor: "pointer",
+              }}
+              onClick={() => setShowSettings(false)}
+            >
+              &times;
+            </button>
+            <LightingSettings />
+          </div>
+          )}
     </div>
   );
 };
