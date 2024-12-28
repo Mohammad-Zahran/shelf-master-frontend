@@ -4,20 +4,17 @@ import Home from "../pages/home/Home";
 import FloorPlanner from "../pages/FloorPlanner/FloorPlanner";
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <Main />,
+    children: [
+      {
         path: "/",
-        element: <Main />,
-        children: [
-            {
-                path: "/",
-                element: <Home />
-            },
-            {
-                path: "/floor-planner",
-                element: <FloorPlanner />
-            }
-        ]
-    },
+        element: <Home />,
+      },
+    ],
+  },
+  { path: "/floor-planner", element: <FloorPlanner /> },
 ]);
 
-export default router
+export default router;
