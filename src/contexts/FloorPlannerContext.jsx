@@ -10,18 +10,21 @@ export const FloorPlannerProvider = ({ children }) => {
   const [furnitureItems, setFurnitureItems] = useState([]);
   const [scale, setScale] = useState(1.5);
   const [viewMode, setViewMode] = useState("3D");
+  const [ambientLightIntensity, setAmbientLightIntensity] = useState(0.5);
+  const [pointLightIntensity, setPointLightIntensity] = useState(1);
+  const [pointLightPosition, setPointLightPosition] = useState([10, 10, 10]);
   const [showSettings, setShowSettings] = useState(false);
-  const [selectedFurnitureIndex, setSelectedFurnitureIndex] = useState(null); // New state
   const [showPopup, setShowPopup] = useState(false);
+  const [selectedFurnitureIndex, setSelectedFurnitureIndex] = useState(null); // New state
 
   const addFurniture = (modelPath) => {
     setFurnitureItems([
       ...furnitureItems,
       {
         modelPath,
-        scale: 1.5,
-        position: [0, 0.5, 0],
-        rotation: [0, 0, 0],
+        scale: 1.5, // Default scale
+        position: [0, 0.5, 0], // Spawn at the center of the room
+        rotation: [0, 0, 0], // Default rotation
       },
     ]);
   };
@@ -38,6 +41,11 @@ export const FloorPlannerProvider = ({ children }) => {
     );
   };
 
+  const deleteFurniture = (index) => {
+    setFurnitureItems((prevItems) => prevItems.filter((_, i) => i !== index));
+    setSelectedFurnitureIndex(null); // Clear selection after deletion
+  };
+
   return (
     <FloorPlannerContext.Provider
       value={{
@@ -45,16 +53,27 @@ export const FloorPlannerProvider = ({ children }) => {
         setWidth,
         height,
         setHeight,
+        furnitureItems,
+        addFurniture,
+        updateFurniturePosition,
+        updateFurnitureRotation,
         scale,
         setScale,
         viewMode,
         setViewMode,
+        ambientLightIntensity,
+        setAmbientLightIntensity,
+        pointLightIntensity,
+        setPointLightIntensity,
+        pointLightPosition,
+        setPointLightPosition,
         showSettings,
         setShowSettings,
-        selectedFurnitureIndex,
-        setSelectedFurnitureIndex,
         showPopup,
         setShowPopup,
+        selectedFurnitureIndex,
+        setSelectedFurnitureIndex, // Add to context
+        deleteFurniture,
       }}
     >
       {children}
