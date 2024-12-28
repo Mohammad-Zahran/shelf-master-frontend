@@ -10,9 +10,25 @@ import TwoDView from "../../components/floor-planner/TwoDView";
 import Sidebar from "../../components/floor-planner/Sidebar";
 
 const FloorPlanner = () => {
-  return (
-    <div>FloorPlanner</div>
-  )
-}
+  const {
+    viewMode,
+    setViewMode,
+    furnitureItems,
+    setShowPopup,
+    width,
+    setWidth,
+    height,
+    setHeight,
+    ambientLightIntensity,
+    pointLightIntensity,
+    pointLightPosition,
+    showSettings,
+    setShowSettings,
+    selectedFurnitureIndex,
+    setSelectedFurnitureIndex,
+    deleteFurniture,
+  } = useFloorPlanner();
+  return <div>FloorPlanner</div>;
+};
 
-export default FloorPlanner
+export default FloorPlanner;
