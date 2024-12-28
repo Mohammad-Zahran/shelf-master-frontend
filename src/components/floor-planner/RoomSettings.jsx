@@ -14,6 +14,7 @@ const RoomSettings = () => {
     showSettings,
     setShowSettings,
   } = useFloorPlanner();
+
   return (
     <>
       <div
@@ -31,7 +32,9 @@ const RoomSettings = () => {
         <label style={{ color: "black" }}>
           Width:
           <input
-            type="text"
+            type="number"
+            value={width}
+            onChange={(e) => setWidth(Number(e.target.value))}
             style={{ marginLeft: "5px", marginRight: "10px" }}
           />
         </label>
@@ -39,21 +42,40 @@ const RoomSettings = () => {
         <label style={{ color: "black" }}>
           Height:
           <input
-            type="text"
+            type="number"
+            value={height}
+            onChange={(e) => setHeight(Number(e.target.value))}
             style={{ marginLeft: "5px", marginRight: "10px" }}
           />
         </label>
 
         <div style={{ marginTop: "10px" }}>
-          <label style={{ marginLeft: "5px", marginRight: "10px" }}>
+          <label style={{ color: "black" }}>
             Scale:
-            <input type="text" />
+            <input
+              type="range"
+              min="1"
+              max="5"
+              step="0.1"
+              value={scale}
+              onChange={(e) => setScale(parseFloat(e.target.value))}
+              style={{ marginLeft: "5px", marginRight: "10px" }}
+            />
+            {scale}
           </label>
         </div>
 
-        <button style={{ marginTop: "10px" }}>Switch to</button>
+        <button
+          onClick={() => setViewMode(viewMode === "3D" ? "2D" : "3D")}
+          style={{ marginTop: "10px" }}
+        >
+          Switch to {viewMode === "3D" ? "2D" : "3D"} View
+        </button>
 
-        <button style={{ marginTop: "10px", marginLeft: "10px" }}>
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          style={{ marginTop: "10px", marginLeft: "10px" }}
+        >
           Settings
         </button>
       </div>
