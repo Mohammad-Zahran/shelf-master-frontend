@@ -17,29 +17,82 @@ const LightingSettings = () => {
       <div>
         <label style={{ color: "black" }}>
           Ambient Light Intensity:
-          <input style={{ marginLeft: "5px" }} />
+          <input
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            value={ambientLightIntensity}
+            onChange={(e) =>
+              setAmbientLightIntensity(parseFloat(e.target.value))
+            }
+            style={{ marginLeft: "5px" }}
+          />
           {ambientLightIntensity}
         </label>
       </div>
 
       <div>
-        <label style={{ color: "black" }}>Point Light Intensity:</label>
-        <input type="text" style={{ marginLeft: "5px" }} />
-        {pointLightIntensity}
+        <label style={{ color: "black" }}>
+          Point Light Intensity:
+          <input
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            value={pointLightIntensity}
+            onChange={(e) => setPointLightIntensity(parseFloat(e.target.value))}
+            style={{ marginLeft: "5px" }}
+          />
+          {pointLightIntensity}
+        </label>
       </div>
 
       <div>
         <label style={{ color: "black" }}>
           Point Light Position X:
-          <input style={{ marginLeft: "5px" }} />
+          <input
+            type="number"
+            value={pointLightPosition[0]}
+            onChange={(e) =>
+              setPointLightPosition([
+                parseFloat(e.target.value),
+                pointLightPosition[1],
+                pointLightPosition[2],
+              ])
+            }
+            style={{ marginLeft: "5px" }}
+          />
         </label>
         <label style={{ color: "black" }}>
           Y:
-          <input type="text" style={{ marginLeft: "5px" }} />
+          <input
+            type="number"
+            value={pointLightPosition[1]}
+            onChange={(e) =>
+              setPointLightPosition([
+                pointLightPosition[0],
+                parseFloat(e.target.value),
+                pointLightPosition[2],
+              ])
+            }
+            style={{ marginLeft: "5px" }}
+          />
         </label>
-        <label htmlFor="">
+        <label style={{ color: "black" }}>
           Z:
-          <input type="text" />
+          <input
+            type="number"
+            value={pointLightPosition[2]}
+            onChange={(e) =>
+              setPointLightPosition([
+                pointLightPosition[0],
+                pointLightPosition[1],
+                parseFloat(e.target.value),
+              ])
+            }
+            style={{ marginLeft: "5px" }}
+          />
         </label>
       </div>
     </div>
