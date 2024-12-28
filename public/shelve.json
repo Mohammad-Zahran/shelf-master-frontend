@@ -1,0 +1,8 @@
+[
+    { "name": "Chair", "modelPath": "/models/chair.glb" },
+    { "name": "Table", "modelPath": "/models/loungeDesignChair.glb" },
+    { "name": "Shelf", "modelPath": "/models/psx_storage_shelves__cardboard_boxs.glb", "previewImagePath": "/images/image.png" },
+    { "name": "Shel2f", "modelPath": "/models/store_shelves.glb" },
+    { "name": "RoomShelf", "modelPath": "/models/shelves.glb" }
+  ]
+  
