@@ -14,6 +14,18 @@ export const FloorPlannerProvider = ({ children }) => {
   const [selectedFurnitureIndex, setSelectedFurnitureIndex] = useState(null); // New state
   const [showPopup, setShowPopup] = useState(false);
 
+  const addFurniture = (modelPath) => {
+    setFurnitureItems([
+      ...furnitureItems,
+      {
+        modelPath,
+        scale: 1.5,
+        position: [0, 0.5, 0],
+        rotation: [0, 0, 0],
+      },
+    ]);
+  };
+
   const updateFurniturePosition = (index, position) => {
     setFurnitureItems((prevItems) =>
       prevItems.map((item, i) => (i === index ? { ...item, position } : item))
