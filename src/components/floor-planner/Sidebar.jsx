@@ -1,5 +1,6 @@
 import React from "react";
 import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
+
 const Sidebar = ({
   viewMode,
   setViewMode,
@@ -13,39 +14,17 @@ const Sidebar = ({
   selectedFurnitureIndex,
   deleteFurniture,
 }) => {
-  const { backgroundColor, setBackgroundColor } = useFloorPlanner(); // Access background color
+  const { backgroundColor, setBackgroundColor } = useFloorPlanner();
+
   return (
-    <div
-      style={{
-        width: "300px",
-        backgroundColor: "#f8f9fa",
-        padding: "20px",
-        boxShadow: "2px 0 5px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <h2
-        style={{
-          fontSize: "18px",
-          marginBottom: "15px",
-          textAlign: "center",
-          color: "black",
-        }}
-      >
+    <div className="w-72 bg-gray-100 p-5 shadow-lg">
+      <h2 className="text-lg font-semibold mb-4 text-center text-black">
         Floor Planner
       </h2>
 
       {/* Settings Button */}
       <button
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "10px",
-          backgroundColor: "#007bff",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
+        className="w-full py-2 mb-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
         onClick={() => setShowSettings(!showSettings)}
       >
         Settings
@@ -53,16 +32,7 @@ const Sidebar = ({
 
       {/* Add Furniture Button */}
       <button
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "10px",
-          backgroundColor: "#28a745",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
+        className="w-full py-2 mb-4 bg-green-600 text-white rounded-md hover:bg-green-700"
         onClick={() => setShowPopup(true)}
       >
         Add Furniture
@@ -70,16 +40,7 @@ const Sidebar = ({
 
       {/* Delete Furniture Button */}
       <button
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "10px",
-          backgroundColor: "#dc3545",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
+        className="w-full py-2 mb-4 bg-red-600 text-white rounded-md hover:bg-red-700"
         onClick={() => {
           if (selectedFurnitureIndex !== null) {
             deleteFurniture(selectedFurnitureIndex);
@@ -93,46 +54,28 @@ const Sidebar = ({
 
       {/* Switch View Mode Button */}
       <button
-        style={{
-          width: "100%",
-          padding: "10px",
-          backgroundColor: "#ffc107",
-          color: "#000",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
+        className="w-full py-2 mb-4 bg-yellow-500 text-black rounded-md hover:bg-yellow-600"
         onClick={() => setViewMode(viewMode === "3D" ? "2D" : "3D")}
       >
         Switch to {viewMode === "3D" ? "2D" : "3D"} View
       </button>
 
-      <label
-        style={{
-          display: "block",
-          marginBottom: "5px",
-          color: "black",
-        }}
-      >
-        Background Color:
-      </label>
-      <input
-        type="color"
-        value={backgroundColor}
-        onChange={(e) => setBackgroundColor(e.target.value)}
-        style={{
-          width: "100%",
-          height: "40px",
-          border: "none",
-          cursor: "pointer",
-        }}
-      />
+      {/* Background Color Picker */}
+      <div className="mt-6">
+        <label className="block mb-2 text-black font-medium">
+          Background Color:
+        </label>
+        <input
+          type="color"
+          value={backgroundColor}
+          onChange={(e) => setBackgroundColor(e.target.value)}
+          className="w-full h-10 rounded-md border-none cursor-pointer"
+        />
+      </div>
 
       {/* Room Dimension Controls */}
-      <div style={{ marginTop: "20px" }}>
-        <label
-          style={{ display: "block", marginBottom: "5px", color: "black" }}
-        >
+      <div className="mt-6">
+        <label className="block mb-2 text-black font-medium">
           Room Width: {width}m
         </label>
         <input
@@ -141,12 +84,10 @@ const Sidebar = ({
           max="50"
           value={width}
           onChange={(e) => setWidth(Number(e.target.value))}
-          style={{ width: "100%", marginBottom: "10px" }}
+          className="w-full mb-4"
         />
 
-        <label
-          style={{ display: "block", marginBottom: "5px", color: "black" }}
-        >
+        <label className="block mb-2 text-black font-medium">
           Room Height: {height}m
         </label>
         <input
@@ -155,7 +96,7 @@ const Sidebar = ({
           max="50"
           value={height}
           onChange={(e) => setHeight(Number(e.target.value))}
-          style={{ width: "100%" }}
+          className="w-full"
         />
       </div>
     </div>
