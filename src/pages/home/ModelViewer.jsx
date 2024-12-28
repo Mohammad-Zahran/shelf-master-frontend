@@ -6,7 +6,7 @@ import {
   Html,
   useGLTF,
 } from "@react-three/drei";
-import Lights from "../../components/Lights";
+import Lights from "../../components/home/Lights";
 import models from "../../constants/models";
 import * as THREE from "three";
 import gsap from "gsap";
