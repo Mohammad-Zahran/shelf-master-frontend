@@ -1,0 +1,203 @@
+[
+    {
+      "_id": "67636ee08a5dfa75bbcba6c1",
+      "name": "Heavy-Duty Steel Shelf 1",
+      "description": "sakjksajksa askjksasa sahjhsajsa sahj",
+      "images": [
+        "image1.jpg",
+        "image2.jpg",
+        "image3.jpg",
+        "image4.jpg"
+      ],
+      "category": "Heavy-Duty",
+      "dimensions": {
+        "width": 120,
+        "height": 180,
+        "depth": 50
+      },
+      "material": "Wood",
+      "loadCapacity": 500,
+      "price": 199.99,
+      "stock": 10,
+      "reviews": [
+        {
+          "user": "John Doe",
+          "rating": 5,
+          "comment": "Great quality shelf!",
+          "createdAt": "2024-12-19T00:54:56.977+00:00"
+        },
+        {
+          "user": "Jane Smith",
+          "rating": 4,
+          "comment": "Very sturdy but a bit pricey.",
+          "createdAt": "2024-12-20T12:34:56.000+00:00"
+        }
+      ],
+      "createdAt": "2024-12-19T00:54:56.977+00:00",
+      "__v": 6
+    },
+    {
+      "_id": "67636ee08a5dfa75bbcba6c2",
+      "name": "Adjustable Aluminum Shelf",
+      "description": "Lightweight and durable aluminum shelf, perfect for small spaces.",
+      "images": [
+        "image5.jpg",
+        "image6.jpg",
+        "image7.jpg",
+        "image8.jpg"
+      ],
+      "category": "Adjustable",
+      "dimensions": {
+        "width": 100,
+        "height": 150,
+        "depth": 40
+      },
+      "material": "Aluminum",
+      "loadCapacity": 300,
+      "price": 149.99,
+      "stock": 15,
+      "reviews": [
+        {
+          "user": "Mark Lee",
+          "rating": 4,
+          "comment": "Good value for the price.",
+          "createdAt": "2024-12-21T10:00:00.000+00:00"
+        }
+      ],
+      "createdAt": "2024-12-20T08:00:00.000+00:00",
+      "__v": 3
+    },
+    {
+      "_id": "67636ee08a5dfa75bbcba6c3",
+      "name": "Compact Wooden Shelf",
+      "description": "Beautiful wooden shelf ideal for decorative storage.",
+      "images": [
+        "image9.jpg",
+        "image10.jpg",
+        "image11.jpg",
+        "image12.jpg"
+      ],
+      "category": "Decorative",
+      "dimensions": {
+        "width": 80,
+        "height": 120,
+        "depth": 30
+      },
+      "material": "Wood",
+      "loadCapacity": 200,
+      "price": 99.99,
+      "stock": 25,
+      "reviews": [
+        {
+          "user": "Anna Green",
+          "rating": 5,
+          "comment": "Looks great in my living room!",
+          "createdAt": "2024-12-22T14:22:00.000+00:00"
+        },
+        {
+          "user": "Chris Brown",
+          "rating": 3,
+          "comment": "Smaller than I expected.",
+          "createdAt": "2024-12-22T15:30:00.000+00:00"
+        }
+      ],
+      "createdAt": "2024-12-21T10:00:00.000+00:00",
+      "__v": 4
+    },
+    {
+      "_id": "67636ee08a5dfa75bbcba6c4",
+      "name": "Industrial Steel Shelf",
+      "description": "Heavy-duty industrial shelf for warehouses.",
+      "images": [
+        "image13.jpg",
+        "image14.jpg",
+        "image15.jpg",
+        "image16.jpg"
+      ],
+      "category": "Heavy-Duty",
+      "dimensions": {
+        "width": 150,
+        "height": 200,
+        "depth": 60
+      },
+      "material": "Steel",
+      "loadCapacity": 1000,
+      "price": 299.99,
+      "stock": 5,
+      "reviews": [],
+      "createdAt": "2024-12-20T15:00:00.000+00:00",
+      "__v": 2
+    },
+    {
+        "_id": "67636ee08a5dfa75bbcba6c4",
+        "name": "Industrial Steel Shelf",
+        "description": "Heavy-duty industrial shelf for warehouses.",
+        "images": [
+          "image13.jpg",
+          "image14.jpg",
+          "image15.jpg",
+          "image16.jpg"
+        ],
+        "category": "Heavy-Duty",
+        "dimensions": {
+          "width": 150,
+          "height": 200,
+          "depth": 60
+        },
+        "material": "Steel",
+        "loadCapacity": 1000,
+        "price": 299.99,
+        "stock": 5,
+        "reviews": [],
+        "createdAt": "2024-12-20T15:00:00.000+00:00",
+        "__v": 2
+      },
+      {
+        "_id": "67636ee08a5dfa75bbcba6c4",
+        "name": "Industrial Steel Shelf",
+        "description": "Heavy-duty industrial shelf for warehouses.",
+        "images": [
+          "image13.jpg",
+          "image14.jpg",
+          "image15.jpg",
+          "image16.jpg"
+        ],
+        "category": "Heavy-Duty",
+        "dimensions": {
+          "width": 150,
+          "height": 200,
+          "depth": 60
+        },
+        "material": "Steel",
+        "loadCapacity": 1000,
+        "price": 299.99,
+        "stock": 5,
+        "reviews": [],
+        "createdAt": "2024-12-20T15:00:00.000+00:00",
+        "__v": 2
+      },
+      {
+        "_id": "67636ee08a5dfa75bbcba6c4",
+        "name": "Industrial Steel Shelf",
+        "description": "Heavy-duty industrial shelf for warehouses.",
+        "images": [
+         "/assets/images/image.png",
+         "/assets/images/image (1).png",
+         "/assets/images/image (2).png"
+        ],
+        "category": "Heavy-Duty",
+        "dimensions": {
+          "width": 150,
+          "height": 200,
+          "depth": 60
+        },
+        "material": "Steel",
+        "loadCapacity": 1000,
+        "price": 299.99,
+        "stock": 5,
+        "reviews": [],
+        "createdAt": "2024-12-20T15:00:00.000+00:00",
+        "__v": 2
+      }
+  ]
+  
