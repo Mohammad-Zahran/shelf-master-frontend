@@ -43,8 +43,14 @@ const Furniture = ({ modelPath, scale = 1, index, roomWidth, roomHeight }) => {
         default:
           return;
       }
+
+      updateFurniturePosition(index, [x, y, z]);
+      updateFurnitureRotation(index, [rotX, rotY, rotZ]);
     };
-  });
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [position, rotation, roomWidth, roomHeight, scale, index, isSelected]);
 
   return <div>Furniture</div>;
 };
