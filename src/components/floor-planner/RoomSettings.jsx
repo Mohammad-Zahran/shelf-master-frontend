@@ -1,9 +1,20 @@
-import React from 'react'
+import React from "react";
+import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
 
 const RoomSettings = () => {
-  return (
-    <div>RoomSettings</div>
-  )
-}
+  const {
+    width,
+    setWidth,
+    height,
+    setHeight,
+    scale,
+    setScale,
+    viewMode,
+    setViewMode,
+    showSettings,
+    setShowSettings,
+  } = useFloorPlanner();
+  return <div>RoomSettings</div>;
+};
 
-export default RoomSettings
+export default RoomSettings;
