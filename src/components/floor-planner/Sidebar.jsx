@@ -1,5 +1,6 @@
 import React from "react";
 import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
+import logo from "../../../public/assets/images/logo.png";
 
 const Sidebar = ({
   viewMode,
@@ -18,13 +19,17 @@ const Sidebar = ({
 
   return (
     <div className="w-72 bg-gray-100 p-5 shadow-lg">
+      <div className="flex justify-center mb-6">
+        <img src={logo} alt="Logo" className="w-24 h-auto" />
+      </div>
+
       <h2 className="text-lg font-semibold mb-4 text-center text-black">
         Floor Planner
       </h2>
 
       {/* Settings Button */}
       <button
-        className="w-full py-2 mb-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        className="w-full py-2 mb-4 bg-steelBlue text-white rounded-md hover:bg-transparent hover:text-steelBlue hover:border hover:border-steelBlue"
         onClick={() => setShowSettings(!showSettings)}
       >
         Settings
@@ -32,7 +37,7 @@ const Sidebar = ({
 
       {/* Add Furniture Button */}
       <button
-        className="w-full py-2 mb-4 bg-green-600 text-white rounded-md hover:bg-green-700"
+        className="w-full py-2 mb-4 bg-steelBlue text-white rounded-md hover:bg-transparent hover:text-steelBlue hover:border hover:border-steelBlue"
         onClick={() => setShowPopup(true)}
       >
         Add Furniture
@@ -40,7 +45,7 @@ const Sidebar = ({
 
       {/* Delete Furniture Button */}
       <button
-        className="w-full py-2 mb-4 bg-red-600 text-white rounded-md hover:bg-red-700"
+        className="w-full py-2 mb-4 bg-steelBlue text-white rounded-md hover:bg-transparent hover:text-steelBlue hover:border hover:border-steelBlue"
         onClick={() => {
           if (selectedFurnitureIndex !== null) {
             deleteFurniture(selectedFurnitureIndex);
@@ -54,7 +59,7 @@ const Sidebar = ({
 
       {/* Switch View Mode Button */}
       <button
-        className="w-full py-2 mb-4 bg-yellow-500 text-black rounded-md hover:bg-yellow-600"
+        className="w-full py-2 mb-4 bg-steelBlue text-white rounded-md hover:bg-transparent hover:text-steelBlue hover:border hover:border-steelBlue"
         onClick={() => setViewMode(viewMode === "3D" ? "2D" : "3D")}
       >
         Switch to {viewMode === "3D" ? "2D" : "3D"} View
