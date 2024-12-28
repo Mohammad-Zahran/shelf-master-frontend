@@ -16,26 +16,46 @@ const RoomSettings = () => {
   } = useFloorPlanner();
   return (
     <>
-      <div>
-        <label htmlFor="">
+      <div
+        style={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          zIndex: 10,
+          backgroundColor: "#fff",
+          padding: "20px",
+          borderRadius: "10px",
+          boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+        }}
+      >
+        <label style={{ color: "black" }}>
           Width:
-          <input type="text" />
-        </label>
-        <label htmlFor="">
-          Height:
-          <input type="text" />
+          <input
+            type="text"
+            style={{ marginLeft: "5px", marginRight: "10px" }}
+          />
         </label>
 
-        <div>
-          <label htmlFor="">
+        <label style={{ color: "black" }}>
+          Height:
+          <input
+            type="text"
+            style={{ marginLeft: "5px", marginRight: "10px" }}
+          />
+        </label>
+
+        <div style={{ marginTop: "10px" }}>
+          <label style={{ marginLeft: "5px", marginRight: "10px" }}>
             Scale:
             <input type="text" />
           </label>
         </div>
 
-        <button>Switch to</button>
+        <button style={{ marginTop: "10px" }}>Switch to</button>
 
-        <button>Settings</button>
+        <button style={{ marginTop: "10px", marginLeft: "10px" }}>
+          Settings
+        </button>
       </div>
     </>
   );
