@@ -18,12 +18,14 @@ const Sidebar = ({
   const { backgroundColor, setBackgroundColor } = useFloorPlanner();
 
   return (
-    <div className="w-72 bg-gray-100 p-5 shadow-lg">
-      <div className="flex justify-center mb-6">
-        <img src={logo} alt="Logo" className="w-24 h-auto" />
+    <div className="w-full md:w-72 bg-gray-100 p-5 shadow-lg flex flex-col items-center">
+      <div className="flex justify-center mb-6 w-full">
+        <a href="/">
+          <img src={logo} alt="Logo" className="w-20 h-auto md:w-24" />
+        </a>
       </div>
 
-      <h2 className="text-lg font-semibold mb-4 text-center text-black">
+      <h2 className="text-base md:text-lg font-semibold mb-4 text-center text-black">
         Floor Planner
       </h2>
 
@@ -66,7 +68,7 @@ const Sidebar = ({
       </button>
 
       {/* Background Color Picker */}
-      <div className="mt-6">
+      <div className="mt-6 w-full">
         <label className="block mb-2 text-black font-medium">
           Background Color:
         </label>
@@ -79,7 +81,7 @@ const Sidebar = ({
       </div>
 
       {/* Room Dimension Controls */}
-      <div className="mt-6">
+      <div className="mt-6 w-full">
         <label className="block mb-2 text-black font-medium">
           Room Width: {width}m
         </label>
