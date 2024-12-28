@@ -12,7 +12,7 @@ const Furniture = ({ modelPath, scale = 1, index, roomWidth, roomHeight }) => {
   } = useFloorPlanner();
   const { position, rotation } = furnitureItems[index];
 
-  const isSelected = selectedFurnitureIndex;
+  const isSelected = selectedFurnitureIndex === index;
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -52,7 +52,26 @@ const Furniture = ({ modelPath, scale = 1, index, roomWidth, roomHeight }) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [position, rotation, roomWidth, roomHeight, scale, index, isSelected]);
 
-  return <div>Furniture</div>;
+  return (
+    <mesh
+      position={position}
+      rotation={rotation}
+      scale={[scale, scale, scale]}
+      onClick={() => setSelectedFurnitureIndex(index)} // Set selected on click
+    >
+      <primitive
+        object={
+          useGLTF(modelPath).nodes[Object.keys(useGLTF(modelPath).nodes)[0]]
+        }
+      />
+      {isSelected && (
+        <mesh>
+          <ringGeometry args={[scale, scale + 0.1, 32]} />
+          <meshBasicMaterial color="blue" />
+        </mesh>
+      )}
+    </mesh>
+  );
 };
 
 export default Furniture;
