@@ -15,7 +15,9 @@ export const FloorPlannerProvider = ({ children }) => {
   const [pointLightPosition, setPointLightPosition] = useState([10, 10, 10]);
   const [showSettings, setShowSettings] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedFurnitureIndex, setSelectedFurnitureIndex] = useState(null); // New state
+  const [selectedFurnitureIndex, setSelectedFurnitureIndex] = useState(null);
+  const [backgroundColor, setBackgroundColor] = useState("#242424"); // New state
+
 
   const addFurniture = (modelPath) => {
     setFurnitureItems([
@@ -72,8 +74,10 @@ export const FloorPlannerProvider = ({ children }) => {
         showPopup,
         setShowPopup,
         selectedFurnitureIndex,
-        setSelectedFurnitureIndex, // Add to context
+        setSelectedFurnitureIndex, 
         deleteFurniture,
+        backgroundColor,
+        setBackgroundColor, 
       }}
     >
       {children}

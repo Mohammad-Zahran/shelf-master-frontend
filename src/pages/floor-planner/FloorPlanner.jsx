@@ -27,10 +27,18 @@ const FloorPlanner = () => {
     selectedFurnitureIndex,
     setSelectedFurnitureIndex,
     deleteFurniture,
+    backgroundColor,
   } = useFloorPlanner();
 
   return (
-    <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
+    <div
+      style={{
+        display: "flex",
+        width: "100vw",
+        height: "100vh",
+        backgroundColor, 
+      }}
+    >
       {/* Sidebar */}
       <Sidebar
         viewMode={viewMode}

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
 const Sidebar = ({
   viewMode,
   setViewMode,
@@ -13,6 +13,7 @@ const Sidebar = ({
   selectedFurnitureIndex,
   deleteFurniture,
 }) => {
+  const { backgroundColor, setBackgroundColor } = useFloorPlanner(); // Access background color
   return (
     <div
       style={{
@@ -105,6 +106,27 @@ const Sidebar = ({
       >
         Switch to {viewMode === "3D" ? "2D" : "3D"} View
       </button>
+
+      <label
+        style={{
+          display: "block",
+          marginBottom: "5px",
+          color: "black",
+        }}
+      >
+        Background Color:
+      </label>
+      <input
+        type="color"
+        value={backgroundColor}
+        onChange={(e) => setBackgroundColor(e.target.value)}
+        style={{
+          width: "100%",
+          height: "40px",
+          border: "none",
+          cursor: "pointer",
+        }}
+      />
 
       {/* Room Dimension Controls */}
       <div style={{ marginTop: "20px" }}>
