@@ -13,33 +13,33 @@ const LightingSettings = () => {
 
   return (
     <div>
-      <h3>Lighting Settings</h3>
+      <h3 style={{ color: "black" }}>Lighting Settings</h3>
       <div>
-        <label htmlFor="">
+        <label style={{ color: "black" }}>
           Ambient Light Intensity:
-          <input type="text" />
+          <input style={{ marginLeft: "5px" }} />
           {ambientLightIntensity}
         </label>
       </div>
 
       <div>
-        <label htmlFor="">Point Light Intensity:</label>
-        <input type="text" />
+        <label style={{ color: "black" }}>Point Light Intensity:</label>
+        <input type="text" style={{ marginLeft: "5px" }} />
         {pointLightIntensity}
       </div>
 
       <div>
-        <label htmlFor="">
-            Point Light Position X:
-            <input type="text" />
+        <label style={{ color: "black" }}>
+          Point Light Position X:
+          <input style={{ marginLeft: "5px" }} />
+        </label>
+        <label style={{ color: "black" }}>
+          Y:
+          <input type="text" style={{ marginLeft: "5px" }} />
         </label>
         <label htmlFor="">
-            Y:
-            <input type="text" />
-        </label>
-        <label htmlFor="">
-            Z:
-            <input type="text" />
+          Z:
+          <input type="text" />
         </label>
       </div>
     </div>
