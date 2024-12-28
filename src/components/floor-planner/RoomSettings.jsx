@@ -14,7 +14,31 @@ const RoomSettings = () => {
     showSettings,
     setShowSettings,
   } = useFloorPlanner();
-  return <div>RoomSettings</div>;
+  return (
+    <>
+      <div>
+        <label htmlFor="">
+          Width:
+          <input type="text" />
+        </label>
+        <label htmlFor="">
+          Height:
+          <input type="text" />
+        </label>
+
+        <div>
+          <label htmlFor="">
+            Scale:
+            <input type="text" />
+          </label>
+        </div>
+
+        <button>Switch to</button>
+
+        <button>Settings</button>
+      </div>
+    </>
+  );
 };
 
 export default RoomSettings;
