@@ -78,6 +78,31 @@ const FloorPlanner = () => {
             <LightingSettings />
           </div>
           )}
+          {/* Render Furniture Popup */}
+        <FurniturePopup />
+
+{/* 3D View */}
+{viewMode === "3D" && (
+  <Canvas style={{ width: "100%", height: "100%" }}>
+    <ambientLight intensity={ambientLightIntensity} />
+    <pointLight
+      intensity={pointLightIntensity}
+      position={pointLightPosition}
+    />
+    <OrbitControls />
+    <Room width={width} height={height} />
+    {furnitureItems.map((item, index) => (
+      <Furniture
+        key={index}
+        modelPath={item.modelPath}
+        scale={item.scale}
+        index={index}
+        roomWidth={width}
+        roomHeight={height}
+      />
+    ))}
+  </Canvas>
+)}
     </div>
   );
 };
