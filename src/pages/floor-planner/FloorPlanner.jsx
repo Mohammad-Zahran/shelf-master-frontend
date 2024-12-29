@@ -31,14 +31,7 @@ const FloorPlanner = () => {
   } = useFloorPlanner();
 
   return (
-    <div
-      style={{
-        display: "flex",
-        width: "100vw",
-        height: "100vh",
-        backgroundColor, 
-      }}
-    >
+    <div className={`flex w-full h-screen`} style={{ backgroundColor }}>
       {/* Sidebar */}
       <Sidebar
         viewMode={viewMode}
@@ -55,32 +48,12 @@ const FloorPlanner = () => {
       />
 
       {/* Main View Area */}
-      <div style={{ flex: 1, position: "relative" }}>
+      <div className="flex-1 relative">
         {/* Render Settings Panel */}
         {showSettings && (
-          <div
-            style={{
-              position: "absolute",
-              top: "20px",
-              left: "20px",
-              zIndex: 20,
-              backgroundColor: "#fff",
-              padding: "20px",
-              borderRadius: "10px",
-              boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-              maxWidth: "300px",
-            }}
-          >
+          <div className="absolute top-5 left-5 z-20 bg-white p-5 rounded-md shadow-lg max-w-xs">
             <button
-              style={{
-                background: "none",
-                border: "none",
-                fontSize: "18px",
-                position: "absolute",
-                top: "10px",
-                right: "10px",
-                cursor: "pointer",
-              }}
+              className="absolute top-2 right-2 text-lg cursor-pointer"
               onClick={() => setShowSettings(false)}
             >
               &times;
@@ -94,12 +67,9 @@ const FloorPlanner = () => {
 
         {/* 3D View */}
         {viewMode === "3D" && (
-          <Canvas style={{ width: "100%", height: "100%" }}>
+          <Canvas className="w-full h-full">
             <ambientLight intensity={ambientLightIntensity} />
-            <pointLight
-              intensity={pointLightIntensity}
-              position={pointLightPosition}
-            />
+            <pointLight intensity={pointLightIntensity} position={pointLightPosition} />
             <OrbitControls />
             <Room width={width} height={height} />
             {furnitureItems.map((item, index) => (
