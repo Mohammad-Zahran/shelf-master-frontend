@@ -1,6 +1,7 @@
 import React from "react";
 import { GLTFExporter } from "three/examples/jsm/exporters/GLTFExporter";
 import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
+import { FaSave, FaDownload, FaCamera, FaFileExport } from "react-icons/fa";
 
 const ControlsPanel = () => {
   const {
@@ -67,28 +68,28 @@ const ControlsPanel = () => {
   return (
     <div className="absolute bottom-5 right-5 flex flex-col gap-2">
       <button
-        className="bg-blue-500 text-white py-2 px-4 rounded"
+        className="flex items-center gap-2 bg-steelBlue text-white py-2 px-4 rounded hover:bg-white hover:text-steelBlue hover:border hover:border-steelBlue"
         onClick={handleSaveDesign}
       >
-        Save Design
+        <FaSave /> Save Design
       </button>
       <button
-        className="bg-green-500 text-white py-2 px-4 rounded"
+        className="flex items-center gap-2 bg-steelBlue text-white py-2 px-4 rounded hover:bg-white hover:text-steelBlue hover:border hover:border-steelBlue"
         onClick={handleLoadDesign}
       >
-        Load Design
+        <FaDownload /> Load Design
       </button>
       <button
-        className="bg-purple-500 text-white py-2 px-4 rounded"
+        className="flex items-center gap-2 bg-steelBlue text-white py-2 px-4 rounded hover:bg-white hover:text-steelBlue hover:border hover:border-steelBlue"
         onClick={handleExport3DModel}
       >
-        Export 3D Model
+        <FaFileExport /> Export 3D Model
       </button>
       <button
-        className="bg-red-500 text-white py-2 px-4 rounded"
+        className="flex items-center gap-2 bg-steelBlue text-white py-2 px-4 rounded hover:bg-white hover:text-steelBlue hover:border hover:border-steelBlue"
         onClick={handleExportImage}
       >
-        Export as Image
+        <FaCamera /> Export as Image
       </button>
     </div>
   );
