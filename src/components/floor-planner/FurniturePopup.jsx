@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { RxCrossCircled } from "react-icons/rx";
+import { IoIosSearch } from "react-icons/io";
 import gsap from "gsap";
 import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
 
@@ -64,13 +65,16 @@ const FurniturePopup = () => {
 
         <h2 className="text-center text-black text-lg font-bold mb-4">Select Furniture</h2>
 
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search furniture..."
-          className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
-        />
+        <div className="relative mb-4">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search furniture..."
+            className="w-full p-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
+          />
+          <IoIosSearch className="absolute top-3 left-3 text-gray-400 text-xl" />
+        </div>
 
         {/* Display models in a grid layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
