@@ -35,9 +35,7 @@ canvas {
     @apply h-[calc(100vh-60px)];
   }
 
-  .btn {
-    @apply px-5 py-2 rounded-3xl bg-steelBlue my-5 text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue;
-  }
+  
 
   .color-container {
     @apply flex items-center justify-center px-4 py-4 rounded-full bg-cerebralGray backdrop-blur;
@@ -129,6 +127,10 @@ canvas {
 }
 
 .btn {
+  @apply bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue;
+}
+
+.btn-rounded {
   @apply px-5 py-2 rounded-3xl bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue;
 }
 
