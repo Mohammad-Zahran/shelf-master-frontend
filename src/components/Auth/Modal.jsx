@@ -33,7 +33,6 @@ const Modal = () => {
                 type="email"
                 placeholder="email"
                 className="input input-bordered"
-                defaultValue="test"
                 {...register("email")}
               />
             </div>
@@ -47,7 +46,7 @@ const Modal = () => {
                 type="password"
                 placeholder="password"
                 className="input input-bordered"
-                required
+                {...register("password")}
               />
               <label className="label mt-1">
                 <a href="#" className="label-text-alt link link-hover">

@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../public/assets/images/logo.png";
 import { FaRegUser } from "react-icons/fa";
-import Modal from "./Modal";
+import Modal from "./Auth/Modal";
 
 const Navbar = () => {
   const navItems = (
