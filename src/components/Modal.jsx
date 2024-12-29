@@ -40,7 +40,7 @@ const Modal = () => {
 
             {/* login btn */}
             <div className="form-control mt-6">
-              <input type="submit" value="Login" className="btn" />
+              <input type="submit" value="Login" className="btn normal" />
             </div>
 
             <p className="text-center my-2">
@@ -53,7 +53,7 @@ const Modal = () => {
 
           {/* Social sign in */}
           <div>
-            <button className="btn btn-circle bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue">
+            <button className="btn btn-circle normal">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
