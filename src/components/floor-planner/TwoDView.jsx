@@ -11,6 +11,7 @@ const TwoDView = () => {
     selectedFurnitureIndex,
     setSelectedFurnitureIndex,
     updateFurniturePosition,
+    updateFurnitureRotation,
   } = useFloorPlanner();
 
   const gridRef = useRef(null);
@@ -83,14 +84,6 @@ const TwoDView = () => {
     return gridLines;
   };
 
-  // Dynamically update the grid size when the width or height changes
-  useEffect(() => {
-    if (gridRef.current) {
-      gridRef.current.style.width = `${width * 50}px`;
-      gridRef.current.style.height = `${height * 50}px`;
-    }
-  }, [width, height]);
-
   // Drag handler
   const bind = useDrag(
     ({ delta: [dx, dy], args: [index] }) => {
@@ -111,6 +104,49 @@ const TwoDView = () => {
     },
     { pointerEvents: true }
   );
+
+  // Keydown handler for moving and rotating
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (selectedFurnitureIndex === null) return;
+
+      const item = furnitureItems[selectedFurnitureIndex];
+      const [x, y, z] = item.position;
+      const [rotX, rotY, rotZ] = item.rotation || [0, 0, 0];
+      let newX = x;
+      let newZ = z;
+      let newRotY = rotY;
+
+      switch (e.key.toLowerCase()) {
+        case "w": // Move up
+          newZ = Math.max(-height / 2 + item.scale / 2, z - 0.1);
+          break;
+        case "s": // Move down
+          newZ = Math.min(height / 2 - item.scale / 2, z + 0.1);
+          break;
+        case "a": // Move left
+          newX = Math.max(-width / 2 + item.scale / 2, x - 0.1);
+          break;
+        case "d": // Move right
+          newX = Math.min(width / 2 - item.scale / 2, x + 0.1);
+          break;
+        case "r": // Rotate clockwise
+          newRotY = rotY + Math.PI / 16;
+          break;
+        case "l": // Rotate counterclockwise
+          newRotY = rotY - Math.PI / 16;
+          break;
+        default:
+          return;
+      }
+
+      updateFurniturePosition(selectedFurnitureIndex, [newX, y, newZ]);
+      updateFurnitureRotation(selectedFurnitureIndex, [rotX, newRotY, rotZ]);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedFurnitureIndex, furnitureItems, width, height, updateFurniturePosition, updateFurnitureRotation]);
 
   return (
     <div className="w-full h-full relative bg-gray-200">
