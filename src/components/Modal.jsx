@@ -4,10 +4,9 @@ const Modal = () => {
   return (
     <dialog id="my_modal_5" className="modal modal-middle sm:modal-middle">
       <div className="modal-box">
-        <h3 className="font-bold text-lg">Hello!</h3>
-        <p className="py-4">Press ESC key or click the button below to close</p>
-        <div className="modal-action">
+        <div className="modal-action mt-0" method="dialog">
           <form className="card-body">
+            <h3 className="font-bold text-lg">Please Login</h3>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -36,7 +35,7 @@ const Modal = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <input type="submit" value="Login" className="btn" />
             </div>
           </form>
         </div>
