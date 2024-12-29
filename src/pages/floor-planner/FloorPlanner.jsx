@@ -8,6 +8,7 @@ import LightingSettings from "../../components/floor-planner/LightingSettings";
 import FurniturePopup from "../../components/floor-planner/FurniturePopup";
 import TwoDView from "../../components/floor-planner/TwoDView";
 import Sidebar from "../../components/floor-planner/Sidebar";
+import ControlsPanel from "../../components/floor-planner/ControlsPanel";
 
 const FloorPlanner = () => {
   const {
@@ -30,11 +31,10 @@ const FloorPlanner = () => {
     backgroundColor,
   } = useFloorPlanner();
 
-  const [controlsEnabled, setControlsEnabled] = useState(true); // State to control OrbitControls
+  const [controlsEnabled, setControlsEnabled] = useState(true);
 
   return (
     <div className="flex w-full h-screen" style={{ backgroundColor }}>
-      {/* Sidebar */}
       <Sidebar
         viewMode={viewMode}
         setViewMode={setViewMode}
@@ -49,9 +49,7 @@ const FloorPlanner = () => {
         deleteFurniture={deleteFurniture}
       />
 
-      {/* Main View Area */}
       <div className="flex-1 relative">
-        {/* Render Settings Panel */}
         {showSettings && (
           <div className="absolute top-5 left-5 z-20 bg-white p-5 rounded-md shadow-lg max-w-xs">
             <button
@@ -64,15 +62,16 @@ const FloorPlanner = () => {
           </div>
         )}
 
-        {/* Render Furniture Popup */}
         <FurniturePopup />
 
-        {/* 3D View */}
         {viewMode === "3D" && (
           <Canvas className="w-full h-full">
             <ambientLight intensity={ambientLightIntensity} />
-            <pointLight intensity={pointLightIntensity} position={pointLightPosition} />
-            <OrbitControls enabled={controlsEnabled} /> {/* Controlled OrbitControls */}
+            <pointLight
+              intensity={pointLightIntensity}
+              position={pointLightPosition}
+            />
+            <OrbitControls enabled={controlsEnabled} />
             <Room width={width} height={height} />
             {furnitureItems.map((item, index) => (
               <Furniture
@@ -82,13 +81,12 @@ const FloorPlanner = () => {
                 index={index}
                 roomWidth={width}
                 roomHeight={height}
-                setControlsEnabled={setControlsEnabled} // Pass the control state updater
+                setControlsEnabled={setControlsEnabled}
               />
             ))}
           </Canvas>
         )}
 
-        {/* 2D View */}
         {viewMode === "2D" && (
           <TwoDView
             width={width}
@@ -98,6 +96,9 @@ const FloorPlanner = () => {
             setSelectedFurnitureIndex={setSelectedFurnitureIndex}
           />
         )}
+
+        {/* Render the ControlsPanel */}
+        <ControlsPanel />
       </div>
     </div>
   );
