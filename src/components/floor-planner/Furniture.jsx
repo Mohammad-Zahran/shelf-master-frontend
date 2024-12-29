@@ -23,8 +23,8 @@ const Furniture = ({ modelPath, scale = 1, index, roomWidth, roomHeight, setCont
 
       let [x, y, z] = position;
 
-      x += dx / 50; // Adjust sensitivity
-      z -= dz / 50; // Adjust sensitivity
+      x += dx / 50; 
+      z -= dz / 50; 
 
       // Clamp to room boundaries
       x = Math.max(-roomWidth / 2 + scale / 2, Math.min(roomWidth / 2 - scale / 2, x));
@@ -32,7 +32,7 @@ const Furniture = ({ modelPath, scale = 1, index, roomWidth, roomHeight, setCont
 
       updateFurniturePosition(index, [x, y, z]);
     },
-    { pointerEvents: true } // Ensure compatibility with pointer events
+    { pointerEvents: true } 
   );
 
   useEffect(() => {
