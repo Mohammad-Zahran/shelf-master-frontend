@@ -136,7 +136,7 @@ const Cards = ({ item }) => {
             <span className="text-sm text-red-500">$</span>
             {item.price.toFixed(2)}
           </p>
-          <button className="btn btn-primary">Buy Now</button>
+          <button className="btn bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue">Add to Cart</button>
         </div>
       </div>
     </motion.div>

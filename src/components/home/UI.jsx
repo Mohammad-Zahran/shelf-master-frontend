@@ -58,18 +58,14 @@ export const UI = () => {
             {[...pages].map((_, index) => (
               <button
                 key={index}
-                className={`btn ${
-                  index === page ? "bg-steelBlue text-white" : ""
-                }`}
+                className={"btn px-5 py-2 rounded-3xl bg-steelBlue my-5 text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue"}
                 onClick={() => setPage(index)}
               >
                 {index === 0 ? "Cover" : `Page ${index}`}
               </button>
             ))}
             <button
-              className={`btn ${
-                page === pages.length ? "bg-steelBlue text-white" : ""
-              }`}
+              className={'btn px-5 py-2 rounded-3xl bg-steelBlue my-5 text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue'}
               onClick={() => setPage(pages.length)}
             >
               Back Cover

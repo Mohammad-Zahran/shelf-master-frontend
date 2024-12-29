@@ -53,7 +53,7 @@ const Modal = () => {
 
           {/* Social sign in */}
           <div>
-            <button className="btn btn-circle">
+            <button className="btn btn-circle bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"

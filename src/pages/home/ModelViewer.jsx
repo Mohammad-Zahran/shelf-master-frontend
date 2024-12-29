@@ -134,7 +134,7 @@ const ModelViewer = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => setAutoRotate(!autoRotate)}
-            className="btn flex items-center gap-2"
+            className="btn px-5 py-2 rounded-3xl bg-steelBlue my-5 text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue"
           >
             {autoRotate ? (
               <>
@@ -155,7 +155,7 @@ const ModelViewer = () => {
                 prev === "white" ? "#f0f0f0" : "white"
               )
             }
-            className="btn flex items-center gap-2"
+            className="btn px-5 py-2 rounded-3xl bg-steelBlue my-5 text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue"
           >
             {backgroundColor === "white" ? (
               <>

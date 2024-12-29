@@ -105,7 +105,7 @@ const Navbar = () => {
             {/* Login */}
             <button
               onClick={() => document.getElementById("my_modal_5").showModal()}
-              className="btn"
+              className="btn px-5 py-2 rounded-3xl bg-steelBlue my-5 text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue"
             >
               <FaRegUser /> Login
             </button>
