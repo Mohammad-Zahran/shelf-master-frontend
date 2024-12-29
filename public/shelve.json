@@ -1,0 +1,41 @@
+[
+  {
+    "name": "Shelf",
+    "modelPath": "/assets/models/floor-planner/psx_storage_shelves__cardboard_boxs.glb",
+    "previewImagePath": "/assets/images/image.png"
+  },
+  {
+    "name": "Shel2f",
+    "modelPath": "/assets/models/floor-planner/store_shelves.glb"
+  },
+  {
+    "name": "RoomShelf",
+    "modelPath": "/assets/models/floor-planner/shelves.glb"
+  },
+  {
+    "name": "Super Market",
+    "modelPath": "/assets/models/floor-planner/supermarket_potato_chips_shelf_asset.glb",
+    "previewImagePath": "/assets/images/floor-planner-images/SuperMarket.png"
+  },
+  {
+    "name": "Grocery Store Shelf",
+    "modelPath": "/assets/models/floor-planner/grocery_store_shelf.glb",
+    "previewImagePath": "/assets/images/floor-planner-images/GroceryStore.png"
+  },
+  {
+    "name": "Book Shelf",
+    "modelPath": "/assets/models/floor-planner/book_shelf.glb",
+    "previewImagePath": "/assets/images/floor-planner-images/BookShelf.png"
+  },
+  {
+    "name": "Metal Shelf File",
+    "modelPath": "/assets/models/floor-planner/metal_shelf_file_14mb.glb",
+    "previewImagePath": "/assets/images/floor-planner-images/Metal Shelf.png"
+  },
+  {
+    "name": "Metal Shelf File",
+    "modelPath": "/assets/models/floor-planner/wooden_industrial_shelf.glb",
+    "previewImagePath": "/assets/images/floor-planner-images/Wooden Shelf.png"
+  }
+
+]

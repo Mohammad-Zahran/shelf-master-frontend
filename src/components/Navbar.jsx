@@ -25,7 +25,7 @@ const Navbar = () => {
         <a>Add Review</a>
       </li>
       <li>
-        <a>3d Floor Planner</a>
+        <a  href="/floor-planner">3d Floor Planner</a>
       </li>
       <li>
         <a>Shelf Assistant AI</a>
