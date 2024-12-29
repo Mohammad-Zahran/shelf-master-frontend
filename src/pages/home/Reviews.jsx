@@ -18,7 +18,7 @@ const Reviews = () => {
       </div>
       <SwipeCards />
       <div className="text-center mt-8">
-        <button className="btn px-5 py-2 rounded-3xl bg-steelBlue my-5 text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue" onClick={handleReviewButtonClick}>
+        <button className="btn round" onClick={handleReviewButtonClick}>
           Review
         </button>
       </div>
