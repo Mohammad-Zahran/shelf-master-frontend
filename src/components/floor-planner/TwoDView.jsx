@@ -105,7 +105,6 @@ const TwoDView = () => {
     { pointerEvents: true }
   );
 
-  // Keydown handler for moving and rotating
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (selectedFurnitureIndex === null) return;
@@ -117,18 +116,20 @@ const TwoDView = () => {
       let newZ = z;
       let newRotY = rotY;
 
+      const movementSpeed = 4; // Updated speed for keyboard movement
+
       switch (e.key.toLowerCase()) {
         case "w": // Move up
-          newZ = Math.max(-height / 2 + item.scale / 2, z - 0.1);
+          newZ = Math.max(-height / 2 + item.scale / 2, z - movementSpeed);
           break;
         case "s": // Move down
-          newZ = Math.min(height / 2 - item.scale / 2, z + 0.1);
+          newZ = Math.min(height / 2 - item.scale / 2, z + movementSpeed);
           break;
         case "a": // Move left
-          newX = Math.max(-width / 2 + item.scale / 2, x - 0.1);
+          newX = Math.max(-width / 2 + item.scale / 2, x - movementSpeed);
           break;
         case "d": // Move right
-          newX = Math.min(width / 2 - item.scale / 2, x + 0.1);
+          newX = Math.min(width / 2 - item.scale / 2, x + movementSpeed);
           break;
         case "r": // Rotate clockwise
           newRotY = rotY + Math.PI / 16;
@@ -146,7 +147,14 @@ const TwoDView = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedFurnitureIndex, furnitureItems, width, height, updateFurniturePosition, updateFurnitureRotation]);
+  }, [
+    selectedFurnitureIndex,
+    furnitureItems,
+    width,
+    height,
+    updateFurniturePosition,
+    updateFurnitureRotation,
+  ]);
 
   return (
     <div className="w-full h-full relative bg-gray-200">
