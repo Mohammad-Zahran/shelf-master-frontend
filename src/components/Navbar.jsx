@@ -101,9 +101,9 @@ const Navbar = () => {
               </div>
             </div>
 
-            <a className="btn">
+            <button className="btn">
               <FaRegUser /> Login
-            </a>
+            </button>
           </div>
         </div>
       </nav>
