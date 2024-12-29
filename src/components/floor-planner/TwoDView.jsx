@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
+import { useDrag } from "@use-gesture/react";
 import shelveData from "../../../public/shelve.json";
 
 const TwoDView = () => {
@@ -9,14 +10,17 @@ const TwoDView = () => {
     furnitureItems,
     selectedFurnitureIndex,
     setSelectedFurnitureIndex,
+    updateFurniturePosition,
   } = useFloorPlanner();
+
+  const gridRef = useRef(null);
 
   // Helper function to generate grid lines and labels
   const generateGrid = () => {
     const gridLines = [];
     const cellSize = 50; // 1 meter = 50px
-    const gridWidth = Math.min(width * cellSize, 800);
-    const gridHeight = Math.min(height * cellSize, 600);
+    const gridWidth = width * cellSize;
+    const gridHeight = height * cellSize;
 
     // Vertical grid lines with labels
     for (let x = 0; x <= width; x++) {
@@ -79,15 +83,45 @@ const TwoDView = () => {
     return gridLines;
   };
 
+  // Dynamically update the grid size when the width or height changes
+  useEffect(() => {
+    if (gridRef.current) {
+      gridRef.current.style.width = `${width * 50}px`;
+      gridRef.current.style.height = `${height * 50}px`;
+    }
+  }, [width, height]);
+
+  // Drag handler
+  const bind = useDrag(
+    ({ delta: [dx, dy], args: [index] }) => {
+      const item = furnitureItems[index];
+      const cellSize = 50; // 1 meter = 50px
+      const [x, y, z] = item.position;
+
+      const newX = Math.max(
+        -width / 2 + item.scale / 2,
+        Math.min(width / 2 - item.scale / 2, x + dx / cellSize)
+      );
+      const newZ = Math.max(
+        -height / 2 + item.scale / 2,
+        Math.min(height / 2 - item.scale / 2, z - dy / cellSize)
+      );
+
+      updateFurniturePosition(index, [newX, y, newZ]);
+    },
+    { pointerEvents: true }
+  );
+
   return (
     <div className="w-full h-full relative bg-gray-200">
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-full max-h-full overflow-auto">
         <h2 className="text-lg font-bold mb-4 text-center">2D Floor Plan</h2>
         <div
+          ref={gridRef}
           className="relative bg-white border border-black"
           style={{
-            width: `${Math.min(width * 50, 800)}px`,
-            height: `${Math.min(height * 50, 600)}px`,
+            width: `${width * 50}px`,
+            height: `${height * 50}px`,
           }}
         >
           {/* Render Grid with Measurements */}
@@ -102,8 +136,9 @@ const TwoDView = () => {
             return (
               <div
                 key={index}
+                {...bind(index)} // Bind drag events
                 onClick={() => setSelectedFurnitureIndex(index)}
-                className={`absolute transition-all duration-300 transform ${
+                className={`absolute transition-all duration-300 transform cursor-grab ${
                   selectedFurnitureIndex === index
                     ? "bg-blue-500 bg-opacity-50"
                     : "bg-black bg-opacity-50"
