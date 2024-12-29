@@ -1,15 +1,12 @@
 import React from "react";
-import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
 
-const Room = ({ width, height }) => {
-  const { wallHeight } = useFloorPlanner(); // Access wallHeight from context
-
-  const wallThickness = 0.1;
+const Room = ({ width, height, wallHeight }) => {
+  const wallThickness = 0.1; // Thickness of the walls
 
   return (
     <group>
       {/* Floor */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.5, 0]}>
         <planeGeometry args={[width, height]} />
         <meshStandardMaterial color="lightgrey" />
       </mesh>
