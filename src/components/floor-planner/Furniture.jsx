@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
+import { useDrag } from "@use-gesture/react";
 import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
 
-const Furniture = ({ modelPath, scale = 1, index, roomWidth, roomHeight }) => {
+const Furniture = ({ modelPath, scale = 1, index, roomWidth, roomHeight, setControlsEnabled }) => {
   const {
     furnitureItems,
     updateFurniturePosition,
@@ -13,6 +14,26 @@ const Furniture = ({ modelPath, scale = 1, index, roomWidth, roomHeight }) => {
   const { position, rotation } = furnitureItems[index];
 
   const isSelected = selectedFurnitureIndex === index;
+
+  const bind = useDrag(
+    ({ delta: [dx, dz], active }) => {
+      if (!isSelected) return;
+
+      if (setControlsEnabled) setControlsEnabled(!active); // Disable controls during drag
+
+      let [x, y, z] = position;
+
+      x += dx / 50; // Adjust sensitivity
+      z -= dz / 50; // Adjust sensitivity
+
+      // Clamp to room boundaries
+      x = Math.max(-roomWidth / 2 + scale / 2, Math.min(roomWidth / 2 - scale / 2, x));
+      z = Math.max(-roomHeight / 2 + scale / 2, Math.min(roomHeight / 2 - scale / 2, z));
+
+      updateFurniturePosition(index, [x, y, z]);
+    },
+    { pointerEvents: true } // Ensure compatibility with pointer events
+  );
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -57,7 +78,11 @@ const Furniture = ({ modelPath, scale = 1, index, roomWidth, roomHeight }) => {
       position={position}
       rotation={rotation}
       scale={[scale, scale, scale]}
-      onClick={() => setSelectedFurnitureIndex(index)} // Set selected on click
+      {...bind()} // Apply drag bindings
+      onClick={(e) => {
+        e.stopPropagation(); // Prevent click from bubbling up
+        setSelectedFurnitureIndex(index);
+      }}
     >
       <primitive
         object={

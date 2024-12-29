@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Room from "../../components/floor-planner/Room";
@@ -30,8 +30,10 @@ const FloorPlanner = () => {
     backgroundColor,
   } = useFloorPlanner();
 
+  const [controlsEnabled, setControlsEnabled] = useState(true); // State to control OrbitControls
+
   return (
-    <div className={`flex w-full h-screen`} style={{ backgroundColor }}>
+    <div className="flex w-full h-screen" style={{ backgroundColor }}>
       {/* Sidebar */}
       <Sidebar
         viewMode={viewMode}
@@ -70,7 +72,7 @@ const FloorPlanner = () => {
           <Canvas className="w-full h-full">
             <ambientLight intensity={ambientLightIntensity} />
             <pointLight intensity={pointLightIntensity} position={pointLightPosition} />
-            <OrbitControls />
+            <OrbitControls enabled={controlsEnabled} /> {/* Controlled OrbitControls */}
             <Room width={width} height={height} />
             {furnitureItems.map((item, index) => (
               <Furniture
@@ -80,6 +82,7 @@ const FloorPlanner = () => {
                 index={index}
                 roomWidth={width}
                 roomHeight={height}
+                setControlsEnabled={setControlsEnabled} // Pass the control state updater
               />
             ))}
           </Canvas>
