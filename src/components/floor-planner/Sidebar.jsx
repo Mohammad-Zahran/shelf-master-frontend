@@ -15,7 +15,8 @@ const Sidebar = ({
   selectedFurnitureIndex,
   deleteFurniture,
 }) => {
-  const { backgroundColor, setBackgroundColor } = useFloorPlanner();
+  const { backgroundColor, setBackgroundColor, wallHeight, setWallHeight } =
+    useFloorPlanner();
 
   return (
     <div className="w-full md:w-72 bg-gray-100 p-5 shadow-lg flex flex-col items-center">
@@ -103,6 +104,18 @@ const Sidebar = ({
           max="50"
           value={height}
           onChange={(e) => setHeight(Number(e.target.value))}
+          className="w-full mb-4"
+        />
+
+        <label className="block mb-2 text-black font-medium">
+          Wall Height: {wallHeight}m
+        </label>
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={wallHeight}
+          onChange={(e) => setWallHeight(Number(e.target.value))}
           className="w-full"
         />
       </div>

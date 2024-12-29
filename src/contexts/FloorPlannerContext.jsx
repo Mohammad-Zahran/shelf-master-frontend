@@ -16,7 +16,9 @@ export const FloorPlannerProvider = ({ children }) => {
   const [showSettings, setShowSettings] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedFurnitureIndex, setSelectedFurnitureIndex] = useState(null);
-  const [backgroundColor, setBackgroundColor] = useState("#242424"); // New state
+  const [backgroundColor, setBackgroundColor] = useState("#242424"); 
+  const [wallHeight, setWallHeight] = useState(3); // Add wallHeight state
+
 
 
   const addFurniture = (modelPath) => {
@@ -78,6 +80,8 @@ export const FloorPlannerProvider = ({ children }) => {
         deleteFurniture,
         backgroundColor,
         setBackgroundColor, 
+        wallHeight,
+        setWallHeight, 
       }}
     >
       {children}

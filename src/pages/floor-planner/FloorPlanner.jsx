@@ -29,6 +29,8 @@ const FloorPlanner = () => {
     setSelectedFurnitureIndex,
     deleteFurniture,
     backgroundColor,
+    wallHeight, // Added wallHeight
+    setWallHeight, // Added setter for wallHeight
   } = useFloorPlanner();
 
   const [controlsEnabled, setControlsEnabled] = useState(true);
@@ -59,6 +61,20 @@ const FloorPlanner = () => {
               &times;
             </button>
             <LightingSettings />
+            {/* Wall Height Settings */}
+            <div className="mt-4">
+              <label className="block text-black font-medium mb-2">
+                Wall Height:
+              </label>
+              <input
+                type="number"
+                value={wallHeight}
+                onChange={(e) => setWallHeight(Number(e.target.value))}
+                className="w-full border rounded-md px-2 py-1"
+                min="1"
+                max="10"
+              />
+            </div>
           </div>
         )}
 
@@ -72,7 +88,7 @@ const FloorPlanner = () => {
               position={pointLightPosition}
             />
             <OrbitControls enabled={controlsEnabled} />
-            <Room width={width} height={height} />
+            <Room width={width} height={height} wallHeight={wallHeight} />
             {furnitureItems.map((item, index) => (
               <Furniture
                 key={index}
