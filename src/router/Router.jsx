@@ -3,6 +3,7 @@ import Main from "../layout/Main";
 import Home from "../pages/home/Home";
 import FloorPlanner from "../pages/floor-planner/FloorPlanner";
 import { FloorPlannerProvider } from "../contexts/FloorPlannerContext";
+import Signup from "../components/Auth/Signup";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       </FloorPlannerProvider>
     ),
   },
+  {
+    path: "/signup",
+    element: <Signup />
+  }
 ]);
 
 export default router;
