@@ -6,6 +6,7 @@ import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
 const FurniturePopup = () => {
   const { showPopup, setShowPopup, addFurniture } = useFloorPlanner();
   const [furnitureModels, setFurnitureModels] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch models dynamically from shelve.json
   useEffect(() => {
@@ -39,16 +40,15 @@ const FurniturePopup = () => {
     );
   };
 
-  const handleAddFurniture = (modelPath) => {
-    addFurniture(modelPath);
-    setShowPopup(false);
-  };
-
   useEffect(() => {
     if (showPopup) {
       handlePopupEnter();
     }
   }, [showPopup]);
+
+  const filteredFurnitureModels = furnitureModels.filter((furniture) =>
+    furniture.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     showPopup && (
@@ -62,17 +62,24 @@ const FurniturePopup = () => {
           <RxCrossCircled />
         </button>
 
-        <h2 className="text-center text-black text-lg font-bold">Select Furniture</h2>
+        <h2 className="text-center text-black text-lg font-bold mb-4">Select Furniture</h2>
+
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search furniture..."
+          className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
+        />
 
         {/* Display models in a grid layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-          {furnitureModels.map((furniture, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {filteredFurnitureModels.map((furniture, index) => (
             <div
               key={index}
               className="text-center bg-gray-100 rounded-md p-4 shadow-md cursor-pointer transition-transform transform hover:scale-105"
-              onClick={() => handleAddFurniture(furniture.modelPath)}
+              onClick={() => addFurniture(furniture.modelPath)}
             >
-              {/* Show image preview or placeholder */}
               <div className="w-full h-24 bg-gray-300 rounded-md mb-4 flex items-center justify-center overflow-hidden">
                 {furniture.previewImagePath ? (
                   <img
@@ -84,7 +91,6 @@ const FurniturePopup = () => {
                   <span className="text-gray-500">No Image</span>
                 )}
               </div>
-              {/* Furniture name */}
               <p className="text-sm font-semibold text-black">{furniture.name}</p>
             </div>
           ))}
