@@ -81,7 +81,10 @@ const FloorPlanner = () => {
         <FurniturePopup />
 
         {viewMode === "3D" && (
-          <Canvas className="w-full h-full">
+          <Canvas className="w-full h-full" camera={{
+            position: [15, 10, 15], // Set the spawn point here (x, y, z)
+            fov: 50, // Field of view
+          }}>
             <ambientLight intensity={ambientLightIntensity} />
             <pointLight
               intensity={pointLightIntensity}
