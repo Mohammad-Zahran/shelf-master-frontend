@@ -2,6 +2,7 @@ import React from "react";
 
 const Room = ({ width, height, wallHeight }) => {
   const wallThickness = 0.1; // Thickness of the walls
+  const wallOpacity = 0.5; // Adjust the opacity level (0: fully transparent, 1: fully opaque)
 
   return (
     <group>
@@ -14,28 +15,28 @@ const Room = ({ width, height, wallHeight }) => {
       {/* Walls */}
       <mesh position={[0, wallHeight / 2, -height / 2]}>
         <boxGeometry args={[width, wallHeight, wallThickness]} />
-        <meshStandardMaterial color="white" />
+        <meshStandardMaterial color="white" transparent={true} opacity={wallOpacity} />
       </mesh>
       <mesh
         position={[width / 2, wallHeight / 2, 0]}
         rotation={[0, -Math.PI / 2, 0]}
       >
         <boxGeometry args={[height, wallHeight, wallThickness]} />
-        <meshStandardMaterial color="white" />
+        <meshStandardMaterial color="white" transparent={true} opacity={wallOpacity} />
       </mesh>
       <mesh
         position={[-width / 2, wallHeight / 2, 0]}
         rotation={[0, Math.PI / 2, 0]}
       >
         <boxGeometry args={[height, wallHeight, wallThickness]} />
-        <meshStandardMaterial color="white" />
+        <meshStandardMaterial color="white" transparent={true} opacity={wallOpacity} />
       </mesh>
       <mesh
         position={[0, wallHeight / 2, height / 2]}
         rotation={[0, Math.PI, 0]}
       >
         <boxGeometry args={[width, wallHeight, wallThickness]} />
-        <meshStandardMaterial color="white" />
+        <meshStandardMaterial color="white" transparent={true} opacity={wallOpacity} />
       </mesh>
     </group>
   );
