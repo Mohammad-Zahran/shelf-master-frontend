@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { RxCrossCircled } from "react-icons/rx";
+import gsap from "gsap";
 import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
 
 const FurniturePopup = () => {
@@ -20,110 +22,70 @@ const FurniturePopup = () => {
     fetchModels();
   }, []);
 
-  const handleAddFurniture = (modelPath) => {
-    addFurniture(modelPath); 
-    setShowPopup(false); 
+  const handleClosePopup = () => {
+    gsap.to(".popup", {
+      opacity: 0,
+      y: -50,
+      duration: 0.3,
+      onComplete: () => setShowPopup(false),
+    });
   };
+
+  const handlePopupEnter = () => {
+    gsap.fromTo(
+      ".popup",
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+    );
+  };
+
+  const handleAddFurniture = (modelPath) => {
+    addFurniture(modelPath);
+    setShowPopup(false);
+  };
+
+  useEffect(() => {
+    if (showPopup) {
+      handlePopupEnter();
+    }
+  }, [showPopup]);
 
   return (
     showPopup && (
       <div
-        style={{
-          position: "fixed",
-          top: "10%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 20,
-          backgroundColor: "#fff",
-          padding: "20px",
-          borderRadius: "10px",
-          boxShadow: "0 0 20px rgba(0,0,0,0.4)",
-          width: "80%",
-          maxWidth: "1000px",
-          maxHeight: "80%",
-          overflowY: "auto",
-        }}
+        className="popup fixed top-10 left-1/2 transform -translate-x-1/2 z-20 bg-white p-6 rounded-md shadow-lg w-4/5 max-w-2xl max-h-[80%] overflow-y-auto"
       >
         <button
-          onClick={() => setShowPopup(false)}
-          style={{
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            backgroundColor: "red",
-            color: "white",
-            border: "none",
-            borderRadius: "50%",
-            fontSize: "20px",
-            width: "30px",
-            height: "30px",
-            cursor: "pointer",
-          }}
+          onClick={handleClosePopup}
+          className="absolute top-3 right-3 text-steelBlue text-3xl cursor-pointer"
         >
-          &times;
+          <RxCrossCircled />
         </button>
 
-        <h2 style={{ color: "black", textAlign: "center" }}>
-          Select Furniture
-        </h2>
+        <h2 className="text-center text-black text-lg font-bold">Select Furniture</h2>
 
         {/* Display models in a grid layout */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-            gap: "20px",
-            marginTop: "20px",
-          }}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
           {furnitureModels.map((furniture, index) => (
             <div
               key={index}
-              style={{
-                textAlign: "center",
-                backgroundColor: "#f9f9f9",
-                borderRadius: "10px",
-                padding: "10px",
-                boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-                cursor: "pointer",
-                transition: "transform 0.2s",
-              }}
+              className="text-center bg-gray-100 rounded-md p-4 shadow-md cursor-pointer transition-transform transform hover:scale-105"
               onClick={() => handleAddFurniture(furniture.modelPath)}
             >
               {/* Show image preview or placeholder */}
-              <div
-                style={{
-                  width: "100%",
-                  height: "100px",
-                  backgroundColor: "#ddd",
-                  borderRadius: "10px",
-                  marginBottom: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                }}
-              >
+              <div className="w-full h-24 bg-gray-300 rounded-md mb-4 flex items-center justify-center overflow-hidden">
                 {furniture.previewImagePath ? (
                   <img
                     src={furniture.previewImagePath}
                     alt={furniture.name}
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "100%",
-                      objectFit: "cover",
-                    }}
+                    className="max-w-full max-h-full object-cover"
                   />
                 ) : (
-                  <span style={{ color: "gray" }}>No Image</span>
+                  <span className="text-gray-500">No Image</span>
                 )}
               </div>
               {/* Furniture name */}
-              <p
-                style={{ fontSize: "14px", color: "black", fontWeight: "bold" }}
-              >
-                {furniture.name}
-              </p>
+              <p className="text-sm font-semibold text-black">{furniture.name}</p>
             </div>
           ))}
         </div>
