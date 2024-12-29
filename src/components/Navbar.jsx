@@ -101,6 +101,7 @@ const Navbar = () => {
               </div>
             </div>
 
+            {/* Login */}
             <button
               onClick={() => document.getElementById("my_modal_5").showModal()}
               className="btn"
