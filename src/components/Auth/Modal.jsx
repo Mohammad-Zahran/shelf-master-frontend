@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -16,6 +16,11 @@ const Modal = () => {
   const { signUpWithGmail, login } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // redirecting to home page or specific page
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
@@ -23,6 +28,8 @@ const Modal = () => {
     login(email, password).then((result) => {
       const user = result.user;
       alert("Login Successful");
+      document.getElementById("my_modal_5").close()
+      navigate(from, {replace: true})
     }).catch((error) => {
       const errorMessage = error.message;
       setErrorMessage("Provide a correct email and password")
@@ -86,7 +93,7 @@ const Modal = () => {
             }
 
             {/* login btn */}
-            <div className="form-control mt-6">
+            <div className="form-control mt-4">
               <input type="submit" value="Login" className="btn normal" />
             </div>
 

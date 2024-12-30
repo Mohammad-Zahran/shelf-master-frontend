@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Modal from "./Modal";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
@@ -14,14 +14,21 @@ const Signup = () => {
 
   const { createUser, login } = useContext(AuthContext);
 
+  // redirecting to home page or specific page
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    createUser(email,password)
+    createUser(email, password)
       .then((result) => {
         // Signed up
         const user = result.user;
-        alert("Account creation successfully done!")
+        alert("Account creation successfully done!");
+        document.getElementById("my_modal_5").close();
+        navigate(from, { replace: true });
         // ...
       })
       .catch((error) => {
