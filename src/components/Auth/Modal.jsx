@@ -82,7 +82,7 @@ const Modal = () => {
 
             {/* error */}
             {
-              errorMessage ? <p className="text-red text-xs italic">{setErrorMessage}</p> : ""
+              errorMessage ? <p className="text-red-600 text-xs italic">{errorMessage}</p> : ""
             }
 
             {/* login btn */}
