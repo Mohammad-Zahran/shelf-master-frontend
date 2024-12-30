@@ -12,19 +12,16 @@ const Products = () => {
 
   // loading data
   useEffect(() => {
-    // fetch data from the backend
     const fetchData = async () => {
       try {
         const response = await fetch("/product.json");
         const data = await response.json();
         setProduct(data);
-        setFilteredItems(data); // Fix: Changed setFilteredItem to setFilteredItems
+        setFilteredItems(data);
       } catch (error) {
         console.log("Error fetching the products", error);
       }
     };
-
-    // call the function
     fetchData();
   }, []);
 
@@ -51,9 +48,7 @@ const Products = () => {
   const handleSortChange = (option) => {
     setSortOption(option);
 
-    // Logic for sorting based on the selected option
     let sortedItems = [...filteredItems];
-
     switch (option) {
       case "A-Z":
         sortedItems.sort((a, b) => a.name.localeCompare(b.name));
@@ -68,7 +63,6 @@ const Products = () => {
         sortedItems.sort((a, b) => b.price - a.price);
         break;
       default:
-        // Do nothing for the "default" case
         break;
     }
 
@@ -76,20 +70,21 @@ const Products = () => {
     setCurrentPage(1);
   };
 
-  // pagination logic:
+  // Pagination logic:
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currenItem = filterItems.slice(indexOfFirstItem, indexOfLastItem);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
   return (
     <div>
       {/* Product shop section */}
       <div className="section-container">
-        {/* filtering and sorting */}
+        {/* Filtering and sorting */}
         <div className="mt-24 flex flex-col md:flex-row flex-wrap md:justify-between items-center space-y-3 mb-8">
-          {/* All Category btns */}
-          <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex=wrap">
+          {/* Category Buttons */}
+          <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap">
             <button
               onClick={showAll}
               className={selectedCategory === "all" ? "active" : ""}
@@ -146,9 +141,8 @@ const Products = () => {
             </button>
           </div>
 
-          {/* sorting base Filtering */}
+          {/* Sorting */}
           <div className="flex justify-end items-center mb-2 rounded-sm">
-            {/* Sorting Dropdown with Icon */}
             <div className="relative">
               <LuSettings2 className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4 pointer-events-none" />
               <select
@@ -168,12 +162,29 @@ const Products = () => {
           </div>
         </div>
 
-        {/* Product card */}
+        {/* Product Cards */}
         <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
-          {filteredItems.map((item) => (
+          {currentItems.map((item) => (
             <Cards key={item._id} item={item} />
           ))}
         </div>
+      </div>
+
+      {/* Pagination Section */}
+      <div className="flex justify-center mt-6 space-x-2">
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => setCurrentPage(index + 1)}
+            className={`px-3 py-1 rounded ${
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );
