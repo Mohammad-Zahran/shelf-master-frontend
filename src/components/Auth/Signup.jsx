@@ -15,13 +15,27 @@ const Signup = () => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div>
+    <div className="max-w-md bg-white shadow w-full mx-auto flex items-center justify-center my-20">
       <div
         className="modal-action flex flex-col justify-center mt-0"
         method="dialog"
       >
         <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-          <h3 className="font-bold text-lg">Please Login</h3>
+          <h3 className="font-bold text-lg">Get Started Now</h3>
+          <p>Enter your Credentials to access your account</p>
+
+          {/*Name*/}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              type="text"
+              placeholder="name"
+              className="input input-bordered"
+              {...register("name")}
+            />
+          </div>
 
           {/* email */}
           <div className="form-control">
@@ -47,11 +61,6 @@ const Signup = () => {
               className="input input-bordered"
               {...register("password")}
             />
-            <label className="label mt-1">
-              <a href="#" className="label-text-alt link link-hover">
-                Forgot password?
-              </a>
-            </label>
           </div>
 
           {/* error */}
