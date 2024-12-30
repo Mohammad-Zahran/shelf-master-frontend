@@ -20,27 +20,37 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // create an account
+  // Create an account
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  // signup with gmail
+  // Sign up with Gmail
   const signUpWithGmail = () => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  // login using email & password
+  // Login using email & password
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // logout
+  // Logout
   const logOut = () => {
-    return signOut(auth);
+    setLoading(true); // Start loading
+    return signOut(auth)
+      .then(() => {
+        setUser(null); // Clear the user
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      })
+      .finally(() => {
+        setLoading(false); // End loading
+      });
   };
 
-  // update profile
+  // Update profile
   const updateuserProfile = ({ name, photoURL }) => {
     return updateProfile(auth.currentUser, {
       displayName: name,
@@ -48,18 +58,17 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  // check signed-in user
+  // Check signed-in user
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        setLoading(false);
       } else {
+        setUser(null); // Clear user when logged out
       }
+      setLoading(false); // End loading after state change
     });
-    return () => {
-        return unsubscribe();
-    }
+    return () => unsubscribe();
   }, []);
 
   const authInfo = {
@@ -69,8 +78,9 @@ const AuthProvider = ({ children }) => {
     login,
     updateuserProfile,
     logOut,
-    loading
+    loading,
   };
+
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

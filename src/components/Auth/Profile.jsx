@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const Profile = ({ user }) => {
+  const { logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {});
+  };
+
   return (
     <div>
       <div className="drawer drawer-end z-50">
@@ -12,11 +21,11 @@ const Profile = ({ user }) => {
             className="drawer-button btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              {user.photoURL ? (
-                <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
+              {user?.photoURL ? (
+                <img alt="User Avatar" src={user.photoURL} />
               ) : (
                 <img
-                  alt="Tailwind CSS Navbar component"
+                  alt="Default Avatar"
                   src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                 />
               )}
@@ -24,13 +33,8 @@ const Profile = ({ user }) => {
           </label>
         </div>
         <div className="drawer-side">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          ></label>
+          <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-            {/* Sidebar content here */}
             <li>
               <a>Profile</a>
             </li>
@@ -41,7 +45,7 @@ const Profile = ({ user }) => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <a onClick={handleLogout}>Logout</a>
             </li>
           </ul>
         </div>
