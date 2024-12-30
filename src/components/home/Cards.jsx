@@ -104,7 +104,7 @@ const Cards = ({
         width,
         height,
       }}
-      className="relative rounded-lg bg-white shadow-lg transition-all border-4 border-blue-300"
+      className="relative rounded-lg bg-white shadow-lg transition-all border-4 border-blue-300 mt-7"
     >
       <div
         onClick={toggleLike}

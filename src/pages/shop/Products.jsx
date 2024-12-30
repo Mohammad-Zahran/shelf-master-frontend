@@ -75,7 +75,16 @@ const Products = () => {
       {/* Product shop section */}
       <div className="section-container">
         {/* filtering and sorting */}
-        <div>filtering and sorting</div>
+        <div className="mt-24">
+            {/* All Category btns */}
+            <div>
+                <button>All</button>
+                <button>All</button>
+                <button>All</button>
+                <button>All</button>
+                <button>All</button>
+            </div>
+        </div>
 
         {/* Product card */}
         <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
