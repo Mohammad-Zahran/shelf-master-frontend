@@ -36,7 +36,7 @@ const Profile = ({ user }) => {
           <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             <li>
-              <a>Profile</a>
+              <a href="/update-profile">Profile</a>
             </li>
             <li>
               <a>Order</a>
