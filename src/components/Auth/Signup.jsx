@@ -38,6 +38,15 @@ const Signup = () => {
               Sign Up
             </button>
           </form>
+
+          {/* Divider */}
+          <div className="flex items-center my-6">
+            <div className="flex-grow h-px bg-gray-300"></div>
+            <span className="px-4 text-gray-500">OR</span>
+            <div className="flex-grow h-px bg-gray-300"></div>
+          </div>
+
+          {/* Social Login Buttons */}
           <div className="flex items-center mt-4 space-x-4">
             {/* Sign in with Google */}
             <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
@@ -58,12 +67,16 @@ const Signup = () => {
               Sign in with GitHub
             </button>
           </div>
-          <p className="mt-4 text-sm text-black">
-            Have an Account?{" "}
-            <a href="#" className="text-blue-500 hover:underline">
-              Sign In
-            </a>
-          </p>
+
+          {/* Centered Footer */}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-black">
+              Have an Account?{" "}
+              <a href="#" className="text-blue-500 hover:underline">
+                Sign In
+              </a>
+            </p>
+          </div>
         </div>
       </div>
 
