@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const Modal = () => {
   const {
@@ -11,6 +12,8 @@ const Modal = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const {} = useContext(AuthContext);
 
   const onSubmit = (data) => console.log(data);
 
