@@ -25,15 +25,17 @@ const Modal = () => {
     const email = data.email;
     const password = data.password;
     // console.log(email, password);
-    login(email, password).then((result) => {
-      const user = result.user;
-      alert("Login Successful");
-      document.getElementById("my_modal_5").close()
-      navigate(from, {replace: true})
-    }).catch((error) => {
-      const errorMessage = error.message;
-      setErrorMessage("Provide a correct email and password")
-    })
+    login(email, password)
+      .then((result) => {
+        const user = result.user;
+        alert("Login Successful");
+        document.getElementById("my_modal_5").close();
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setErrorMessage("Provide a correct email and password");
+      });
   };
 
   // google signin
@@ -42,6 +44,7 @@ const Modal = () => {
       .then((result) => {
         const user = result.user;
         alert("Login successfull");
+        navigate(from, { replace: true });
       })
       .catch((error) => console.log(error));
   };
@@ -88,9 +91,11 @@ const Modal = () => {
             </div>
 
             {/* error */}
-            {
-              errorMessage ? <p className="text-red-600 text-xs italic">{errorMessage}</p> : ""
-            }
+            {errorMessage ? (
+              <p className="text-red-600 text-xs italic">{errorMessage}</p>
+            ) : (
+              ""
+            )}
 
             {/* login btn */}
             <div className="form-control mt-4">

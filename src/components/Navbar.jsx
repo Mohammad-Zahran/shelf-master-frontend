@@ -38,9 +38,8 @@ const Navbar = () => {
     </>
   );
 
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   console.log(user);
-  
 
   return (
     <header className="max-w-screen-2xl container mx-auto">
@@ -108,12 +107,20 @@ const Navbar = () => {
             </div>
 
             {/* Login */}
-            <button
-              onClick={() => document.getElementById("my_modal_5").showModal()}
-              className="btn round"
-            >
-              <FaRegUser /> Login
-            </button>
+            {user ? (
+              <>
+                <p>Logout</p>
+              </>
+            ) : (
+              <button
+                onClick={() =>
+                  document.getElementById("my_modal_5").showModal()
+                }
+                className="btn round"
+              >
+                <FaRegUser /> Login
+              </button>
+            )}
             <Modal />
           </div>
         </div>
