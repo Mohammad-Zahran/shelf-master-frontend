@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Modal from "./Modal";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const Signup = () => {
   const {
@@ -11,7 +12,24 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const { createUser, login } = useContext(AuthContext);
+
+  const onSubmit = (data) => {
+    const email = data.email;
+    const password = data.password;
+    createUser(email,password)
+      .then((result) => {
+        // Signed up
+        const user = result.user;
+        alert("Account creation successfully done!")
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  };
 
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-white">
