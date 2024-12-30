@@ -3,6 +3,7 @@ import logo from "../../public/assets/images/logo.png";
 import { FaRegUser } from "react-icons/fa";
 import Modal from "./Auth/Modal";
 import { AuthContext } from "../contexts/AuthProvider";
+import Profile from "./Auth/Profile";
 
 const Navbar = () => {
   const navItems = (
@@ -109,7 +110,7 @@ const Navbar = () => {
             {/* Login */}
             {user ? (
               <>
-                <p>Logout</p>
+                <Profile user={user}/>
               </>
             ) : (
               <button
