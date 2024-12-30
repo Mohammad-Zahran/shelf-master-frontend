@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Cards from "../../components/home/Cards";
 
 const Products = () => {
   const [product, setProduct] = useState([]);
@@ -13,13 +14,13 @@ const Products = () => {
       try {
         const response = await fetch("/product.json");
         const data = await response.json();
-        // console.log(data);
         setProduct(data);
-        setFilteredItem(data);
+        setFilteredItems(data); // Fix: Changed setFilteredItem to setFilteredItems
       } catch (error) {
         console.log("Error fetching the products", error);
       }
     };
+
     // call the function
     fetchData();
   }, []);
@@ -72,7 +73,17 @@ const Products = () => {
   return (
     <div>
       {/* Product shop section */}
-      <div className="section-container"></div>
+      <div className="section-container">
+        {/* filtering and sorting */}
+        <div>filtering and sorting</div>
+
+        {/* Product card */}
+        <div>
+          {filteredItems.map((item) => (
+            <Cards key={item._id} item={item} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { gsap } from "gsap";
 import Modal from "./Modal";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -14,34 +15,52 @@ const Signup = () => {
 
   const { createUser, login } = useContext(AuthContext);
 
-  // redirecting to home page or specific page
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
+
+  // Refs for animation
+  const leftSectionRef = useRef(null);
+  const rightSectionRef = useRef(null);
+
+  useEffect(() => {
+    // Animate the left section
+    gsap.fromTo(
+      leftSectionRef.current,
+      { opacity: 0, x: -100 },
+      { opacity: 1, x: 0, duration: 1 }
+    );
+
+    // Animate the right section
+    gsap.fromTo(
+      rightSectionRef.current,
+      { opacity: 0, x: 100 },
+      { opacity: 1, x: 0, duration: 1 }
+    );
+  }, []);
 
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
     createUser(email, password)
       .then((result) => {
-        // Signed up
         const user = result.user;
         alert("Account creation successfully done!");
         document.getElementById("my_modal_5").close();
         navigate(from, { replace: true });
-        // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+        console.log(error.message);
       });
   };
 
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-white">
       {/* Left Section: Signup Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 md:px-10">
+      <div
+        ref={leftSectionRef}
+        className="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 md:px-10"
+      >
         <div className="w-full max-w-md" method="dialog">
           <h2 className="text-3xl font-bold text-charcoal mb-4 text-center lg:text-left">
             Get Started Now
@@ -88,7 +107,6 @@ const Signup = () => {
 
           {/* Social Login Buttons */}
           <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-4 md:space-y-0 mt-4">
-            {/* Sign in with Google */}
             <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
               <img
                 src="/assets/images/google.png"
@@ -97,7 +115,6 @@ const Signup = () => {
               />
               Sign in with Google
             </button>
-            {/* Sign in with Facebook */}
             <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
               <img
                 src="/assets/images/facebook.png"
@@ -123,7 +140,7 @@ const Signup = () => {
             </p>
             <Link
               to="/"
-              className="flex items-center gap-2 text-steelBlue font-medium absolute top-4 left-4 hover:text-gray-600 transition-all"
+              className="flex items-center gap-2 text-steelBlue font-medium absolute top-4 left-4 hover:text-gray-600 transition-all text-sm md:text-base"
             >
               <FaArrowAltCircleLeft className="text-lg" /> Home
             </Link>
@@ -133,7 +150,10 @@ const Signup = () => {
       <Modal />
 
       {/* Right Section: Image */}
-      <div className="hidden lg:flex w-1/2 h-full overflow-auto justify-end">
+      <div
+        ref={rightSectionRef}
+        className="hidden lg:flex w-1/2 h-full overflow-auto justify-end"
+      >
         <img
           src="/assets/images/signup.png"
           alt="Signup"
