@@ -73,7 +73,15 @@ const Popular = () => {
       <Slider ref={slider} {...settings}>
         {products.map((item, i) => (
           <div key={i} className="px-2">
-            <Cards item={item} />
+            {/* Pass larger dimensions for the Cards component */}
+            <Cards
+              item={item}
+              width="400px"
+              height="600px"
+              imageRatio="80%"
+              buttonClass="btn normal"
+              onButtonClick={(item) => console.log("Clicked:", item)}
+            />{" "}
           </div>
         ))}
       </Slider>

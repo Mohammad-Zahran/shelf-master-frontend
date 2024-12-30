@@ -9,10 +9,18 @@ import {
 import { FaHeart } from "react-icons/fa";
 import { gsap } from "gsap";
 
-const ROTATION_RANGE = 32.5;
-const HALF_ROTATION_RANGE = 32.5 / 2;
+const ROTATION_RANGE = 20;
+const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
 
-const Cards = ({ item }) => {
+const Cards = ({
+  item,
+  width = "240px",
+  height = "350px",
+  imageRatio = "65%", // Customize image height ratio
+  buttonText = "Add to Cart", // Customize button text
+  buttonClass = "bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue", // Button styling
+  onButtonClick, // Button click handler
+}) => {
   const ref = useRef(null);
   const imageRef = useRef(null);
   const [isLiked, setIsLiked] = useState(false);
@@ -93,21 +101,24 @@ const Cards = ({ item }) => {
       style={{
         transformStyle: "preserve-3d",
         transform,
+        width,
+        height,
       }}
-      className="relative h-[550px] w-[352px] rounded-lg bg-white shadow-xl transition-all border border-[#C8E6FF]"
+      className="relative rounded-lg bg-white shadow-lg transition-all border-4 border-blue-300"
     >
       <div
         onClick={toggleLike}
-        style={{ transform: "translateZ(75px)" }}
+        style={{ transform: "translateZ(50px)" }}
         className={`absolute top-2 right-2 z-10 cursor-pointer p-2 rounded-full transition-all ${
-          isLiked ? "text-steelBlue" : "text-steelBlue"
+          isLiked ? "text-red-500" : "text-gray-400"
         }`}
       >
-        <FaHeart className="h-6 w-6" />
+        <FaHeart className="h-5 w-5" />
       </div>
       <Link
         to={`/product/${item._id}`}
-        className="block h-[400px] overflow-hidden rounded-t-lg"
+        className="block overflow-hidden rounded-t-lg"
+        style={{ height: imageRatio }}
       >
         <img
           ref={imageRef}
@@ -115,28 +126,34 @@ const Cards = ({ item }) => {
           alt={`${item.name} - ${currentImageIndex + 1}`}
           className="h-full w-full object-cover transition-all duration-200 hover:scale-105"
           style={{
-            transform: "translateZ(50px)",
+            transform: "translateZ(30px)",
           }}
         />
       </Link>
       <div
-        className="p-4 flex flex-col justify-between h-[120px]"
+        className="p-3 flex flex-col justify-between"
         style={{
-          transform: "translateZ(25px)",
+          transform: "translateZ(20px)",
+          height: `calc(${height} - ${imageRatio})`,
         }}
       >
         <div>
-          <h3 className="text-lg font-semibold">{item.name}</h3>
-          <p className="text-sm text-gray-500 line-clamp-2">
+          <h3 className="text-base font-semibold truncate">{item.name}</h3>
+          <p className="text-sm text-gray-500 line-clamp-2 truncate">
             {item.description}
           </p>
         </div>
         <div className="flex justify-between items-center mt-2">
-          <p className="text-lg font-semibold">
+          <p className="text-base font-semibold">
             <span className="text-sm text-red-500">$</span>
             {item.price.toFixed(2)}
           </p>
-          <button className="btn normal">Add to Cart</button>
+          <button
+            className={`text-sm font-medium py-1 px-3 rounded-md transition ${buttonClass}`}
+            onClick={() => onButtonClick && onButtonClick(item)}
+          >
+            {buttonText}
+          </button>
         </div>
       </div>
     </motion.div>

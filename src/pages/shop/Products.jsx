@@ -78,7 +78,7 @@ const Products = () => {
         <div>filtering and sorting</div>
 
         {/* Product card */}
-        <div>
+        <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
           {filteredItems.map((item) => (
             <Cards key={item._id} item={item} />
           ))}
