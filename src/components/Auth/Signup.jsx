@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Modal from './Modal';
 
 const Signup = () => {
   const {
@@ -85,13 +86,19 @@ const Signup = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-black">
               Have an Account?{" "}
-              <Link to="/login" className="text-blue-500 hover:underline">
+              <button
+                onClick={() =>
+                  document.getElementById("my_modal_5").showModal()
+                }
+                className="text-blue-500 hover:underline"
+              >
                 Sign In
-              </Link>
+              </button>{" "}
             </p>
           </div>
         </div>
       </div>
+      <Modal />
 
       {/* Right Section: Image */}
       <div className="hidden lg:flex w-1/2 h-full overflow-auto justify-end">
