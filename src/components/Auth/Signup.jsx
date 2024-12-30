@@ -1,32 +1,45 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Signup = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
+
   return (
     <div className="flex h-screen bg-white">
       {/* Left Section: Signup Form */}
       <div className="w-1/2 flex flex-col justify-center items-center px-10">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md" method="dialog">
           <h2 className="text-3xl font-bold text-charcoal mb-4">
             Get Started Now
           </h2>
           <p className="text-steelBlue mb-6">
             Enter your credentials to access your account
           </p>
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <input
               type="text"
               placeholder="Name"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
+              {...register("name")}
             />
             <input
               type="email"
               placeholder="Email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
+              {...register("email")}
             />
             <input
               type="password"
               placeholder="Password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
+              {...register("password")}
             />
             <div className="flex items-center gap-2">
               <input type="checkbox" id="terms" />
@@ -34,7 +47,7 @@ const Signup = () => {
                 I agree to the terms & policy
               </label>
             </div>
-            <button type="submit" className="btn w-full normal">
+            <button type="submit" value="Login" className="btn w-full normal">
               Sign Up
             </button>
           </form>
@@ -57,14 +70,14 @@ const Signup = () => {
               />
               Sign in with Google
             </button>
-            {/* Sign in with GitHub */}
+            {/* Sign in with Facebook */}
             <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
               <img
-                src="/assets/images/github.png"
-                alt="GitHub"
+                src="/assets/images/facebook.png"
+                alt="Facebook"
                 className="w-5 h-5 mr-2"
               />
-              Sign in with GitHub
+              Sign in with Facebook
             </button>
           </div>
 
