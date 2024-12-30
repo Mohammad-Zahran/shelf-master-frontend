@@ -14,9 +14,9 @@ const Signup = () => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex flex-col lg:flex-row items-center justify-between min-h-screen bg-white">
       {/* Left Section - Form */}
-      <div className="w-full lg:w-1/2 max-w-md bg-white shadow-lg rounded-lg p-8">
+      <div className="w-full lg:w-1/2 max-w-md mx-auto p-8">
         <h3 className="font-bold text-2xl text-center text-steelBlue">
           Get Started Now
         </h3>
@@ -33,7 +33,7 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Name"
-              className="input input-bordered w-full"
+              className="input border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-steelBlue"
               {...register("name")}
             />
           </div>
@@ -46,7 +46,7 @@ const Signup = () => {
             <input
               type="email"
               placeholder="Email"
-              className="input input-bordered w-full"
+              className="input border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-steelBlue"
               {...register("email")}
             />
           </div>
@@ -59,7 +59,7 @@ const Signup = () => {
             <input
               type="password"
               placeholder="Password"
-              className="input input-bordered w-full"
+              className="input border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-steelBlue"
               {...register("password")}
             />
           </div>
@@ -97,11 +97,11 @@ const Signup = () => {
       </div>
 
       {/* Right Section - Image */}
-      <div className="hidden lg:flex items-center justify-center w-full lg:w-1/2">
+      <div className="hidden lg:flex items-center justify-end w-full lg:w-1/2 h-full">
         <img
           src={SignUpImage}
           alt="Sign Up Illustration"
-          className="w-3/4 rounded-lg shadow-lg"
+          className="w-auto h-5/6 rounded-lg shadow-none"
         />
       </div>
     </div>
