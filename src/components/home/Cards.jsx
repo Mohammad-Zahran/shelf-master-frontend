@@ -14,9 +14,9 @@ const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
 
 const Cards = ({
   item,
-  width = "240px",
-  height = "350px",
-  imageRatio = "65%", // Customize image height ratio
+  width = "320px",
+  height = "420px",
+  imageRatio = "70%", // Customize image height ratio
   buttonText = "Add to Cart", // Customize button text
   buttonClass = "bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue", // Button styling
   onButtonClick, // Button click handler
