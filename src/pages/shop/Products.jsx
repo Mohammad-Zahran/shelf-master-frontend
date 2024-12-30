@@ -7,6 +7,8 @@ const Products = () => {
   const [filteredItems, setFilteredItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOption, setSortOption] = useState("default");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8);
 
   // loading data
   useEffect(() => {
@@ -35,12 +37,14 @@ const Products = () => {
 
     setFilteredItems(filtered);
     setSelectedCategory(category);
+    setCurrentPage(1);
   };
 
   // show all data function
   const showAll = () => {
     setFilteredItems(product);
     setSelectedCategory("all");
+    setCurrentPage(1);
   };
 
   // sorting based on A-Z, Low-High pricing
@@ -69,7 +73,14 @@ const Products = () => {
     }
 
     setFilteredItems(sortedItems);
+    setCurrentPage(1);
   };
+
+  // pagination logic:
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currenItem = filterItems.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -143,7 +154,7 @@ const Products = () => {
               <select
                 name="sort"
                 id="sort"
-                onClick={(e) => handleSortChange(e.target.value)}
+                onChange={(e) => handleSortChange(e.target.value)}
                 value={sortOption}
                 className="pl-8 pr-2 py-1 rounded-sm border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
               >
