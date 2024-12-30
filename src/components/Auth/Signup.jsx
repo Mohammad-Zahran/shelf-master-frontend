@@ -12,14 +12,14 @@ const Signup = () => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className="flex flex-col lg:flex-row h-screen bg-white">
       {/* Left Section: Signup Form */}
-      <div className="w-1/2 flex flex-col justify-center items-center px-10">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 md:px-10">
         <div className="w-full max-w-md" method="dialog">
-          <h2 className="text-3xl font-bold text-charcoal mb-4">
+          <h2 className="text-3xl font-bold text-charcoal mb-4 text-center lg:text-left">
             Get Started Now
           </h2>
-          <p className="text-steelBlue mb-6">
+          <p className="text-steelBlue mb-6 text-center lg:text-left">
             Enter your credentials to access your account
           </p>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -60,7 +60,7 @@ const Signup = () => {
           </div>
 
           {/* Social Login Buttons */}
-          <div className="flex items-center mt-4 space-x-4">
+          <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-4 md:space-y-0 mt-4">
             {/* Sign in with Google */}
             <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
               <img
@@ -85,23 +85,23 @@ const Signup = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-black">
               Have an Account?{" "}
-              <a href="#" className="text-blue-500 hover:underline">
+              <Link to="/login" className="text-blue-500 hover:underline">
                 Sign In
-              </a>
+              </Link>
             </p>
           </div>
         </div>
       </div>
 
       {/* Right Section: Image */}
-      <div className="w-1/2 h-full overflow-auto flex justify-end">
+      <div className="hidden lg:flex w-1/2 h-full overflow-auto justify-end">
         <img
           src="/assets/images/signup.png"
           alt="Signup"
           className="h-auto"
           style={{
-            width: "75%", // Set the image width to 75% of the container
-            maxHeight: "100vh", // Ensure it doesn’t exceed the viewport height
+            width: "75%",
+            maxHeight: "100vh",
             display: "block",
           }}
         />
