@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Modal from './Modal';
+import Modal from "./Modal";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 const Signup = () => {
   const {
@@ -95,6 +96,12 @@ const Signup = () => {
                 Sign In
               </button>{" "}
             </p>
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-steelBlue font-medium absolute top-4 left-4 hover:text-gray-600 transition-all"
+            >
+              <FaArrowAltCircleLeft className="text-lg" /> Home
+            </Link>
           </div>
         </div>
       </div>
