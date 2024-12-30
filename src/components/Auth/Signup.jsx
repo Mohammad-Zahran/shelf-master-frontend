@@ -1,109 +1,66 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { FaGoogle, FaFacebookF, FaGithub } from "react-icons/fa";
-import { useForm } from "react-hook-form";
-import SignUpImage from "../../../public/assets/images/signup.png";
 
 const Signup = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => console.log(data);
-
   return (
-    <div className="flex flex-col lg:flex-row items-center lg:justify-between min-h-screen bg-white">
-      {/* Left Section - Form */}
-      <div className="w-full lg:w-[45%] max-w-md mx-auto lg:mx-16 p-8 flex items-center justify-center">
-        <div className="w-full">
-          <h3 className="font-bold text-2xl text-center text-steelBlue">
-            Get Started Now
-          </h3>
-          <p className="text-center text-gray-500 mb-6">
-            Enter your credentials to access your account
-          </p>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Name */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Name"
-                className="input border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-steelBlue"
-                {...register("name")}
-              />
-            </div>
-
-            {/* Email */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                placeholder="Email"
-                className="input border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-steelBlue"
-                {...register("email")}
-              />
-            </div>
-
-            {/* Password */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                placeholder="Password"
-                className="input border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-steelBlue"
-                {...register("password")}
-              />
-            </div>
-
-            {/* Submit Button */}
-            <div className="form-control mt-6">
-              <input
-                type="submit"
-                value="Sign Up"
-                className="btn bg-steelBlue text-white hover:bg-transparent hover:text-steelBlue border hover:border-steelBlue w-full"
-              />
-            </div>
-          </form>
-
-          {/* Social Sign-in */}
-          <div className="divider my-6">Or sign in with</div>
-          <div className="flex justify-center space-x-4">
-            <button className="btn btn-circle bg-gray-100 hover:bg-gray-200">
-              <FaGoogle className="text-red-500" />
-            </button>
-            <button className="btn btn-circle bg-gray-100 hover:bg-gray-200">
-              <FaFacebookF className="text-blue-500" />
-            </button>
-            <button className="btn btn-circle bg-gray-100 hover:bg-gray-200">
-              <FaGithub className="text-gray-700" />
-            </button>
+    <div className="flex h-screen bg-white">
+      {/* Left Section: Signup Form */}
+      <div className="w-1/2 flex flex-col justify-center items-center px-10">
+        <h2 className="text-3xl font-bold text-black mb-4">Get Started Now</h2>
+        <p className="text-gray-500 mb-6">
+          Enter your credentials to access your account
+        </p>
+        <form className="w-full max-w-md space-y-4">
+          <input
+            type="text"
+            placeholder="Name"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <div className="flex items-center gap-2">
+            <input type="checkbox" id="terms" />
+            <label htmlFor="terms" className="text-sm text-gray-500">
+              I agree to the terms & policy
+            </label>
           </div>
-
-          <p className="text-center text-gray-500 mt-6">
-            Already have an account?{" "}
-            <Link to="/login" className="text-steelBlue font-medium underline">
-              Log In
-            </Link>
-          </p>
+          <button
+            type="submit"
+            className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+          >
+            Sign Up
+          </button>
+        </form>
+        <div className="flex items-center mt-4 space-x-4">
+          <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+            Sign in with Google
+          </button>
+          <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+            Sign in with Apple
+          </button>
         </div>
+        <p className="mt-4 text-sm text-gray-500">
+          Have an Account?{" "}
+          <a href="#" className="text-blue-500 hover:underline">
+            Sign In
+          </a>
+        </p>
       </div>
 
-      {/* Right Section - Image */}
-      <div className="hidden lg:flex items-center justify-end w-full lg:w-[55%] h-screen">
+      {/* Right Section: Image */}
+      <div className="w-1/2 h-full overflow-auto flex justify-end">
         <img
-          src={SignUpImage}
-          alt="Sign Up Illustration"
-          className="w-full h-full object-contain"
+          src="/assets/images/signup.png"
+          alt="Signup"
+          className="h-auto w-auto"
+          style={{ maxHeight: "100vh", display:"block" }}
         />
       </div>
     </div>
