@@ -16,17 +16,17 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Name"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
             />
             <input
               type="email"
               placeholder="Email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
             />
             <input
               type="password"
               placeholder="Password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
             />
             <div className="flex items-center gap-2">
               <input type="checkbox" id="terms" />
@@ -34,19 +34,28 @@ const Signup = () => {
                 I agree to the terms & policy
               </label>
             </div>
-            <button
-              type="submit"
-              className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-            >
+            <button type="submit" className="btn w-full normal">
               Sign Up
             </button>
           </form>
           <div className="flex items-center mt-4 space-x-4">
+            {/* Sign in with Google */}
             <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+              <img
+                src="/assets/images/google.png"
+                alt="Google"
+                className="w-5 h-5 mr-2"
+              />
               Sign in with Google
             </button>
+            {/* Sign in with GitHub */}
             <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
-              Sign in with Apple
+              <img
+                src="/assets/images/github.png"
+                alt="GitHub"
+                className="w-5 h-5 mr-2"
+              />
+              Sign in with GitHub
             </button>
           </div>
           <p className="mt-4 text-sm text-black">
@@ -65,7 +74,7 @@ const Signup = () => {
           alt="Signup"
           className="h-auto"
           style={{
-            width: "75%", // Set the image width to 70% of the container
+            width: "75%", // Set the image width to 75% of the container
             maxHeight: "100vh", // Ensure it doesn’t exceed the viewport height
             display: "block",
           }}
