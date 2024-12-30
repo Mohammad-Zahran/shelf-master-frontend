@@ -79,14 +79,14 @@ const Products = () => {
           {/* All Category btns */}
           <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex=wrap">
             <button onClick={showAll} className={selectedCategory === "all" ? "active" : ""}>All</button>
-            <button onClick={() => filterItems("Heavy-Duty")}>Heavy-Duty</button>
-            <button onClick={() => filterItems("Adjustable")}>Adjustable</button>
-            <button onClick={() => filterItems("Modern")}>Modern</button>
-            <button onClick={() => filterItems("Rustic")}>Rustic</button>
-            <button onClick={() => filterItems("Industrial")}>Industrial</button>
-            <button onClick={() => filterItems("Decorative")}>Decorative</button>
-            <button onClick={() => filterItems("Kids")}>Kids</button>
-            <button onClick={() => filterItems("Luxury")}>Luxury</button>
+            <button onClick={() => filterItems("Heavy-Duty")} className={selectedCategory === "Heavy-Duty" ? "active" : ""}>Heavy-Duty</button>
+            <button onClick={() => filterItems("Adjustable")} className={selectedCategory === "Adjustable" ? "active" : ""}>Adjustable</button>
+            <button onClick={() => filterItems("Modern")} className={selectedCategory === "Modern" ? "active" : ""}>Modern</button>
+            <button onClick={() => filterItems("Rustic")} className={selectedCategory === "Rustic" ? "active" : ""}>Rustic</button>
+            <button onClick={() => filterItems("Industrial")} className={selectedCategory === "Industrial" ? "active" : ""}>Industrial</button>
+            <button onClick={() => filterItems("Decorative")} className={selectedCategory === "Decorative" ? "active" : ""}>Decorative</button>
+            <button onClick={() => filterItems("Kids")} className={selectedCategory === "Kids" ? "active" : ""}>Kids</button>
+            <button onClick={() => filterItems("Luxury")} className={selectedCategory === "Luxury" ? "active" : ""}>Luxury</button>
           </div>
         </div>
 
