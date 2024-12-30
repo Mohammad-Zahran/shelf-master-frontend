@@ -76,14 +76,18 @@ const Products = () => {
       <div className="section-container">
         {/* filtering and sorting */}
         <div className="mt-24">
-            {/* All Category btns */}
-            <div>
-                <button>All</button>
-                <button>All</button>
-                <button>All</button>
-                <button>All</button>
-                <button>All</button>
-            </div>
+          {/* All Category btns */}
+          <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex=wrap">
+            <button onClick={showAll} className={selectedCategory === "all" ? "active" : ""}>All</button>
+            <button onClick={() => filterItems("Heavy-Duty")}>Heavy-Duty</button>
+            <button onClick={() => filterItems("Adjustable")}>Adjustable</button>
+            <button onClick={() => filterItems("Modern")}>Modern</button>
+            <button onClick={() => filterItems("Rustic")}>Rustic</button>
+            <button onClick={() => filterItems("Industrial")}>Industrial</button>
+            <button onClick={() => filterItems("Decorative")}>Decorative</button>
+            <button onClick={() => filterItems("Kids")}>Kids</button>
+            <button onClick={() => filterItems("Luxury")}>Luxury</button>
+          </div>
         </div>
 
         {/* Product card */}

@@ -180,7 +180,7 @@ nav {
 .active {
   text-decoration: underline;
   text-underline-offset: 5px;
-  color: #39db4a;
+  color: steelblue;
 }
 
 /* Chrome, Safari, Edge, Opera */
