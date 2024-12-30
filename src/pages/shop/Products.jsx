@@ -13,7 +13,9 @@ const Products = () => {
       try {
         const response = await fetch("/product.json");
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
+        setProduct(data);
+        setFilteredItem(data);
       } catch (error) {
         console.log("Error fetching the products", error);
       }
