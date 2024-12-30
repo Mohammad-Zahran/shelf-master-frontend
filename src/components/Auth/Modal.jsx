@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
@@ -13,9 +13,21 @@ const Modal = () => {
     formState: { errors },
   } = useForm();
 
-  const { signUpWithGmail } = useContext(AuthContext);
+  const { signUpWithGmail, login } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    const email = data.email;
+    const password = data.password;
+    // console.log(email, password);
+    login(email, password).then((result) => {
+      const user = result.user;
+      alert("Login Successful");
+    }).catch((error) => {
+      const errorMessage = error.message;
+      setErrorMessage("Provide a correct email and password")
+    })
+  };
 
   // google signin
   const handleLogin = () => {
@@ -69,6 +81,9 @@ const Modal = () => {
             </div>
 
             {/* error */}
+            {
+              errorMessage ? <p className="text-red text-xs italic">{setErrorMessage}</p> : ""
+            }
 
             {/* login btn */}
             <div className="form-control mt-6">
