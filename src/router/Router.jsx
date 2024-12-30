@@ -5,6 +5,7 @@ import FloorPlanner from "../pages/floor-planner/FloorPlanner";
 import { FloorPlannerProvider } from "../contexts/FloorPlannerContext";
 import Signup from "../components/Auth/Signup";
 import UpdateProfile from "../pages/dashboard/UpdateProfile";
+import Products from "../pages/shop/Products";
 
 const router = createBrowserRouter([
   {
@@ -17,8 +18,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/update-profile",
-        element: <UpdateProfile />
-      }
+        element: <UpdateProfile />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
+      },
     ],
   },
   {
@@ -31,8 +36,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <Signup />
-  }
+    element: <Signup />,
+  },
 ]);
 
 export default router;
