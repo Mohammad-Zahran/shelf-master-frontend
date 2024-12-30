@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../public/assets/images/logo.png";
 import { FaRegUser } from "react-icons/fa";
 import Modal from "./Auth/Modal";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const Navbar = () => {
   const navItems = (
@@ -36,6 +37,10 @@ const Navbar = () => {
       </li>
     </>
   );
+
+  const {user} = useContext(AuthContext)
+  console.log(user);
+  
 
   return (
     <header className="max-w-screen-2xl container mx-auto">
