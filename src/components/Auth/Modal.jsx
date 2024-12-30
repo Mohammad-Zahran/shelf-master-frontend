@@ -13,9 +13,19 @@ const Modal = () => {
     formState: { errors },
   } = useForm();
 
-  const {} = useContext(AuthContext);
+  const { signUpWithGmail } = useContext(AuthContext);
 
   const onSubmit = (data) => console.log(data);
+
+  // google signin
+  const handleLogin = () => {
+    signUpWithGmail()
+      .then((result) => {
+        const user = result.user;
+        alert("Login successfull");
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <dialog id="my_modal_5" className="modal modal-middle sm:modal-middle">
@@ -73,16 +83,17 @@ const Modal = () => {
             </p>
 
             <button
-            htmlFor="my_modal_5"
-            onClick={() => document.getElementById("my_modal_5").close()}
-            className="btn normal btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              htmlFor="my_modal_5"
+              onClick={() => document.getElementById("my_modal_5").close()}
+              className="btn normal btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
               ✕
             </button>
           </form>
 
           {/* Social sign in */}
           <div className="text-center space-3 mb-5">
-            <button className="btn btn-circle normal">
+            <button className="btn btn-circle normal" onClick={handleLogin}>
               <FaGoogle />
             </button>
             <button className="btn btn-circle normal">
