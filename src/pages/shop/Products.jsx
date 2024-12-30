@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const Products = () => {
   const [product, setProduct] = useState([]);
-  const [filteredItem, setFilteredItem] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOption, setSortOption] = useState("default");
 
@@ -23,6 +23,17 @@ const Products = () => {
     // call the function
     fetchData();
   }, []);
+
+  // filtering data based on category
+  const filterItems = (category) => {
+    const filtered =
+      category === "all"
+        ? product
+        : product.filter((item) => item.category === category);
+
+    setFilteredItems(filtered);
+    setSelectedCategory(category);
+  };
 
   return (
     <div>
