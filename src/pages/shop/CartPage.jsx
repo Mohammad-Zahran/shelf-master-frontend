@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useCart from "./../../hooks/useCart";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -7,7 +7,39 @@ import { AuthContext } from "../../contexts/AuthProvider";
 const CartPage = () => {
   const [cart, refetch] = useCart();
   const { user } = useContext(AuthContext);
+  const [cartItems, setCartItems] = useState([]);
+  const [exchangeRate, setExchangeRate] = useState(null); // State to store exchange rate
+  const [currency, setCurrency] = useState("USD"); // Default currency
 
+  useEffect(() => {
+    fetchExchangeRate();
+  }, []);
+
+  const fetchExchangeRate = async () => {
+    try {
+      const response = await fetch(
+        "https://api.exchangerate-api.com/v4/latest/USD"
+      );
+      const data = await response.json();
+      setExchangeRate(data.rates.LBP); // Assuming LBP is the desired currency
+    } catch (error) {
+      console.error("Error fetching exchange rate:", error);
+    }
+  };
+
+  // Convert USD to LBP
+  const convertCurrency = (price) => {
+    if (currency === "LBP" && exchangeRate) {
+      return (price * exchangeRate).toFixed(2);
+    }
+    return price.toFixed(2);
+  };
+
+  // Calculate the total price for each item in the cart
+  const calculateTotalPrice = (item) => {
+    return convertCurrency(item.price) * item.quantity;
+  };
+  
   // Handle quantity increase
   const handleIncrease = async (item) => {
     try {
