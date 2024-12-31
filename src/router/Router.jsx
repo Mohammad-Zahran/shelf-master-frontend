@@ -7,6 +7,7 @@ import Signup from "../components/Auth/Signup";
 import UpdateProfile from "../pages/dashboard/UpdateProfile";
 import Products from "../pages/shop/Products";
 import PrivateRouter from "./../PrivateRouter/PrivateRouter";
+import CartPage from "../pages/shop/CartPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             <Products />
           </PrivateRouter>
         ),
+      },
+      {
+        path: "/cart-page",
+        element: <CartPage />
       },
     ],
   },
