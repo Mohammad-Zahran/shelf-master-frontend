@@ -181,8 +181,8 @@
         "name": "Industrial Steel Shelf",
         "description": "Heavy-duty industrial shelf for warehouses.",
         "images": [
-         "/assets/images/image.png",
-         "/assets/images/image (1).png",
+         "images/image.png",
+         "images/image (1).png",
          "/assets/images/image (2).png"
         ],
         "category": "Heavy-Duty",
@@ -237,7 +237,7 @@
           "__v": 6
         },
         {
-          "_id": "17636ee08a5dfa75bbcba6c2",
+          "_id": "7636ee08a5dfa75bbcba6c2",
           "name": "Adjustable Aluminum Shelf",
           "description": "Lightweight and durable aluminum shelf, perfect for small spaces.",
           "images": [

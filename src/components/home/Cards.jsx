@@ -21,19 +21,7 @@ const Cards = ({
   buttonText = "Add to Cart", // Customize button text
   buttonClass = "bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue", // Button styling
 }) => {
-  const {
-    _id,
-    name,
-    description,
-    images,
-    category,
-    dimensions,
-    material,
-    loadCapacity,
-    price,
-    stock,
-    reviews,
-  } = item;
+  const { _id, name, images, price } = item;
   const ref = useRef(null);
   const imageRef = useRef(null);
   const [isLiked, setIsLiked] = useState(false);
@@ -44,24 +32,28 @@ const Cards = ({
 
   // add to cart btn
   const handleAddtoCart = (item) => {
-    // console.log("btn is clicked", item);
+    console.log("btn is clicked", item);
     if (user && user?.email) {
       const cartItem = {
-        productItemId: _id,
+        productId: _id, 
         name,
         quantity: 1,
-        description,
         images,
-        category,
-        dimensions,
-        material,
-        loadCapacity,
         price,
-        stock,
-        reviews,
         email: user.email,
       };
-      console.log(cartItem);
+
+      fetch("http://localhost:8080/carts", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(cartItem),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
     }
   };
 
