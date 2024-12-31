@@ -8,15 +8,80 @@ const CartPage = () => {
   const [cart, refetch] = useCart();
   const { user } = useContext(AuthContext);
 
+  // Handle quantity increase
+  const handleIncrease = async (item) => {
+    try {
+      const response = await fetch(`http://localhost:6001/carts/${item._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity: item.quantity + 1 }),
+      });
 
-  const handleIncrease = (item) => {
-    console.log(item._id);
-  }
-
-  // handleDecrease function
-  const handleDecrease = (item) => {
-    console.log(item._id);
+      if (response.ok) {
+        const updatedCart = cartItems.map((cartItem) => {
+          if (cartItem.id === item.id) {
+            return {
+              ...cartItem,
+              quantity: cartItem.quantity + 1,
+            };
+          }
+          return cartItem;
+        });
+        await refetch();
+        setCartItems(updatedCart);
+      } else {
+        console.error("Failed to update quantity");
+      }
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
   };
+
+  // Handle quantity decrease
+  const handleDecrease = async (item) => {
+    if (item.quantity > 1) {
+      try {
+        const response = await fetch(
+          `http://localhost:6001/carts/${item._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ quantity: item.quantity - 1 }),
+          }
+        );
+
+        if (response.ok) {
+          const updatedCart = cartItems.map((cartItem) => {
+            if (cartItem.id === item.id) {
+              return {
+                ...cartItem,
+                quantity: cartItem.quantity - 1,
+              };
+            }
+            return cartItem;
+          });
+          await refetch();
+          setCartItems(updatedCart);
+        } else {
+          console.error("Failed to update quantity");
+        }
+      } catch (error) {
+        console.error("Error updating quantity:", error);
+      }
+    }
+  };
+
+  // Calculate the cart subtotal
+  const cartSubtotal = cart.reduce((total, item) => {
+    return total + calculateTotalPrice(item);
+  }, 0);
+
+  // Calculate the order total
+  const orderTotal = cartSubtotal;
 
   // handledelete btn
   const handleDelete = (item) => {
@@ -112,7 +177,12 @@ const CartPage = () => {
                       onChange={() => console.log(item.quantity)}
                       className="w-10 mx-2 text-center overflow-hidden appearance-none"
                     />
-                    <button className="btn normal btn-xs" onClick={() => handleIncrease(item)}>+</button>
+                    <button
+                      className="btn normal btn-xs"
+                      onClick={() => handleIncrease(item)}
+                    >
+                      +
+                    </button>
                   </td>
                   <td>{item.price}</td>
                   <th>
