@@ -22,7 +22,7 @@ const Cards = ({
   buttonText = "Add to Cart", // Customize button text
   buttonClass = "bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue", // Button styling
 }) => {
-  const { _id, name, images, price } = item;
+  const { _id, name, images, material, price } = item;
   const ref = useRef(null);
   const imageRef = useRef(null);
   const [isLiked, setIsLiked] = useState(false);
@@ -41,6 +41,7 @@ const Cards = ({
         name,
         quantity: 1,
         images,
+        material,
         price,
         email: user.email,
       };
