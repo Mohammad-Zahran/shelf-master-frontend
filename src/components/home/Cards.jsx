@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   motion,
   useMotionTemplate,
@@ -31,9 +31,10 @@ const Cards = ({
   const { user } = useContext(AuthContext);
   // console.log(user)
 
-  // add to cart btn
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const handleAddtoCart = (item) => {
-    console.log("btn is clicked", item);
     if (user && user?.email) {
       const cartItem = {
         productId: _id,
@@ -53,22 +54,14 @@ const Cards = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data); // Log the response to debug
+          console.log(data);
           if (data?.cart) {
-            // Check if 'cart' exists in the response
             Swal.fire({
               position: "top-end",
               icon: "success",
               title: "Item added to cart successfully!",
               showConfirmButton: false,
               timer: 1500,
-            });
-          } else {
-            // Handle the case where adding to cart fails
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong! Please try again.",
             });
           }
         })
@@ -77,15 +70,23 @@ const Cards = ({
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Unable to add item to cart. Please check your connection.",
+            text: "Something went wrong! Please try again later.",
           });
         });
     } else {
-      // Handle unauthenticated user
+      // The else block should now handle the case when the user is not logged in
       Swal.fire({
+        title: "Authentication Required",
+        text: "You need to log in to add items to the cart.",
         icon: "warning",
-        title: "Not Logged In",
-        text: "Please log in to add items to your cart.",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login Now",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/signup", { state: { from: location } });
+        }
       });
     }
   };
