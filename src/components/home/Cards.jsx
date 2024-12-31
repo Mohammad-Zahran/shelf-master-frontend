@@ -9,6 +9,7 @@ import {
 import { FaHeart } from "react-icons/fa";
 import { gsap } from "gsap";
 import { AuthContext } from "../../contexts/AuthProvider";
+import Swal from "sweetalert2";
 
 const ROTATION_RANGE = 20;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -35,7 +36,7 @@ const Cards = ({
     console.log("btn is clicked", item);
     if (user && user?.email) {
       const cartItem = {
-        productId: _id, 
+        productId: _id,
         name,
         quantity: 1,
         images,
@@ -52,8 +53,40 @@ const Cards = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          console.log(data); // Log the response to debug
+          if (data?.cart) {
+            // Check if 'cart' exists in the response
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Item added to cart successfully!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            // Handle the case where adding to cart fails
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong! Please try again.",
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error adding to cart:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Unable to add item to cart. Please check your connection.",
+          });
         });
+    } else {
+      // Handle unauthenticated user
+      Swal.fire({
+        icon: "warning",
+        title: "Not Logged In",
+        text: "Please log in to add items to your cart.",
+      });
     }
   };
 
