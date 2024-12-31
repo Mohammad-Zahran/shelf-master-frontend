@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import useCart from "./../../hooks/useCart";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const CartPage = () => {
   const [cart, refetch] = useCart();
+  const {user} = useContext(AuthContext);
 
   // handledelete btn
   const handleDelete = (item) => {
@@ -51,6 +53,7 @@ const CartPage = () => {
 
   return (
     <div className="section-container ">
+      {/* table for the cart  */}
       <div>
         <div className="overflow-x-auto">
           <table className="table">
@@ -101,6 +104,20 @@ const CartPage = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* customer details */}
+      <div className="my-12">
+        <div className="md:w-1/2 space-y-3">
+        <h3 className="font-medium">Shopping Details</h3>
+        <p>Name: {user.displayName}</p>
+        <p>Email: {user.email}</p>
+        <p>User_id: {user.uid}</p>
+        <p>Total Items: {cart.length}</p>
+        <p>Total Price: $0.00</p>
+        <button className="btn normal">Procceed Checkout</button>
+        </div>
+        <div className="md:w-1/2 space-y-3"></div>
       </div>
     </div>
   );
