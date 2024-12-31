@@ -6,6 +6,7 @@ import { FloorPlannerProvider } from "../contexts/FloorPlannerContext";
 import Signup from "../components/Auth/Signup";
 import UpdateProfile from "../pages/dashboard/UpdateProfile";
 import Products from "../pages/shop/Products";
+import PrivateRouter from "./../PrivateRouter/PrivateRouter";
 
 const router = createBrowserRouter([
   {
@@ -22,16 +23,22 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Products />,
+        element: (
+          <PrivateRouter>
+            <Products />
+          </PrivateRouter>
+        ),
       },
     ],
   },
   {
     path: "/floor-planner",
     element: (
-      <FloorPlannerProvider>
-        <FloorPlanner />
-      </FloorPlannerProvider>
+      <PrivateRouter>
+        <FloorPlannerProvider>
+          <FloorPlanner />
+        </FloorPlannerProvider>
+      </PrivateRouter>
     ),
   },
   {
