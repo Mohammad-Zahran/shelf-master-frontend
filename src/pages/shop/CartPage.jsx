@@ -18,14 +18,37 @@ const CartPage = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
+        fetch(`http://localhost:8080/carts/${item._id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              refetch();
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: data.message || "Failed to delete the item.",
+                icon: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            Swal.fire({
+              title: "Error!",
+              text: "Something went wrong.",
+              icon: "error",
+            });
+          });
       }
     });
   };
+
   return (
     <div className="section-container ">
       <div>
