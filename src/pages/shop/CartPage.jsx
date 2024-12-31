@@ -8,6 +8,16 @@ const CartPage = () => {
   const [cart, refetch] = useCart();
   const { user } = useContext(AuthContext);
 
+
+  const handleIncrease = (item) => {
+    console.log(item._id);
+  }
+
+  // handleDecrease function
+  const handleDecrease = (item) => {
+    console.log(item._id);
+  };
+
   // handledelete btn
   const handleDelete = (item) => {
     Swal.fire({
@@ -89,7 +99,21 @@ const CartPage = () => {
                       {item.material}
                     </span>
                   </td>
-                  <td>{item.quantity}</td>
+                  <td>
+                    <button
+                      className="btn normal btn-xs"
+                      onClick={() => handleDecrease(item)}
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      onChange={() => console.log(item.quantity)}
+                      className="w-10 mx-2 text-center overflow-hidden appearance-none"
+                    />
+                    <button className="btn normal btn-xs" onClick={() => handleIncrease(item)}>+</button>
+                  </td>
                   <td>{item.price}</td>
                   <th>
                     <button
