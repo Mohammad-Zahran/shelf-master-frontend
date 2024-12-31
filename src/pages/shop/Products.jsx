@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Cards from "../../components/home/Cards";
 import { LuSettings2 } from "react-icons/lu";
+import { IoSearch } from "react-icons/io5";
 
 const Products = () => {
   const [product, setProduct] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOption, setSortOption] = useState("default");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8);
 
-  // loading data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +26,6 @@ const Products = () => {
     fetchData();
   }, []);
 
-  // filtering data based on category
   const filterItems = (category) => {
     const filtered =
       category === "all"
@@ -37,14 +37,12 @@ const Products = () => {
     setCurrentPage(1);
   };
 
-  // show all data function
   const showAll = () => {
     setFilteredItems(product);
     setSelectedCategory("all");
     setCurrentPage(1);
   };
 
-  // sorting based on A-Z, Low-High pricing
   const handleSortChange = (option) => {
     setSortOption(option);
 
@@ -70,7 +68,15 @@ const Products = () => {
     setCurrentPage(1);
   };
 
-  // Pagination logic:
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    const filtered = product.filter((item) =>
+      item.name.toLowerCase().includes(term.toLowerCase())
+    );
+    setFilteredItems(filtered);
+    setCurrentPage(1);
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
@@ -78,11 +84,9 @@ const Products = () => {
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
   return (
-    <div>
-      {/* Product shop section */}
+    <div className="mb-12">
       <div className="section-container">
-        {/* Filtering and sorting */}
-        <div className="mt-24 flex flex-col md:flex-row flex-wrap md:justify-between items-center space-y-3 mb-8">
+        <div className="mt-16 flex flex-col md:flex-row flex-wrap md:justify-between items-center space-y-3 mb-8">
           {/* Category Buttons */}
           <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap">
             <button
@@ -141,8 +145,21 @@ const Products = () => {
             </button>
           </div>
 
-          {/* Sorting */}
-          <div className="flex justify-end items-center mb-2 rounded-sm">
+          {/* Sorting and Search */}
+          <div className="flex justify-end items-center space-x-4">
+            {/* Search Bar */}
+            <div className="relative flex items-center">
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchTerm}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="pl-8 pr-2 py-1 rounded-sm border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
+              />
+              <IoSearch className="absolute left-2 text-gray-500 h-4 w-4 pointer-events-none" />
+            </div>
+
+            {/* Sorting Dropdown */}
             <div className="relative">
               <LuSettings2 className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4 pointer-events-none" />
               <select
@@ -178,7 +195,7 @@ const Products = () => {
             onClick={() => setCurrentPage(index + 1)}
             className={`px-3 py-1 rounded ${
               currentPage === index + 1
-                ? "bg-blue-500 text-white"
+                ? "bg-steelBlue text-white"
                 : "bg-gray-200 text-gray-700"
             }`}
           >
