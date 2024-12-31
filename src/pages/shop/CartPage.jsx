@@ -3,6 +3,7 @@ import useCart from "./../../hooks/useCart";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
   const [cart, refetch] = useCart();
@@ -39,30 +40,25 @@ const CartPage = () => {
   const calculateTotalPrice = (item) => {
     return convertCurrency(item.price) * item.quantity;
   };
-  
-  // Handle quantity increase
+
   const handleIncrease = async (item) => {
     try {
-      const response = await fetch(`http://localhost:6001/carts/${item._id}`, {
+      const response = await fetch(`http://localhost:8080/carts/${item._id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ quantity: item.quantity + 1 }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: item.productId,
+          name: item.name,
+          images: item.images,
+          material: item.material,
+          price: item.price,
+          quantity: item.quantity + 1,
+          email: user.email,
+        }),
       });
 
       if (response.ok) {
-        const updatedCart = cartItems.map((cartItem) => {
-          if (cartItem.id === item.id) {
-            return {
-              ...cartItem,
-              quantity: cartItem.quantity + 1,
-            };
-          }
-          return cartItem;
-        });
-        await refetch();
-        setCartItems(updatedCart);
+        refetch();
       } else {
         console.error("Failed to update quantity");
       }
@@ -71,39 +67,36 @@ const CartPage = () => {
     }
   };
 
-  // Handle quantity decrease
   const handleDecrease = async (item) => {
     if (item.quantity > 1) {
       try {
         const response = await fetch(
-          `http://localhost:6001/carts/${item._id}`,
+          `http://localhost:8080/carts/${item._id}`,
           {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ quantity: item.quantity - 1 }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              productId: item.productId,
+              name: item.name,
+              images: item.images,
+              material: item.material,
+              price: item.price,
+              quantity: item.quantity - 1, // Decrease quantity
+              email: user.email,
+            }),
           }
         );
 
         if (response.ok) {
-          const updatedCart = cartItems.map((cartItem) => {
-            if (cartItem.id === item.id) {
-              return {
-                ...cartItem,
-                quantity: cartItem.quantity - 1,
-              };
-            }
-            return cartItem;
-          });
-          await refetch();
-          setCartItems(updatedCart);
+          refetch();
         } else {
-          console.error("Failed to update quantity");
+          console.error("Failed to decrease quantity");
         }
       } catch (error) {
-        console.error("Error updating quantity:", error);
+        console.error("Error decreasing quantity:", error);
       }
+    } else {
+      console.warn("Quantity cannot be less than 1");
     }
   };
 
@@ -216,7 +209,12 @@ const CartPage = () => {
                       +
                     </button>
                   </td>
-                  <td>{item.price}</td>
+                  <td>
+                    <td>
+                      {currency === "LBP" ? "LBP" : "$"}{" "}
+                      {convertCurrency(item.price * item.quantity)}
+                    </td>
+                  </td>
                   <th>
                     <button
                       className="btn btn-ghost text-red-600 btn-xs"
@@ -246,8 +244,24 @@ const CartPage = () => {
         <div className="md:w-1/2 space-y-3">
           <h3 className="font-medium text-lg">Shopping Details</h3>
           <p>Total Items: {cart.length}</p>
-          <p>Total Price: $0.00</p>
-          <button className="btn normal">Proceed to Checkout</button>
+          <p>
+            Total Price:{" "}
+            <span id="total-price">
+              {currency === "LBP" ? "LBP" : "$"} {orderTotal.toFixed(2)}
+            </span>{" "}
+            ({currency})
+          </p>
+          <button
+            className="btn normal btn-md bg-green text-white px-8 py-1 mt-5"
+            onClick={() => setCurrency(currency === "USD" ? "LBP" : "USD")}
+          >
+            Convert to {currency === "USD" ? "LBP" : "USD"}
+          </button>
+          <Link to="/process-checkout">
+            <button className="btn normal btn-md bg-green text-white px-8 py-1 mt-5">
+              Proceed to Checkout
+            </button>
+          </Link>
         </div>
       </div>
     </div>
