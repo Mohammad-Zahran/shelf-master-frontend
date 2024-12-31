@@ -6,7 +6,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 
 const CartPage = () => {
   const [cart, refetch] = useCart();
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   // handledelete btn
   const handleDelete = (item) => {
@@ -107,17 +107,22 @@ const CartPage = () => {
       </div>
 
       {/* customer details */}
-      <div className="my-12">
+      <div className="my-12 flex flex-col md:flex-row justify-between items-start space-y-6 md:space-y-0 md:space-x-6">
+        {/* Customer Details Section */}
         <div className="md:w-1/2 space-y-3">
-        <h3 className="font-medium">Shopping Details</h3>
-        <p>Name: {user.displayName}</p>
-        <p>Email: {user.email}</p>
-        <p>User_id: {user.uid}</p>
-        <p>Total Items: {cart.length}</p>
-        <p>Total Price: $0.00</p>
-        <button className="btn normal">Procceed Checkout</button>
+          <h3 className="font-medium text-lg">Customer Details</h3>
+          <p>Name: {user.displayName}</p>
+          <p>Email: {user.email}</p>
+          <p>User ID: {user.uid}</p>
         </div>
-        <div className="md:w-1/2 space-y-3"></div>
+
+        {/* Shopping Details Section */}
+        <div className="md:w-1/2 space-y-3">
+          <h3 className="font-medium text-lg">Shopping Details</h3>
+          <p>Total Items: {cart.length}</p>
+          <p>Total Price: $0.00</p>
+          <button className="btn normal">Proceed to Checkout</button>
+        </div>
       </div>
     </div>
   );
