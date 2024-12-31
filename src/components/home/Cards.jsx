@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   motion,
@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { FaHeart } from "react-icons/fa";
 import { gsap } from "gsap";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const ROTATION_RANGE = 20;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -19,13 +20,50 @@ const Cards = ({
   imageRatio = "70%", // Customize image height ratio
   buttonText = "Add to Cart", // Customize button text
   buttonClass = "bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue", // Button styling
-  onButtonClick, // Button click handler
 }) => {
+  const {
+    _id,
+    name,
+    description,
+    images,
+    category,
+    dimensions,
+    material,
+    loadCapacity,
+    price,
+    stock,
+    reviews,
+  } = item;
   const ref = useRef(null);
   const imageRef = useRef(null);
   const [isLiked, setIsLiked] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const { user } = useContext(AuthContext);
+  // console.log(user)
+
+  // add to cart btn
+  const handleAddtoCart = (item) => {
+    // console.log("btn is clicked", item);
+    if (user && user?.email) {
+      const cartItem = {
+        productItemId: _id,
+        name,
+        quantity: 1,
+        description,
+        images,
+        category,
+        dimensions,
+        material,
+        loadCapacity,
+        price,
+        stock,
+        reviews,
+        email: user.email,
+      };
+      console.log(cartItem);
+    }
+  };
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -150,7 +188,7 @@ const Cards = ({
           </p>
           <button
             className={`text-sm font-medium py-1 px-3 rounded-md transition ${buttonClass}`}
-            onClick={() => onButtonClick && onButtonClick(item)}
+            onClick={() => handleAddtoCart(item)}
           >
             {buttonText}
           </button>
