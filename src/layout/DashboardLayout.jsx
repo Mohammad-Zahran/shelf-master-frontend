@@ -1,35 +1,27 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import Topbar from "../components/Topbar"; // Import the Topbar component
 
 const DashboardLayout = () => {
   return (
     <div>
-      <div className="drawer lg:drawer-open">
-        <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
-          {/* Page content here */}
-          <label
-            htmlFor="my-drawer-2"
-            className="btn btn-primary drawer-button lg:hidden"
-          >
-            Open drawer
-          </label>
-        </div>
-        <div className="drawer-side">
-          <label
-            htmlFor="my-drawer-2"
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          ></label>
-          <ul className="menu bg-[#F1F2F7] text-base-content min-h-full w-80 p-4">
-            {/* Sidebar content here */}
-            <li className="hover:bg-[#707FDD]/10 hover:text-[#5A6ACF]">
-              <a>Sidebar Item 1</a>
+      <Topbar /> {/* Add the Topbar component here */}
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="bg-[#F1F2F7] min-h-screen w-80 p-4">
+          <ul className="menu text-base-content">
+            <li className="admin-hover">
+              <Link to="/dashboard">Dashboard</Link>
             </li>
-            <li className="hover:bg-[#707FDD]/10 hover:text-[#5A6ACF]">
-              <a>Sidebar Item 2</a>
+            <li className="admin-hover">
+              <Link to={"/dashboard/users"}>All Users</Link>
             </li>
           </ul>
+        </div>
+        
+        {/* Main Content */}
+        <div className="flex-grow bg-white p-6">
+          <Outlet /> {/* Page content */}
         </div>
       </div>
     </div>
