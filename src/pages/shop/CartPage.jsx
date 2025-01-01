@@ -152,113 +152,80 @@ const CartPage = () => {
   };
 
   return (
-    <div className="section-container ">
-      {/* table for the cart  */}
-      <div>
-        <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
-            <thead className="bg-steelBlue text-white rounded-sm">
-              <tr>
-                <th>#</th>
-                <th>Shelf</th>
-                <th>Item Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {cart.map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img src={item.images[0]} alt="" />
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="font-medium">
-                    {item.name}
-                    <br />
-                    <span className="badge badge-ghost badge-sm">
-                      {item.material}
-                    </span>
-                  </td>
-                  <td>
+    <div className="container mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">Cart</h1>
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Cart Items Section */}
+        <div className="flex-1 bg-white shadow-lg rounded-md p-4">
+          <h2 className="text-xl font-medium mb-4">Your Items</h2>
+          <div className="space-y-4">
+            {cart.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-6 border-b pb-4"
+              >
+                <img
+                  src={item.images[0]}
+                  alt={item.name}
+                  className="w-24 h-24 object-cover rounded"
+                />
+                <div className="flex-1">
+                  <h3 className="font-medium text-lg">{item.name}</h3>
+                  <p className="text-gray-500">Material: {item.material}</p>
+                  <div className="flex items-center mt-2">
                     <button
-                      className="btn normal btn-xs"
+                      className="px-3 py-1 border"
                       onClick={() => handleDecrease(item)}
                     >
                       -
                     </button>
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      onChange={() => console.log(item.quantity)}
-                      className="w-10 mx-2 text-center overflow-hidden appearance-none"
-                    />
+                    <span className="px-4">{item.quantity}</span>
                     <button
-                      className="btn normal btn-xs"
+                      className="px-3 py-1 border"
                       onClick={() => handleIncrease(item)}
                     >
                       +
                     </button>
-                  </td>
-                  <td>
-                    <td>
-                      {currency === "LBP" ? "LBP" : "$"}{" "}
-                      {convertCurrency(item.price * item.quantity)}
-                    </td>
-                  </td>
-                  <th>
-                    <button
-                      className="btn btn-ghost text-red-600 btn-xs"
-                      onClick={() => handleDelete(item)}
-                    >
-                      <FaTrash />
-                    </button>
-                  </th>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* customer details */}
-      <div className="my-12 flex flex-col md:flex-row justify-between items-start space-y-6 md:space-y-0 md:space-x-6">
-        {/* Customer Details Section */}
-        <div className="md:w-1/2 space-y-3">
-          <h3 className="font-medium text-lg">Customer Details</h3>
-          <p>Name: {user.displayName}</p>
-          <p>Email: {user.email}</p>
-          <p>User ID: {user.uid}</p>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-lg font-medium">
+                    ${convertCurrency(item.price * item.quantity)}
+                  </p>
+                  <button
+                    className="text-blue-600 mt-2"
+                    onClick={() => handleDelete(item)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Shopping Details Section */}
-        <div className="md:w-1/2 space-y-3">
-          <h3 className="font-medium text-lg">Shopping Details</h3>
-          <p>Total Items: {cart.length}</p>
-          <p>
-            Total Price:{" "}
-            <span id="total-price">
-              {currency === "LBP" ? "LBP" : "$"} {orderTotal.toFixed(2)}
-            </span>{" "}
-            ({currency})
+        {/* Order Summary Section */}
+        <div className="w-full md:w-1/3 bg-white shadow-lg rounded-md p-4">
+          <h2 className="text-xl font-medium mb-4">Order Summary</h2>
+          <p className="mb-2">
+            Subtotal:{" "}
+            <span className="font-medium">${cartSubtotal.toFixed(2)}</span>
+          </p>
+          <p className="mb-2">
+            Estimated Tax: <span className="font-medium">$0.00</span>
+          </p>
+          <p className="mb-4">
+            Total:{" "}
+            <span className="font-medium">${cartSubtotal.toFixed(2)}</span>
           </p>
           <button
-            className="btn normal btn-md bg-green text-white px-8 py-1 mt-5"
+            className="w-full bg-blue-600 text-white py-2 rounded-md"
             onClick={() => setCurrency(currency === "USD" ? "LBP" : "USD")}
           >
             Convert to {currency === "USD" ? "LBP" : "USD"}
           </button>
           <Link to="/process-checkout">
-            <button className="btn normal btn-md bg-green text-white px-8 py-1 mt-5">
+            <button className="w-full bg-green-600 text-white py-2 mt-4 rounded-md">
               Proceed to Checkout
             </button>
           </Link>
