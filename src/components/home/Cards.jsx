@@ -18,9 +18,9 @@ const Cards = ({
   item,
   width = "320px",
   height = "420px",
-  imageRatio = "70%", // Customize image height ratio
-  buttonText = "Add to Cart", // Customize button text
-  buttonClass = "bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue", // Button styling
+  imageRatio = "70%",
+  buttonText = "Add to Cart",
+  buttonClass = "bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue",
 }) => {
   const { _id, name, images, material, price } = item;
   const ref = useRef(null);
@@ -33,6 +33,7 @@ const Cards = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Function to handle cart addition
   const handleAddtoCart = (item) => {
     if (user && user?.email) {
       const cartItem = {
@@ -89,6 +90,69 @@ const Cards = ({
     }
   };
 
+  // Handle toggling the wishlist
+  const handleToggleWishlist = async () => {
+    if (!user || !user.email) {
+      Swal.fire(
+        "Login Required",
+        "Please login to manage your wishlist",
+        "warning"
+      );
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/wishlists/toggle", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user.email,
+          product: { _id, name, images, material, price },
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Wishlist Toggle Response:", data);
+
+      if (response.ok) {
+        setIsLiked((prev) => !prev);
+
+        // Update localStorage
+        const savedWishlist = JSON.parse(
+          localStorage.getItem("wishlist") || "[]"
+        );
+
+        if (isLiked) {
+          const updatedWishlist = savedWishlist.filter(
+            (itemId) => itemId !== _id
+          );
+          localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+        } else {
+          savedWishlist.push(_id);
+          localStorage.setItem("wishlist", JSON.stringify(savedWishlist));
+        }
+
+        const message = isLiked ? "Removed from wishlist" : "Added to wishlist";
+        Swal.fire("Success", message, "success");
+      } else {
+        console.error("Failed to toggle wishlist:", data.message);
+      }
+    } catch (error) {
+      console.error("Error toggling wishlist:", error);
+    }
+  };
+
+  const fetchWishlistStatus = () => {
+    const savedWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    if (savedWishlist.includes(_id)) {
+      setIsLiked(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchWishlistStatus();
+  }, [user, _id]);
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -96,16 +160,6 @@ const Cards = ({
   const ySpring = useSpring(y);
 
   const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
-
-  useEffect(() => {
-    if (!isHovered) return;
-
-    const interval = setInterval(() => {
-      transitionToNextImage();
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [isHovered, currentImageIndex]);
 
   const transitionToNextImage = () => {
     const nextIndex = (currentImageIndex + 1) % item.images.length;
@@ -121,6 +175,16 @@ const Cards = ({
       });
     }
   };
+
+  useEffect(() => {
+    if (!isHovered) return;
+
+    const interval = setInterval(() => {
+      transitionToNextImage();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isHovered, currentImageIndex]);
 
   const handleMouseMove = (e) => {
     if (!ref.current) return;
@@ -151,7 +215,7 @@ const Cards = ({
   };
 
   const toggleLike = () => {
-    setIsLiked(!isLiked);
+    handleToggleWishlist();
 
     gsap.fromTo(
       ".fa-heart",
@@ -186,7 +250,10 @@ const Cards = ({
       </div>
 
       {/* Product Image */}
-      <div className="block overflow-hidden rounded-t-lg" style={{ height: imageRatio }}>
+      <div
+        className="block overflow-hidden rounded-t-lg"
+        style={{ height: imageRatio }}
+      >
         <img
           ref={imageRef}
           src={item.images[currentImageIndex]}
