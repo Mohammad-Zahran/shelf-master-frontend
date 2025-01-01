@@ -156,56 +156,62 @@ const CartPage = () => {
       <h1 className="text-2xl font-bold mb-6">Cart</h1>
       <div className="flex flex-col md:flex-row gap-6">
         {/* Cart Items Section */}
-        <div className="flex-1 bg-white shadow-lg rounded-md p-4">
+        <div className="flex-1 bg-white rounded-md p-4">
           <h2 className="text-xl font-medium mb-4">Your Items</h2>
-          <div className="space-y-4">
+          <div className="space-y-6">
             {cart.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-6 border-b pb-4"
+                className="relative flex gap-6 pb-6 border-b border-gray-300"
               >
                 <img
                   src={item.images[0]}
                   alt={item.name}
-                  className="w-24 h-24 object-cover rounded"
+                  className="w-32 h-32 object-cover rounded"
                 />
                 <div className="flex-1">
+                  {/* Name and Material */}
                   <h3 className="font-medium text-lg">{item.name}</h3>
-                  <p className="text-gray-500">Material: {item.material}</p>
-                  <div className="flex items-center mt-2">
+                  <p className="text-gray-500 mb-4">Material: {item.material}</p>
+  
+                  {/* Incrementer and Remove */}
+                  <div className="flex items-center">
+                    <div className="flex items-center border rounded p-1">
+                      <button
+                        className="px-3 py-1 border-r"
+                        onClick={() => handleDecrease(item)}
+                      >
+                        -
+                      </button>
+                      <span className="px-4">{item.quantity}</span>
+                      <button
+                        className="px-3 py-1 border-l"
+                        onClick={() => handleIncrease(item)}
+                      >
+                        +
+                      </button>
+                    </div>
                     <button
-                      className="px-3 py-1 border"
-                      onClick={() => handleDecrease(item)}
+                      className="ml-4 text-blue-600"
+                      onClick={() => handleDelete(item)}
                     >
-                      -
-                    </button>
-                    <span className="px-4">{item.quantity}</span>
-                    <button
-                      className="px-3 py-1 border"
-                      onClick={() => handleIncrease(item)}
-                    >
-                      +
+                      Remove
                     </button>
                   </div>
                 </div>
-                <div>
+                {/* Price */}
+                <div className="absolute top-0 right-0">
                   <p className="text-lg font-medium">
                     ${convertCurrency(item.price * item.quantity)}
                   </p>
-                  <button
-                    className="text-blue-600 mt-2"
-                    onClick={() => handleDelete(item)}
-                  >
-                    Remove
-                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
-
+  
         {/* Order Summary Section */}
-        <div className="w-full md:w-1/3 bg-white shadow-lg rounded-md p-4">
+        <div className="w-full md:w-1/3 bg-white rounded-md p-4">
           <h2 className="text-xl font-medium mb-4">Order Summary</h2>
           <p className="mb-2">
             Subtotal:{" "}
@@ -233,6 +239,7 @@ const CartPage = () => {
       </div>
     </div>
   );
-};
-
-export default CartPage;
+}
+  export default CartPage;
+  
+  
