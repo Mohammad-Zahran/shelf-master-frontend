@@ -8,6 +8,7 @@ import UpdateProfile from "../pages/dashboard/UpdateProfile";
 import Products from "../pages/shop/Products";
 import PrivateRouter from "./../PrivateRouter/PrivateRouter";
 import CartPage from "../pages/shop/CartPage";
+import WishListPage from "../pages/shop/WishListPage";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <CartPage />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/wishlist-page",
+        element: (
+          <PrivateRouter>
+            <WishListPage />
           </PrivateRouter>
         ),
       },
