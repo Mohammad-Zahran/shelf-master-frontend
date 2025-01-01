@@ -81,7 +81,7 @@ const Navbar = () => {
             <ul className="menu menu-horizontal px-1">{navItems}</ul>
           </div>
           <div className="navbar-end">
-            <Link to="favorites-page">
+            <Link to="wishlist-page">
               <label
                 tabIndex={0}
                 role="button"

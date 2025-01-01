@@ -160,7 +160,9 @@ const CartPage = () => {
       <div className="flex flex-wrap md:flex-nowrap gap-6">
         {/* Cart Items Section */}
         <div className="flex-1 bg-white rounded-md p-4 sm:p-6">
-          <h2 className="text-xl font-semibold mb-4 text-charcoal">Your Items</h2>
+          <h2 className="text-xl font-semibold mb-4 text-charcoal">
+            Your Items
+          </h2>
           <div className="space-y-6">
             {cart.map((item, index) => (
               <div
@@ -175,8 +177,10 @@ const CartPage = () => {
                 <div className="flex-1">
                   {/* Name and Material */}
                   <h3 className="font-medium text-lg">{item.name}</h3>
-                  <p className="text-gray-500 mb-4">Material: {item.material}</p>
-  
+                  <p className="text-gray-500 mb-4">
+                    Material: {item.material}
+                  </p>
+
                   {/* Incrementer and Remove */}
                   <div className="flex items-center">
                     <div className="flex items-center border rounded p-1">
@@ -212,7 +216,7 @@ const CartPage = () => {
             ))}
           </div>
         </div>
-  
+
         {/* Order Summary Section */}
         <div className="w-full sm:w-1/2 md:w-1/4 bg-white border border-gray-300 rounded-md p-4 sm:p-6">
           <h2 className="text-xl font-medium mb-4">Order Summary</h2>
@@ -246,6 +250,5 @@ const CartPage = () => {
       </div>
     </div>
   );
-  
 };
 export default CartPage;
