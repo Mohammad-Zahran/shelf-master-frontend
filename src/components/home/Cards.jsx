@@ -29,7 +29,6 @@ const Cards = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const { user } = useContext(AuthContext);
-  // console.log(user)
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,7 +54,6 @@ const Cards = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data?.cart) {
             Swal.fire({
               position: "top-end",
@@ -75,7 +73,6 @@ const Cards = ({
           });
         });
     } else {
-      // The else block should now handle the case when the user is not logged in
       Swal.fire({
         title: "Authentication Required",
         text: "You need to log in to add items to the cart.",
@@ -155,6 +152,12 @@ const Cards = ({
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
+
+    gsap.fromTo(
+      ".fa-heart",
+      { scale: 0.8 },
+      { scale: 1.2, duration: 0.2, ease: "back.out(2)" }
+    );
   };
 
   return (
@@ -171,20 +174,19 @@ const Cards = ({
       }}
       className="relative rounded-lg bg-white shadow-lg transition-all border-4 border-blue-300 mt-7"
     >
+      {/* Heart Icon */}
       <div
         onClick={toggleLike}
         style={{ transform: "translateZ(50px)" }}
-        className={`absolute top-2 right-2 z-10 cursor-pointer p-2 rounded-full transition-all ${
-          isLiked ? "text-red-500" : "text-gray-400"
+        className={`absolute top-2 right-2 z-20 cursor-pointer p-2 rounded-full transition-all ${
+          isLiked ? "text-steelBlue" : "text-gray-400"
         }`}
       >
-        <FaHeart className="h-5 w-5" />
+        <FaHeart className="h-5 w-5 fa-heart" />
       </div>
-      <Link
-        to={`/product/${item._id}`}
-        className="block overflow-hidden rounded-t-lg"
-        style={{ height: imageRatio }}
-      >
+
+      {/* Product Image */}
+      <div className="block overflow-hidden rounded-t-lg" style={{ height: imageRatio }}>
         <img
           ref={imageRef}
           src={item.images[currentImageIndex]}
@@ -194,7 +196,9 @@ const Cards = ({
             transform: "translateZ(30px)",
           }}
         />
-      </Link>
+      </div>
+
+      {/* Card Content */}
       <div
         className="p-3 flex flex-col justify-between"
         style={{
@@ -219,6 +223,15 @@ const Cards = ({
           >
             {buttonText}
           </button>
+        </div>
+        {/* See More Button */}
+        <div className="mt-3">
+          <Link
+            to={`/product/${item._id}`}
+            className="text-sm font-medium text-blue-500 hover:underline"
+          >
+            See More
+          </Link>
         </div>
       </div>
     </motion.div>
