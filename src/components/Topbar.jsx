@@ -10,32 +10,29 @@ const Topbar = () => {
 
   return (
     <div
-      className="flex items-center justify-between shadow-md border-b border-gray-300"
-      style={{ height: "60px" }}
+      className="flex flex-col lg:flex-row items-center justify-between shadow-md border-b border-gray-300"
+      style={{ height: "auto" }}
     >
       {/* Left Section with Background Color */}
       <a
         href="/"
-        className="flex admin-hover items-center px-4"
+        className="flex admin-hover items-center w-full lg:w-72 px-4 py-2"
         style={{
           backgroundColor: "#F1F2F7",
-          height: "100%",
-          minWidth: "320px", // Adjust the width to match the sidebar
         }}
       >
-        {/* Logo */}
         <img
           src="/assets/images/logotxt.png" // Path to the logo inside the public folder
           alt="Logo"
-          className="h-12 mr-3" // Adjust height and margin as needed
+          className="h-12 mr-3"
         />
         <div className="text-lg font-semibold">Admin Dashboard</div>
       </a>
 
       {/* Right Section */}
-      <div className="flex items-center space-x-4 flex-grow justify-between px-6">
+      <div className="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-4 w-full lg:w-auto px-6">
         {/* Search Box */}
-        <div className="relative flex items-center flex-grow max-w-[500px]">
+        <div className="relative flex items-center w-full max-w-full lg:max-w-[500px]">
           <input
             type="text"
             placeholder="Search"
