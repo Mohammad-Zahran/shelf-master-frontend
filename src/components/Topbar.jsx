@@ -9,10 +9,14 @@ const Topbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between shadow-md border-b border-gray-300" style={{ height: "60px" }}>
+    <div
+      className="flex items-center justify-between shadow-md border-b border-gray-300"
+      style={{ height: "60px" }}
+    >
       {/* Left Section with Background Color */}
-      <div
-        className="flex items-center px-4"
+      <a
+        href="/"
+        className="flex admin-hover items-center px-4"
         style={{
           backgroundColor: "#F1F2F7",
           height: "100%",
@@ -26,7 +30,7 @@ const Topbar = () => {
           className="h-12 mr-3" // Adjust height and margin as needed
         />
         <div className="text-lg font-semibold">Admin Dashboard</div>
-      </div>
+      </a>
 
       {/* Right Section */}
       <div className="flex items-center space-x-4 flex-grow justify-between px-6">
