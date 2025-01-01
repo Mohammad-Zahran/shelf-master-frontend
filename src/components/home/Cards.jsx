@@ -11,6 +11,8 @@ import { gsap } from "gsap";
 import { AuthContext } from "../../contexts/AuthProvider";
 import Swal from "sweetalert2";
 import useCart from "../../hooks/useCart";
+import useWishList from "../../hooks/useWishList";
+
 
 const ROTATION_RANGE = 20;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -31,6 +33,7 @@ const Cards = ({
   const [isHovered, setIsHovered] = useState(false);
   const { user } = useContext(AuthContext);
   const [cart, refetch] = useCart();
+  const [wishlist, refetch1] = useWishList();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -136,6 +139,7 @@ const Cards = ({
         }
 
         const message = isLiked ? "Removed from wishlist" : "Added to wishlist";
+        refetch1();
         Swal.fire("Success", message, "success");
       } else {
         console.error("Failed to toggle wishlist:", data.message);

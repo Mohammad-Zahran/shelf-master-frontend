@@ -71,27 +71,17 @@ const WishListPage = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          // Update local wishlist to remove the added item
-          setLocalWishlist((prev) =>
-            prev.filter((wishlistItem) => wishlistItem._id !== item._id)
-          );
-
-          // Refetch cart data
           refetchCart();
-
           Swal.fire({
-            title: "Success!",
-            text: "Item added to cart successfully!",
+            position: "top-end",
             icon: "success",
-            confirmButtonText: "OK",
+            title: "Item added to cart successfully!",
+            showConfirmButton: false,
+            timer: 1500,
           });
-        } else {
-          Swal.fire("Error!", data.message || "Failed to add item to cart.", "error");
         }
       })
-      .catch(() =>
-        Swal.fire("Error!", "Something went wrong while adding the item to the cart.", "error")
-      );
+      .catch(() => Swal.fire("Error!", "Something went wrong.", "error"));
   };
 
   const isItemInCart = (itemId) => {
