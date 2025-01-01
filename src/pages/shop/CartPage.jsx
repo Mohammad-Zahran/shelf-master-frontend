@@ -4,6 +4,7 @@ import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Link } from "react-router-dom";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 
 const CartPage = () => {
   const [cart, refetch] = useCart();
@@ -152,12 +153,14 @@ const CartPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Cart</h1>
+    <div className="section-container mx-auto p-6">
+      <h1 className="text-3xl font-bold ml-5 mb-6 text-charcoal">Cart</h1>
       <div className="flex flex-col md:flex-row gap-6">
         {/* Cart Items Section */}
         <div className="flex-1 bg-white rounded-md p-4">
-          <h2 className="text-xl font-medium mb-4">Your Items</h2>
+          <h2 className="text-xl font-semibold mb-4 text-charcoal">
+            Your Items
+          </h2>
           <div className="space-y-6">
             {cart.map((item, index) => (
               <div
@@ -172,8 +175,10 @@ const CartPage = () => {
                 <div className="flex-1">
                   {/* Name and Material */}
                   <h3 className="font-medium text-lg">{item.name}</h3>
-                  <p className="text-gray-500 mb-4">Material: {item.material}</p>
-  
+                  <p className="text-gray-500 mb-4">
+                    Material: {item.material}
+                  </p>
+
                   {/* Incrementer and Remove */}
                   <div className="flex items-center">
                     <div className="flex items-center border rounded p-1">
@@ -192,7 +197,7 @@ const CartPage = () => {
                       </button>
                     </div>
                     <button
-                      className="ml-4 text-blue-600"
+                      className="ml-4 text-red-600"
                       onClick={() => handleDelete(item)}
                     >
                       Remove
@@ -209,29 +214,33 @@ const CartPage = () => {
             ))}
           </div>
         </div>
-  
+
         {/* Order Summary Section */}
-        <div className="w-full md:w-1/3 bg-white rounded-md p-4">
+        <div className="w-full md:w-1/4 bg-white border border-gray-300 rounded-md p-6">
           <h2 className="text-xl font-medium mb-4">Order Summary</h2>
-          <p className="mb-2">
-            Subtotal:{" "}
-            <span className="font-medium">${cartSubtotal.toFixed(2)}</span>
-          </p>
-          <p className="mb-2">
-            Estimated Tax: <span className="font-medium">$0.00</span>
-          </p>
-          <p className="mb-4">
-            Total:{" "}
-            <span className="font-medium">${cartSubtotal.toFixed(2)}</span>
-          </p>
+          <div className="space-y-3">
+            <p className="flex justify-between">
+              <span>Subtotal:</span>
+              <span className="font-medium">${cartSubtotal.toFixed(2)}</span>
+            </p>
+            <p className="flex justify-between">
+              <span>Estimated Tax:</span>
+              <span className="font-medium">$0.00</span>
+            </p>
+            <p className="flex justify-between font-semibold text-lg border-t pt-3">
+              <span>Total:</span>
+              <span>${cartSubtotal.toFixed(2)}</span>
+            </p>
+          </div>
           <button
-            className="w-full bg-blue-600 text-white py-2 rounded-md"
+            className="w-full bg-green-500 text-white py-2 rounded-md mt-6 flex items-center justify-center gap-2"
             onClick={() => setCurrency(currency === "USD" ? "LBP" : "USD")}
           >
+            <FaMoneyBillTransfer />
             Convert to {currency === "USD" ? "LBP" : "USD"}
           </button>
           <Link to="/process-checkout">
-            <button className="w-full bg-green-600 text-white py-2 mt-4 rounded-md">
+            <button className="w-full btn normal text-white py-2 mt-4 rounded-md">
               Proceed to Checkout
             </button>
           </Link>
@@ -239,7 +248,5 @@ const CartPage = () => {
       </div>
     </div>
   );
-}
-  export default CartPage;
-  
-  
+};
+export default CartPage;
