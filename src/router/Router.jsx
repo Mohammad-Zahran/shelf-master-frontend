@@ -24,13 +24,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: (
-            <Products />
-        ),
+        element: <Products />,
       },
       {
         path: "/cart-page",
-        element: <CartPage />
+        element: (
+          <PrivateRouter>
+            <CartPage />
+          </PrivateRouter>
+        ),
       },
     ],
   },
