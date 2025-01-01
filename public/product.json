@@ -105,7 +105,7 @@
       "__v": 4
     },
     {
-      "_id": "67636ee08a5dfa75bbcba6c4",
+      "_id": "17636ee08a5dfa75bbcba6c4",
       "name": "Industrial Steel Shelf",
       "description": "Heavy-duty industrial shelf for warehouses.",
       "images": [
@@ -129,7 +129,7 @@
       "__v": 2
     },
     {
-        "_id": "67636ee08a5dfa75bbcba6c4",
+        "_id": "27636ee08a5dfa75bbcba6c4",
         "name": "Industrial Steel Shelf",
         "description": "Heavy-duty industrial shelf for warehouses.",
         "images": [
@@ -153,7 +153,7 @@
         "__v": 2
       },
       {
-        "_id": "67636ee08a5dfa75bbcba6c4",
+        "_id": "37636ee08a5dfa75bbcba6c4",
         "name": "Industrial Steel Shelf",
         "description": "Heavy-duty industrial shelf for warehouses.",
         "images": [
@@ -177,12 +177,12 @@
         "__v": 2
       },
       {
-        "_id": "67636ee08a5dfa75bbcba6c4",
+        "_id": "47636ee08a5dfa75bbcba6c4",
         "name": "Industrial Steel Shelf",
         "description": "Heavy-duty industrial shelf for warehouses.",
         "images": [
-         "/assets/images/image.png",
-         "/assets/images/image (1).png",
+         "images/image.png",
+         "images/image (1).png",
          "/assets/images/image (2).png"
         ],
         "category": "Heavy-Duty",
@@ -198,6 +198,212 @@
         "reviews": [],
         "createdAt": "2024-12-20T15:00:00.000+00:00",
         "__v": 2
-      }
+      },
+        {
+          "_id": "17636ee08a5dfa75bbcba6c1",
+          "name": "Heavy-Duty Steel Shelf 1",
+          "description": "sakjksajksa askjksasa sahjhsajsa sahj",
+          "images": [
+            "image1.jpg",
+            "image2.jpg",
+            "image3.jpg",
+            "image4.jpg"
+          ],
+          "category": "Heavy-Duty",
+          "dimensions": {
+            "width": 120,
+            "height": 180,
+            "depth": 50
+          },
+          "material": "Wood",
+          "loadCapacity": 500,
+          "price": 199.99,
+          "stock": 10,
+          "reviews": [
+            {
+              "user": "John Doe",
+              "rating": 5,
+              "comment": "Great quality shelf!",
+              "createdAt": "2024-12-19T00:54:56.977+00:00"
+            },
+            {
+              "user": "Jane Smith",
+              "rating": 4,
+              "comment": "Very sturdy but a bit pricey.",
+              "createdAt": "2024-12-20T12:34:56.000+00:00"
+            }
+          ],
+          "createdAt": "2024-12-19T00:54:56.977+00:00",
+          "__v": 6
+        },
+        {
+          "_id": "7636ee08a5dfa75bbcba6c2",
+          "name": "Adjustable Aluminum Shelf",
+          "description": "Lightweight and durable aluminum shelf, perfect for small spaces.",
+          "images": [
+            "image5.jpg",
+            "image6.jpg",
+            "image7.jpg",
+            "image8.jpg"
+          ],
+          "category": "Adjustable",
+          "dimensions": {
+            "width": 100,
+            "height": 150,
+            "depth": 40
+          },
+          "material": "Aluminum",
+          "loadCapacity": 300,
+          "price": 149.99,
+          "stock": 15,
+          "reviews": [
+            {
+              "user": "Mark Lee",
+              "rating": 4,
+              "comment": "Good value for the price.",
+              "createdAt": "2024-12-21T10:00:00.000+00:00"
+            }
+          ],
+          "createdAt": "2024-12-20T08:00:00.000+00:00",
+          "__v": 3
+        },
+        {
+          "_id": "67636ee08a5dfa75bbcba6c5",
+          "name": "Modern Floating Shelf",
+          "description": "A sleek floating shelf for minimalist interiors.",
+          "images": [
+            "image20.jpg",
+            "image21.jpg"
+          ],
+          "category": "Modern",
+          "dimensions": {
+            "width": 80,
+            "height": 20,
+            "depth": 20
+          },
+          "material": "Glass",
+          "loadCapacity": 100,
+          "price": 89.99,
+          "stock": 30,
+          "reviews": [
+            {
+              "user": "Sophia Hill",
+              "rating": 5,
+              "comment": "Beautiful and modern!",
+              "createdAt": "2024-12-21T18:45:00.000+00:00"
+            }
+          ],
+          "createdAt": "2024-12-21T10:00:00.000+00:00",
+          "__v": 1
+        },
+        {
+          "_id": "67636ee08a5dfa75bbcba6c6",
+          "name": "Rustic Wooden Shelf",
+          "description": "Add a rustic charm to your home with this wooden shelf.",
+          "images": [
+            "image22.jpg",
+            "image23.jpg"
+          ],
+          "category": "Rustic",
+          "dimensions": {
+            "width": 100,
+            "height": 30,
+            "depth": 25
+          },
+          "material": "Wood",
+          "loadCapacity": 200,
+          "price": 129.99,
+          "stock": 20,
+          "reviews": [
+            {
+              "user": "Liam Carter",
+              "rating": 4,
+              "comment": "Looks amazing in my study!",
+              "createdAt": "2024-12-22T12:30:00.000+00:00"
+            }
+          ],
+          "createdAt": "2024-12-22T10:00:00.000+00:00",
+          "__v": 1
+        },
+        {
+          "_id": "67636ee08a5dfa75bbcba6c7",
+          "name": "Industrial Wall Shelf",
+          "description": "Perfect for offices and industrial-style homes.",
+          "images": [
+            "image24.jpg",
+            "image25.jpg"
+          ],
+          "category": "Industrial",
+          "dimensions": {
+            "width": 150,
+            "height": 50,
+            "depth": 30
+          },
+          "material": "Metal",
+          "loadCapacity": 500,
+          "price": 199.99,
+          "stock": 10,
+          "reviews": [],
+          "createdAt": "2024-12-23T14:00:00.000+00:00",
+          "__v": 0
+        },
+        {
+          "_id": "67636ee08a5dfa75bbcba6c8",
+          "name": "Kids Storage Shelf",
+          "description": "Colorful and safe storage shelf for kids' rooms.",
+          "images": [
+            "image26.jpg",
+            "image27.jpg"
+          ],
+          "category": "Kids",
+          "dimensions": {
+            "width": 120,
+            "height": 100,
+            "depth": 40
+          },
+          "material": "Plastic",
+          "loadCapacity": 50,
+          "price": 59.99,
+          "stock": 50,
+          "reviews": [
+            {
+              "user": "Emily Brown",
+              "rating": 5,
+              "comment": "My kids love it!",
+              "createdAt": "2024-12-25T10:00:00.000+00:00"
+            }
+          ],
+          "createdAt": "2024-12-24T08:00:00.000+00:00",
+          "__v": 1
+        },
+        {
+          "_id": "67636ee08a5dfa75bbcba6c9",
+          "name": "Luxury Display Shelf",
+          "description": "Elegant display shelf for luxurious spaces.",
+          "images": [
+            "image28.jpg",
+            "image29.jpg"
+          ],
+          "category": "Luxury",
+          "dimensions": {
+            "width": 120,
+            "height": 200,
+            "depth": 50
+          },
+          "material": "Marble",
+          "loadCapacity": 300,
+          "price": 499.99,
+          "stock": 5,
+          "reviews": [
+            {
+              "user": "Oliver Green",
+              "rating": 5,
+              "comment": "Truly luxurious.",
+              "createdAt": "2024-12-26T09:00:00.000+00:00"
+            }
+          ],
+          "createdAt": "2024-12-25T12:00:00.000+00:00",
+          "__v": 1
+        }
   ]
   

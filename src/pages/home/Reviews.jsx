@@ -18,7 +18,7 @@ const Reviews = () => {
       </div>
       <SwipeCards />
       <div className="text-center mt-8">
-        <button className="btn" onClick={handleReviewButtonClick}>
+        <button className="btn round" onClick={handleReviewButtonClick}>
           Review
         </button>
       </div>

@@ -75,7 +75,7 @@ const Hero = () => {
         </p>
         <button
           ref={buttonRef}
-          className="btn"
+          className="btn round"
         >
           Shop Now
         </button>

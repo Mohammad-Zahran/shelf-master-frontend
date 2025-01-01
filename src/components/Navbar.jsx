@@ -1,31 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../public/assets/images/logo.png";
 import { FaRegUser } from "react-icons/fa";
+import Modal from "./Auth/Modal";
+import { AuthContext } from "../contexts/AuthProvider";
+import Profile from "./Auth/Profile";
+import { Link } from "react-router-dom";
+import useCart from "../hooks/useCart";
+import { FaRegHeart } from "react-icons/fa";
+import useWishList from "../hooks/useWishList";
 
 const Navbar = () => {
   const navItems = (
     <>
       <li>
-        <a>Home</a>
+        <a href="/">Home</a>
       </li>
       <li>
-        <details>
-          <summary>Services</summary>
-          <ul className="p-2">
-            <li>
-              <a>Submenu 1</a>
-            </li>
-            <li>
-              <a>Submenu 2</a>
-            </li>
-          </ul>
-        </details>
+        <a href="/products">Shelves</a>
       </li>
       <li>
         <a>Add Review</a>
       </li>
       <li>
-        <a  href="/floor-planner">3d Floor Planner</a>
+        <a href="/floor-planner">3d Floor Planner</a>
       </li>
       <li>
         <a>Shelf Assistant AI</a>
@@ -35,6 +32,13 @@ const Navbar = () => {
       </li>
     </>
   );
+
+  const { user } = useContext(AuthContext);
+  const [cart, refetch] = useCart();
+  const [wishlist, refetch1] = useWishList();
+
+  
+  const wishListCount = wishlist?.length || 0;
 
   return (
     <header className="max-w-screen-2xl container mx-auto">
@@ -70,40 +74,70 @@ const Navbar = () => {
               </ul>
             </div>
             <a href="/">
-              <img width={120} height={60} src={logo} alt="" />
+              <img width={120} height={60} src={logo} alt="Logo" />
             </a>
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">{navItems}</ul>
           </div>
           <div className="navbar-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn-cart btn-circle mr-3 flex items-center justify-center"
-            >
-              <div className="indicator">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <span className="badge badge-sm indicator-item">8</span>
-              </div>
-            </div>
+            <Link to="wishlist-page">
+              <label
+                tabIndex={0}
+                role="button"
+                className="btn-circle mr-3 flex items-center justify-center group"
+              >
+                <div className="indicator">
+                  <FaRegHeart className="h-5 w-5 text-black group-hover:text-steelBlue transition-colors duration-200" />
+                  <span className="badge badge-sm indicator-item">
+                    {wishListCount}
+                  </span>
+                </div>
+              </label>
+            </Link>
 
-            <a className="btn">
-              <FaRegUser /> Login
-            </a>
+            <Link to="cart-page">
+              <label
+                tabIndex={0}
+                role="button"
+                className="btn-cart btn-circle mr-3 flex items-center justify-center"
+              >
+                <div className="indicator">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                  <span className="badge badge-sm indicator-item">
+                    {cart?.length || 0}
+                  </span>
+                </div>
+              </label>
+            </Link>
+
+            {/* Login */}
+            {user ? (
+              <Profile user={user} />
+            ) : (
+              <button
+                onClick={() =>
+                  document.getElementById("my_modal_5").showModal()
+                }
+                className="btn round"
+              >
+                <FaRegUser /> Login
+              </button>
+            )}
+            <Modal />
           </div>
         </div>
       </nav>

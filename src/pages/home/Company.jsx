@@ -113,7 +113,7 @@ const Company = () => {
           Our company has been the leading provider of construction services to
           clients throughout the Lebanon since 2015.
         </p>
-        <button className="btn">Contact Us</button>
+        <button className="btn normal">Contact Us</button>
       </div>
     </div>
   );

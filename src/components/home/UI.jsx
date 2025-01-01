@@ -58,18 +58,14 @@ export const UI = () => {
             {[...pages].map((_, index) => (
               <button
                 key={index}
-                className={`btn ${
-                  index === page ? "bg-steelBlue text-white" : ""
-                }`}
+                className={"btn round"}
                 onClick={() => setPage(index)}
               >
                 {index === 0 ? "Cover" : `Page ${index}`}
               </button>
             ))}
             <button
-              className={`btn ${
-                page === pages.length ? "bg-steelBlue text-white" : ""
-              }`}
+              className={'btn round'}
               onClick={() => setPage(pages.length)}
             >
               Back Cover

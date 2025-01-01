@@ -134,7 +134,7 @@ const ModelViewer = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => setAutoRotate(!autoRotate)}
-            className="btn flex items-center gap-2"
+            className="btn round"
           >
             {autoRotate ? (
               <>
@@ -155,7 +155,7 @@ const ModelViewer = () => {
                 prev === "white" ? "#f0f0f0" : "white"
               )
             }
-            className="btn flex items-center gap-2"
+            className="btn round"
           >
             {backgroundColor === "white" ? (
               <>
