@@ -7,6 +7,7 @@ import Profile from "./Auth/Profile";
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import { FaRegHeart } from "react-icons/fa";
+import useWishList from "../hooks/useWishList";
 
 const Navbar = () => {
   const navItems = (
@@ -33,9 +34,11 @@ const Navbar = () => {
   );
 
   const { user } = useContext(AuthContext);
-  const [cart, refetch] = useCart(); // Get cart and refetch from the hook
+  const [cart, refetch] = useCart();
+  const [wishlist, refetch1] = useWishList();
 
-  const cartCount = cart?.length || 0; // Safely get the cart count
+  const cartCount = cart?.length || 0;
+  const wishListCount = wishlist?.length || 0;
 
   return (
     <header className="max-w-screen-2xl container mx-auto">
@@ -87,7 +90,7 @@ const Navbar = () => {
                 <div className="indicator">
                   <FaRegHeart className="h-5 w-5 text-black group-hover:text-steelBlue transition-colors duration-200" />
                   <span className="badge badge-sm indicator-item">
-                    {cartCount}
+                    {wishListCount}
                   </span>
                 </div>
               </label>

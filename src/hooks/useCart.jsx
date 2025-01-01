@@ -11,7 +11,7 @@ const useCart = () => {
         `http://localhost:8080/carts?email=${user?.email}`
       );
       if (!res.ok) {
-        throw new Error("Failed to fetch cart data");
+        throw new Error("Failed to fetch wishlist data");
       }
       return res.json();
     },
