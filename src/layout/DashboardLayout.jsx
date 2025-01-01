@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import Topbar from "../components/Topbar"; // Import the Topbar component
+import Topbar from "../components/Topbar";
+import { VscGraph } from "react-icons/vsc";
+import { FaUser } from "react-icons/fa";
 
 const DashboardLayout = () => {
   return (
@@ -10,15 +12,45 @@ const DashboardLayout = () => {
         {/* Sidebar */}
         <div className="bg-[#F1F2F7] min-h-screen w-80 p-4">
           <ul className="menu text-base-content">
-            <li className="admin-hover">
-              <Link to="/dashboard">Dashboard</Link>
+            <li className="admin-hover text-lg text-[#273240]">
+              <Link to="/dashboard">
+                <VscGraph className="text-steelBlue"/>
+                Dashboard
+              </Link>
             </li>
-            <li className="admin-hover">
-              <Link to={"/dashboard/users"}>All Users</Link>
+            <li className="admin-hover text-lg text-[#273240]">
+              <Link to={"/dashboard/users"}>
+                <FaUser className="text-steelBlue" />
+                Accounts
+              </Link>
+            </li>
+            <li className="admin-hover text-lg text-[#273240]">
+              <Link to={"/dashboard/users"}>
+                <FaUser className="text-steelBlue" />
+                Accounts
+              </Link>
+            </li>
+            <li className="admin-hover text-lg text-[#273240]">
+              <Link to={"/dashboard/users"}>
+                <FaUser className="text-steelBlue" />
+                Accounts
+              </Link>
+            </li>
+            <li className="admin-hover text-lg text-[#273240]">
+              <Link to={"/dashboard/users"}>
+                <FaUser className="text-steelBlue" />
+                Accounts
+              </Link>
+            </li>
+            <li className="admin-hover text-lg text-[#273240]">
+              <Link to={"/dashboard/users"}>
+                <FaUser className="text-steelBlue" />
+                Accounts
+              </Link>
             </li>
           </ul>
         </div>
-        
+
         {/* Main Content */}
         <div className="flex-grow bg-white p-6">
           <Outlet /> {/* Page content */}
