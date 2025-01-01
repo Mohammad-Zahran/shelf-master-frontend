@@ -9,6 +9,8 @@ import Products from "../pages/shop/Products";
 import PrivateRouter from "./../PrivateRouter/PrivateRouter";
 import CartPage from "../pages/shop/CartPage";
 import WishListPage from "../pages/shop/WishListPage";
+import DashboardLayout from "./../layout/DashboardLayout";
+import Dashboard from "../pages/dashboard/admin/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +60,20 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRouter>
+        <DashboardLayout />
+      </PrivateRouter>
+    ),
+    children: [
+      {
+        path: "",
+        element: <Dashboard />,
+      },
+    ],
   },
 ]);
 
