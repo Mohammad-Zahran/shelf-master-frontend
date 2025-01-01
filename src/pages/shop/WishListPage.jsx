@@ -37,9 +37,17 @@ const WishListPage = () => {
               setLocalWishlist((prev) =>
                 prev.filter((wishlistItem) => wishlistItem._id !== item._id)
               );
-              Swal.fire("Deleted!", "Item removed from your wishlist.", "success");
+              Swal.fire(
+                "Deleted!",
+                "Item removed from your wishlist.",
+                "success"
+              );
             } else {
-              Swal.fire("Error!", data.message || "Failed to delete the item.", "error");
+              Swal.fire(
+                "Error!",
+                data.message || "Failed to delete the item.",
+                "error"
+              );
             }
           })
           .catch(() => Swal.fire("Error!", "Something went wrong.", "error"));
@@ -49,7 +57,11 @@ const WishListPage = () => {
 
   const handleAddToCart = (item) => {
     if (!user || !user.email) {
-      Swal.fire("Login Required", "Please log in to add items to your cart.", "warning");
+      Swal.fire(
+        "Login Required",
+        "Please log in to add items to your cart.",
+        "warning"
+      );
       return;
     }
 
@@ -70,10 +82,10 @@ const WishListPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-          refetchCart();
+        refetchCart();
+        if (data?.cart) {
           Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
             title: "Item added to cart successfully!",
             showConfirmButton: false,
@@ -90,10 +102,14 @@ const WishListPage = () => {
 
   return (
     <div className="section-container mx-auto p-4 sm:p-6">
-      <h1 className="text-3xl font-bold ml-2 sm:ml-5 mb-6 text-charcoal">Wishlist</h1>
+      <h1 className="text-3xl font-bold ml-2 sm:ml-5 mb-6 text-charcoal">
+        Wishlist
+      </h1>
       <div className="flex flex-wrap md:flex-nowrap gap-6">
         <div className="flex-1 bg-white rounded-md p-4 sm:p-6">
-          <h2 className="text-xl font-semibold mb-4 text-charcoal">Your Wishlist</h2>
+          <h2 className="text-xl font-semibold mb-4 text-charcoal">
+            Your Wishlist
+          </h2>
           {localWishlist.length > 0 ? (
             <div className="space-y-6">
               {localWishlist.map((item, index) => (
@@ -109,7 +125,9 @@ const WishListPage = () => {
 
                   <div className="flex-1">
                     <h3 className="font-medium text-lg">{item.name}</h3>
-                    <p className="text-gray-500 mb-4">Material: {item.material}</p>
+                    <p className="text-gray-500 mb-4">
+                      Material: {item.material}
+                    </p>
                     <button
                       className="mt-4 text-red-600"
                       onClick={() => handleDelete(item)}
@@ -119,7 +137,9 @@ const WishListPage = () => {
                   </div>
 
                   <div className="absolute sm:static top-0 right-0 sm:right-auto text-right">
-                    <p className="text-lg font-medium">${item.price.toFixed(2)}</p>
+                    <p className="text-lg font-medium">
+                      ${item.price.toFixed(2)}
+                    </p>
                     {isItemInCart(item._id) ? (
                       <Link
                         to="/cart-page"
