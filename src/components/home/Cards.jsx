@@ -10,6 +10,7 @@ import { FaHeart } from "react-icons/fa";
 import { gsap } from "gsap";
 import { AuthContext } from "../../contexts/AuthProvider";
 import Swal from "sweetalert2";
+import useCart from "../../hooks/useCart";
 
 const ROTATION_RANGE = 20;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -29,6 +30,7 @@ const Cards = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const { user } = useContext(AuthContext);
+  const [cart, refetch] = useCart();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,6 +57,7 @@ const Cards = ({
       })
         .then((res) => res.json())
         .then((data) => {
+          refetch(); 
           if (data?.cart) {
             Swal.fire({
               position: "top-end",

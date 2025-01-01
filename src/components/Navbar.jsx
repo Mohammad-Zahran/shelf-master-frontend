@@ -37,7 +37,7 @@ const Navbar = () => {
   const [cart, refetch] = useCart();
   const [wishlist, refetch1] = useWishList();
 
-  const cartCount = cart?.length || 0;
+  
   const wishListCount = wishlist?.length || 0;
 
   return (
@@ -118,7 +118,7 @@ const Navbar = () => {
                     />
                   </svg>
                   <span className="badge badge-sm indicator-item">
-                    {cartCount}
+                    {cart?.length || 0}
                   </span>
                 </div>
               </label>
