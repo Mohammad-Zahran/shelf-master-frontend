@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import Modal from "./Modal";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { AuthContext } from "../../contexts/AuthProvider";
+import axios from "axios";
 
 const Signup = () => {
   const {
@@ -13,7 +14,8 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const { createUser, login } = useContext(AuthContext);
+  const { signupWithGmail, createUser, updateuserProfile } =
+    useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,14 +47,27 @@ const Signup = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        alert("Account creation successfully done!");
-        document.getElementById("my_modal_5").close();
-        navigate(from, { replace: true });
+        updateuserProfile(data.email, data.photoURL).then(() => {
+          const userInfo = {
+            name: data.name,
+            email: data.email,
+          };
+          axios
+            .post("http://localhost:8080/users", userInfo)
+            .then((response) => {
+              alert("Account creation successfully done!");
+              document.getElementById("my_modal_5").close();
+              navigate(from, { replace: true });
+            });
+        });
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
+
+  // login with google
+  
 
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-white">

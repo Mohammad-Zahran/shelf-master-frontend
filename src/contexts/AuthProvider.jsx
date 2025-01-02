@@ -66,12 +66,15 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         const userInfo = { email: currentUser.email };
         axios.post("http://127.0.0.1:8080/jwt", userInfo).then((response) => {
-          console.log(response.data.token);
+          // console.log(response.data.token);
+          if (response.data.token) {
+            localStorage.setItem("access-token", response.data.token);
+          }
         });
       } else {
-        setUser(null); // Clear user when logged out
+        localStorage.removeItem("access-token")
       }
-      setLoading(false); // End loading after state change
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
