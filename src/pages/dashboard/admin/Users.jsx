@@ -151,7 +151,7 @@ const Users = () => {
                   {user.role === "admin" ? (
                     "Admin"
                   ) : (
-                    <button className="btn btn-circle btn-sm bg-steelBlue text-white">
+                    <button className="btn btn-circle btn-sm bg-steelBlue text-white hover:bg-white hover:text-steelBlue hover:border-steelBlue">
                       <FaUsers />
                     </button>
                   )}

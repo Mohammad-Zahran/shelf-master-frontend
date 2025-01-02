@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -61,8 +62,12 @@ const AuthProvider = ({ children }) => {
   // Check signed-in user
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
       if (currentUser) {
-        setUser(currentUser);
+        const userInfo = { email: currentUser.email };
+        axios.post("http://127.0.0.1:8080/jwt", userInfo).then((response) => {
+          console.log(response.data.token);
+        });
       } else {
         setUser(null); // Clear user when logged out
       }

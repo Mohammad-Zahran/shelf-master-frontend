@@ -40,8 +40,6 @@ const Navbar = () => {
   
   const wishListCount = wishlist?.length || 0;
 
-  console.log("User Object:", user); // Added to debug the user object
-  console.log("User PhotoURL:", user?.photoURL); // Specifically logging the photoURL
 
   return (
     <header className="max-w-screen-2xl container mx-auto">
