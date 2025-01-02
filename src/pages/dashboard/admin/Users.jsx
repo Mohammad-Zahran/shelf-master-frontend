@@ -1,9 +1,17 @@
-import React from 'react'
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
 
 const Users = () => {
-  return (
-    <div>Users</div>
-  )
-}
+  const { refetch, data: users = { cart: [] } } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:8080/users`);
+      return res.json();
+    },
+  });
+  console.log(users);
 
-export default Users
+  return <div>Users</div>;
+};
+
+export default Users;
