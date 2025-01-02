@@ -119,7 +119,7 @@ const Modal = () => {
           </form>
 
           {/* Social sign in */}
-          <div className="text-center space-3 mb-5">
+          <div className="text-center space-x-4 mb-5">
             <button className="btn btn-circle normal" onClick={handleLogin}>
               <FaGoogle />
             </button>
