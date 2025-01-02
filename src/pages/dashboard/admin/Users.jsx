@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
-import { FaRegTrashAlt, FaUsers, FaFilePdf, FaFilter } from "react-icons/fa";
+import React, { useState, useEffect, useRef } from "react";
+import { FaRegTrashAlt, FaUsers, FaFilePdf } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import gsap from "gsap";
 
 const Users = () => {
   const [search, setSearch] = useState("");
@@ -22,7 +23,9 @@ const Users = () => {
     },
   });
 
-  // Filter and Search Logic
+  const totalPages = Math.ceil(users.length / usersPerPage);
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   const filteredUsers = users
     .filter((user) => {
       return (
@@ -32,8 +35,6 @@ const Users = () => {
       );
     })
     .slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
-
-  const totalPages = Math.ceil(users.length / usersPerPage);
 
   // PDF Export
   const handleDownloadPDF = () => {
@@ -46,8 +47,39 @@ const Users = () => {
     doc.save("users-list.pdf");
   };
 
+  // GSAP Animation Refs
+  const containerRef = useRef(null);
+  const tableRef = useRef(null);
+
+  useEffect(() => {
+    // Set default hidden styles for elements
+    const rows = tableRef.current.querySelectorAll("tbody tr");
+    gsap.set(containerRef.current, { opacity: 0, scale: 0.9 });
+    gsap.set(rows, { opacity: 0, x: -50 });
+
+    // Delay to ensure the DOM is fully rendered before animation
+    setTimeout(() => {
+      // Container animation: fade in with scaling
+      gsap.to(containerRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      // Table row animation: slide in from left
+      gsap.to(rows, {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
+    }, 100); // Small delay
+  }, [filteredUsers]);
+
   return (
-    <div>
+    <div ref={containerRef}>
       <div className="flex items-center justify-between mx-4 my-4">
         <h5 className="text-lg font-bold">All Users</h5>
         <div className="flex items-center gap-3">
@@ -78,14 +110,13 @@ const Users = () => {
               <option value="admin">Admin</option>
               <option value="user">User</option>
             </select>
-            <FaFilter className="absolute right-3 top-2/4 -translate-y-2/4 text-gray-500 text-lg" />
           </div>
         </div>
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="table table-zebra">
+        <table className="table table-zebra" ref={tableRef}>
           <thead>
             <tr>
               <th>
@@ -147,28 +178,20 @@ const Users = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-between items-center mx-4 mt-4">
-        <div>
-          Page {currentPage} of {totalPages}
-        </div>
-        <div className="btn-group">
+      <div className="flex justify-center items-center mt-4 gap-2">
+        {pages.map((page) => (
           <button
-            className="btn"
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`btn-sm btn-circle ${
+              currentPage === page
+                ? "btn-active bg-steelBlue text-white"
+                : "btn-outline"
+            }`}
           >
-            Previous
+            {page}
           </button>
-          <button
-            className="btn"
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
+        ))}
       </div>
     </div>
   );
