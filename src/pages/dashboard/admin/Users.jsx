@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { FaRegTrashAlt } from "react-icons/fa";
-<FaRegTrashAlt />
+import { FaRegTrashAlt, FaUser, FaUsers } from "react-icons/fa";
 
 const Users = () => {
   const { refetch, data: users = [] } = useQuery({
@@ -69,9 +68,11 @@ const Users = () => {
                     </div>
                   </td>
                   <td>{user.email}</td>
-                  <td>{user.role || "N/A"}</td>
+                  <td>{user.role === "admin" ? "Admin" : <button className="btn btn-circle btn-sm bg-steelBlue text-white"><FaUsers/></button>}</td>
                   <th>
-                    <button className="btn btn-ghost btn-xs">Delete</button>
+                    <button className="btn btn-ghost btn-lg text-[#959595]">
+                      <FaRegTrashAlt />
+                    </button>
                   </th>
                 </tr>
               ))}
