@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { FaRegTrashAlt, FaUsers } from "react-icons/fa";
+import { FaRegTrashAlt, FaUsers, FaFilePdf, FaFilter } from "react-icons/fa";
+import { IoSearchOutline } from "react-icons/io5";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -30,10 +31,7 @@ const Users = () => {
           user.email.toLowerCase().includes(search.toLowerCase()))
       );
     })
-    .slice(
-      (currentPage - 1) * usersPerPage,
-      currentPage * usersPerPage
-    );
+    .slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
 
   const totalPages = Math.ceil(users.length / usersPerPage);
 
@@ -51,33 +49,38 @@ const Users = () => {
   return (
     <div>
       <div className="flex items-center justify-between mx-4 my-4">
-        <h5>All Users</h5>
-        <button
-          onClick={handleDownloadPDF}
-          className="btn btn-primary"
-        >
-          Download PDF
-        </button>
-      </div>
-
-      {/* Search and Filter */}
-      <div className="flex items-center justify-between mx-4 mb-4 gap-4">
-        <input
-          type="text"
-          placeholder="Search by name or email"
-          className="input input-bordered w-full max-w-xs"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <select
-          className="select select-bordered"
-          value={filterRole}
-          onChange={(e) => setFilterRole(e.target.value)}
-        >
-          <option value="">All Roles</option>
-          <option value="admin">Admin</option>
-          <option value="user">User</option>
-        </select>
+        <h5 className="text-lg font-bold">All Users</h5>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleDownloadPDF}
+            className="btn normal btn-outline flex items-center gap-2"
+          >
+            <FaFilePdf className="text-red-500" />
+            Download PDF
+          </button>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search"
+              className="input input-bordered pr-10"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <IoSearchOutline className="absolute top-2/4 right-3 -translate-y-2/4 text-gray-500 text-xl" />
+          </div>
+          <div>
+            <select
+              className="select select-bordered flex items-center gap-2"
+              value={filterRole}
+              onChange={(e) => setFilterRole(e.target.value)}
+            >
+              <option value="">All Roles</option>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+            <FaFilter className="absolute right-3 top-2/4 -translate-y-2/4 text-gray-500 text-lg" />
+          </div>
+        </div>
       </div>
 
       {/* Table */}
