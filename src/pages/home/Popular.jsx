@@ -47,41 +47,45 @@ const Popular = () => {
   };
 
   return (
-    <div className="section-container my-20 relative">
-      <div className="text-left mb-8">
-        <p className="subtitle ">Popular Shelves</p>
-        <h2 className="title md:w-[520px]">Best Shelves for Sale</h2>
+    <div className="section-container my-20 relative px-4 md:px-8 lg:px-16">
+      {/* Section Title */}
+      <div className="text-center mb-8">
+        <p className="subtitle text-sm md:text-base">Popular Shelves</p>
+        <h2 className="title md:w-[520px] mx-auto text-lg md:text-2xl lg:text-3xl font-bold">
+          Best Shelves for Sale
+        </h2>
       </div>
 
-      <div className="absolute right-40 top-0 z-10 flex space-x-2">
+      {/* Navigation Buttons */}
+      <div className="absolute right-4 md:right-10 lg:right-20 top-0 z-10 flex space-x-2">
         <button
           onClick={() => slider?.current?.slickPrev()}
           className="btn p-2 rounded-full bg-steelBlue shadow-md hover:bg-white transition-colors"
           aria-label="Previous slide"
         >
-          <FaAngleLeft className="h-6 w-6 text-white group-hover:text-steelBlue" />
+          <FaAngleLeft className="h-6 w-6 text-white hover:text-steelBlue" />
         </button>
         <button
           onClick={() => slider?.current?.slickNext()}
           className="btn p-2 rounded-full bg-steelBlue shadow-md hover:bg-white transition-colors"
           aria-label="Next slide"
         >
-          <FaAngleRight className="h-6 w-6 text-white group-hover:text-steelBlue" />
+          <FaAngleRight className="h-6 w-6 text-white hover:text-steelBlue" />
         </button>
       </div>
 
+      {/* Slider */}
       <Slider ref={slider} {...settings}>
         {products.map((item, i) => (
           <div key={i} className="px-2">
-            {/* Pass larger dimensions for the Cards component */}
             <Cards
               item={item}
-              width="400px"
-              height="600px"
+              width="100%" // Adjusted for responsiveness
+              height="auto" // Maintain aspect ratio for images
               imageRatio="80%"
               buttonClass="btn normal"
               onButtonClick={(item) => console.log("Clicked:", item)}
-            />{" "}
+            />
           </div>
         ))}
       </Slider>
