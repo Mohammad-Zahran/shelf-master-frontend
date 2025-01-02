@@ -67,7 +67,22 @@ const Signup = () => {
   };
 
   // login with google
-  
+  const handleRegister = () => {
+    signupWithGmail()
+      .then((result) => {
+        const user = result.user;
+        const userInfo = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+        };
+        axios.post("http://localhost:8080/users", userInfo).then((response) => {
+          alert("Account creation successfully done!");
+          document.getElementById("my_modal_5").close();
+          navigate("/");
+        });
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-white">
@@ -122,7 +137,7 @@ const Signup = () => {
 
           {/* Social Login Buttons */}
           <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-4 md:space-y-0 mt-4">
-            <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+            <button onClick={handleRegister} className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
               <img
                 src="/assets/images/google.png"
                 alt="Google"
