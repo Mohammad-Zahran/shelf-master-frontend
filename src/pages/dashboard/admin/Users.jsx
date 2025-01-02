@@ -1,18 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { FaRegTrashAlt, FaUsers, FaFilePdf } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 import gsap from "gsap";
+import { useSearch } from "../../../hooks/useSearch";
+import { useFilter } from "../../../hooks/useFilter";
+import { usePagination } from "../../../hooks/usePagination";
+import { usePDFExport } from "../../../hooks/usePDFExport";
 
 const Users = () => {
-  const [search, setSearch] = useState("");
-  const [filterRole, setFilterRole] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 5;
-
-  const { data: users = [], refetch } = useQuery({
+  const { data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await fetch(`http://localhost:8080/users`);
@@ -23,29 +20,24 @@ const Users = () => {
     },
   });
 
-  const totalPages = Math.ceil(users.length / usersPerPage);
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
-  const filteredUsers = users
-    .filter((user) => {
-      return (
-        (!filterRole || user.role === filterRole) &&
-        (user.name.toLowerCase().includes(search.toLowerCase()) ||
-          user.email.toLowerCase().includes(search.toLowerCase()))
-      );
-    })
-    .slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
-
-  // PDF Export
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF();
-    doc.text("Users List", 14, 10);
-    doc.autoTable({
-      head: [["Name", "Email", "Role"]],
-      body: users.map((user) => [user.name, user.email, user.role]),
-    });
-    doc.save("users-list.pdf");
-  };
+  // Custom Hooks
+  const {
+    search,
+    setSearch,
+    filteredData: searchResults,
+  } = useSearch(users, "name");
+  const {
+    filterValue,
+    setFilterValue,
+    filteredData: filteredUsers,
+  } = useFilter(searchResults, "role");
+  const { currentPage, setCurrentPage, totalPages, paginatedData } =
+    usePagination(filteredUsers, 5);
+  const { exportToPDF } = usePDFExport(
+    users,
+    ["name", "email", "role"],
+    "Users List"
+  );
 
   // GSAP Animation Refs
   const containerRef = useRef(null);
@@ -76,7 +68,7 @@ const Users = () => {
         ease: "power3.out",
       });
     }, 100); // Small delay
-  }, [filteredUsers]);
+  }, [paginatedData]);
 
   return (
     <div ref={containerRef}>
@@ -84,7 +76,7 @@ const Users = () => {
         <h5 className="text-lg font-bold">All Users</h5>
         <div className="flex items-center gap-3">
           <button
-            onClick={handleDownloadPDF}
+            onClick={exportToPDF}
             className="btn normal btn-outline flex items-center gap-2"
           >
             <FaFilePdf className="text-red-500" />
@@ -100,17 +92,15 @@ const Users = () => {
             />
             <IoSearchOutline className="absolute top-2/4 right-3 -translate-y-2/4 text-gray-500 text-xl" />
           </div>
-          <div>
-            <select
-              className="select select-bordered flex items-center gap-2"
-              value={filterRole}
-              onChange={(e) => setFilterRole(e.target.value)}
-            >
-              <option value="">All Roles</option>
-              <option value="admin">Admin</option>
-              <option value="user">User</option>
-            </select>
-          </div>
+          <select
+            className="select select-bordered"
+            value={filterValue}
+            onChange={(e) => setFilterValue(e.target.value)}
+          >
+            <option value="">All Roles</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+          </select>
         </div>
       </div>
 
@@ -131,7 +121,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.map((user) => (
+            {paginatedData.map((user) => (
               <tr key={user.id}>
                 <th>
                   <label>
@@ -179,17 +169,17 @@ const Users = () => {
 
       {/* Pagination */}
       <div className="flex justify-center items-center mt-4 gap-2">
-        {pages.map((page) => (
+        {Array.from({ length: totalPages }, (_, index) => (
           <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
+            key={index}
+            onClick={() => setCurrentPage(index + 1)}
             className={`btn-sm btn-circle ${
-              currentPage === page
+              currentPage === index + 1
                 ? "btn-active bg-steelBlue text-white"
                 : "btn-outline"
             }`}
           >
-            {page}
+            {index + 1}
           </button>
         ))}
       </div>
