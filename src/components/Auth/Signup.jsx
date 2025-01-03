@@ -14,7 +14,7 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const { signupWithGmail, createUser, updateuserProfile } =
+  const { signUpWithGmail, createUser, updateuserProfile } =
     useContext(AuthContext);
 
   const location = useLocation();
@@ -68,7 +68,7 @@ const Signup = () => {
 
   // login with google
   const handleRegister = () => {
-    signupWithGmail()
+    signUpWithGmail()
       .then((result) => {
         const user = result.user;
         const userInfo = {
@@ -137,7 +137,10 @@ const Signup = () => {
 
           {/* Social Login Buttons */}
           <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-4 md:space-y-0 mt-4">
-            <button onClick={handleRegister} className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+            <button
+              onClick={handleRegister}
+              className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition"
+            >
               <img
                 src="/assets/images/google.png"
                 alt="Google"
@@ -158,15 +161,10 @@ const Signup = () => {
           {/* Centered Footer */}
           <div className="mt-6 text-center">
             <p className="text-sm text-black">
-              Have an Account?{" "}
-              <button
-                onClick={() =>
-                  document.getElementById("my_modal_5").showModal()
-                }
-                className="text-blue-500 hover:underline"
-              >
-                Sign In
-              </button>{" "}
+              Have an Acocunt?{" "}
+              <Link to="/login" className="text-blue-500 hover:underline">
+                Login
+              </Link>
             </p>
             <Link
               to="/"

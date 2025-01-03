@@ -12,6 +12,7 @@ import WishListPage from "../pages/shop/WishListPage";
 import DashboardLayout from "./../layout/DashboardLayout";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
 import Users from "../pages/dashboard/admin/Users";
+import Login from "../components/Auth/Login";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
     path: "dashboard",
     element: (
       <PrivateRouter>
@@ -75,9 +80,9 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: 'users',
-        element: <Users />
-      }
+        path: "users",
+        element: <Users />,
+      },
     ],
   },
 ]);

@@ -164,7 +164,7 @@ const Login = () => {
         className="hidden lg:flex w-1/2 h-full overflow-auto justify-end"
       >
         <img
-          src="/assets/images/login.png"
+          src="/assets/images/signup.png"
           alt="Login"
           className="h-auto"
           style={{
