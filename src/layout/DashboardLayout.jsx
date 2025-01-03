@@ -25,44 +25,45 @@ const DashboardLayout = () => {
     };
   }, []);
 
+  const sharedLinks = (
+    <>
+      {/* Menu Item: Dashboard */}
+      <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+        <Link to="/dashboard" className="flex items-center space-x-2">
+          <VscGraph className="text-steelBlue" />
+          <span>Dashboard</span>
+        </Link>
+      </li>
+
+      {/* Menu Item: Accounts */}
+      <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+        <Link to="/dashboard/users" className="flex items-center space-x-2">
+          <FaUser className="text-steelBlue" />
+          <span>Accounts</span>
+        </Link>
+      </li>
+
+      {/* Additional menu items */}
+      {Array(4)
+        .fill(null)
+        .map((_, i) => (
+          <li key={i} className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+            <Link to="/dashboard/users" className="flex items-center space-x-2">
+              <FaUser className="text-steelBlue" />
+              <span>Accounts</span>
+            </Link>
+          </li>
+        ))}
+    </>
+  );
+
   return (
     <div>
       <Topbar />
       <div className="flex flex-col lg:flex-row">
         {/* Sidebar */}
         <div className="hidden lg:block bg-[#F1F2F7] min-h-screen w-full lg:w-72 p-4">
-          <ul className="menu text-base-content">
-            {/* Menu Item: Dashboard */}
-            <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
-              <Link to="/dashboard" className="flex items-center space-x-2">
-                <VscGraph className="text-steelBlue" />
-                <span>Dashboard</span>
-              </Link>
-            </li>
-
-            {/* Menu Item: Accounts */}
-            <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
-              <Link to="/dashboard/users" className="flex items-center space-x-2">
-                <FaUser className="text-steelBlue" />
-                <span>Accounts</span>
-              </Link>
-            </li>
-
-            {/* Additional menu items */}
-            {Array(4)
-              .fill(null)
-              .map((_, i) => (
-                <li
-                  key={i}
-                  className="text-lg text-[#273240] hover:text-[#5A6ACF]"
-                >
-                  <Link to="/dashboard/users" className="flex items-center space-x-2">
-                    <FaUser className="text-steelBlue" />
-                    <span>Accounts</span>
-                  </Link>
-                </li>
-              ))}
-          </ul>
+          <ul className="menu text-base-content">{sharedLinks}</ul>
         </div>
 
         {/* Collapsible Menu for Small Screens */}
