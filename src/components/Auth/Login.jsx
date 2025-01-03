@@ -14,7 +14,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const { loginWithGmail, signInUser } = useContext(AuthContext);
+  const { signUpWithGmail, login } = useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,19 +43,19 @@ const Login = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    signInUser(email, password)
+    login(email, password)
       .then((result) => {
         alert("Login successful!");
         navigate(from, { replace: true });
       })
       .catch((error) => {
-        console.log(error.message);
+        console.error("Login failed:", error.message);
       });
   };
 
   // Login with Google
   const handleLoginWithGoogle = () => {
-    loginWithGmail()
+    signUpWithGmail()
       .then((result) => {
         const userInfo = {
           name: result?.user?.displayName,
@@ -66,7 +66,7 @@ const Login = () => {
           navigate(from, { replace: true });
         });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error("Google Sign-In failed:", error));
   };
 
   return (
