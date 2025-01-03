@@ -60,6 +60,7 @@ const Login = () => {
         const userInfo = {
           name: result?.user?.displayName,
           email: result?.user?.email,
+          photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
         };
         axios.post("http://localhost:8080/users", userInfo).then((response) => {
           alert("Login successful!");

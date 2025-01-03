@@ -44,44 +44,48 @@ const Signup = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
+    const defaultPhotoURL = "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
+
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        updateuserProfile(data.email, data.photoURL).then(() => {
-          const userInfo = {
-            name: data.name,
-            email: data.email,
-          };
-          axios
-            .post("http://localhost:8080/users", userInfo)
-            .then((response) => {
-              alert("Account creation successfully done!");
-              document.getElementById("my_modal_5").close();
-              navigate(from, { replace: true });
-            });
+        const userInfo = {
+          name: data.name,
+          email: data.email,
+          photoURL: data.photoURL || defaultPhotoURL, // Use default if not provided
+        };
+
+        updateuserProfile({
+          name: data.name,
+          photoURL: userInfo.photoURL,
+        }).then(() => {
+          axios.post("http://localhost:8080/users", userInfo).then(() => {
+            alert("Account creation successfully done!");
+            navigate(from, { replace: true });
+          });
         });
       })
       .catch((error) => {
-        console.log(error.message);
+        console.error("Error creating user:", error.message);
       });
   };
 
-  // login with google
+  // Login with Google
   const handleRegister = () => {
     signUpWithGmail()
       .then((result) => {
-        const user = result.user;
         const userInfo = {
-          name: result?.user?.displayName,
-          email: result?.user?.email,
+          name: result.user.displayName,
+          email: result.user.email,
+          photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
         };
-        axios.post("http://localhost:8080/users", userInfo).then((response) => {
+
+        axios.post("http://localhost:8080/users", userInfo).then(() => {
           alert("Account creation successfully done!");
-          document.getElementById("my_modal_5").close();
           navigate("/");
         });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error("Google sign-up error:", error));
   };
 
   return (
