@@ -38,15 +38,21 @@ const Modal = () => {
       });
   };
 
-  // google signin
+  // Login with Google
   const handleLogin = () => {
     signUpWithGmail()
       .then((result) => {
-        const user = result.user;
-        alert("Login successfull");
-        navigate(from, { replace: true });
+        const userInfo = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
+        };
+        axios.post("http://localhost:8080/users", userInfo).then((response) => {
+          alert("Login successful!");
+          navigate(from, { replace: true });
+        });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error("Google Sign-In failed:", error));
   };
 
   return (
