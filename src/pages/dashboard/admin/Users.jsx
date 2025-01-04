@@ -11,13 +11,20 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Users = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [] } = useQuery({
+  const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users`);
       return res.data;
     },
   });
+
+  const handleMakeAdmin = (user) => {
+    axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
+      alert(`${user.name} is now admin`);
+      refetch();
+    });
+  };
 
   // Custom Hooks
   const {
@@ -150,7 +157,10 @@ const Users = () => {
                   {user.role === "admin" ? (
                     "Admin"
                   ) : (
-                    <button className="btn btn-circle btn-sm bg-steelBlue text-white hover:bg-white hover:text-steelBlue hover:border-steelBlue">
+                    <button
+                      onClick={() => handleMakeAdmin(user)}
+                      className="btn btn-circle btn-sm bg-steelBlue text-white hover:bg-white hover:text-steelBlue hover:border-steelBlue"
+                    >
                       <FaUsers />
                     </button>
                   )}
