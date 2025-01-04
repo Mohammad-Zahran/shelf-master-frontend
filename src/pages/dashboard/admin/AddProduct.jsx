@@ -9,6 +9,8 @@ const AddProduct = () => {
   const checkmarkRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  const { register, handleSubmit, setValue } = useForm();
+
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
     setIsLoading(true);
@@ -24,6 +26,7 @@ const AddProduct = () => {
     setTimeout(() => {
       const uploadedImages = files.map((file) => file.name); // Replace with actual uploaded URLs
       setImages((prevImages) => [...prevImages, ...uploadedImages]);
+      setValue("images", [...images, ...uploadedImages]); // Update react-hook-form images field
 
       // Show checkmark animation
       gsap.to(checkmarkRef.current, {
@@ -63,13 +66,15 @@ const AddProduct = () => {
   };
 
   const removeImage = (imageName) => {
-    setImages((prevImages) =>
-      prevImages.filter((image) => image !== imageName)
-    );
+    const updatedImages = images.filter((image) => image !== imageName);
+    setImages(updatedImages);
+    setValue("images", updatedImages); // Update react-hook-form images field
   };
 
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    // You can handle API submission here
+  };
 
   return (
     <div className="w-full md:w-[1250px] px-4 mx-auto">
@@ -82,101 +87,97 @@ const AddProduct = () => {
         {/* Form Section */}
         <div className="flex-1">
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/* 1st Row */}
-            {/* Product Name */}
+            {/* Name */}
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Product Name</span>
               </label>
               <input
                 type="text"
+                {...register("name", { required: true })}
                 placeholder="Type name here"
                 className="input input-bordered w-full"
               />
             </div>
 
-            {/* 2nd Row */}
             {/* Description */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Description</span>
               </label>
               <textarea
+                {...register("description", { required: true })}
                 className="textarea textarea-bordered h-24 w-full"
                 placeholder="Type Description here"
               ></textarea>
             </div>
 
-            {/* 3rd Row */}
             {/* Price */}
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Price</span>
               </label>
               <input
+                {...register("price", { required: true })}
                 type="number"
                 placeholder="Price"
                 className="input input-bordered w-full"
               />
             </div>
 
-            {/* 4th Row */}
-            <div className="flex items-center gap-8">
-              {/* Category */}
-              <div className="form-control w-full max-w-xs">
-                <label className="label">
-                  <span className="label-text">Choose Category</span>
-                </label>
-                <select
-                  className="select select-bordered"
-                  defaultValue="default"
-                >
-                  <option disabled value="default">
-                    Select a category
-                  </option>
-                  <option value="Heavy-Duty">Heavy-Duty</option>
-                  <option value="Adjustable">Adjustable</option>
-                  <option value="Modern">Modern</option>
-                  <option value="Rustic">Rustic</option>
-                  <option value="Industrial">Industrial</option>
-                  <option value="Decorative">Decorative</option>
-                  <option value="Kids">Kids</option>
-                  <option value="Luxury">Luxury</option>
-                </select>
-              </div>
-
-              {/* Load Capacity */}
-              <div className="form-control w-full max-w-xs">
-                <label className="label">
-                  <span className="label-text">Load Capacity</span>
-                </label>
-                <input
-                  type="number"
-                  placeholder="Load Capacity"
-                  className="input input-bordered w-full"
-                />
-              </div>
+            {/* Category */}
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Category</span>
+              </label>
+              <select
+                {...register("category", { required: true })}
+                className="select select-bordered"
+              >
+                <option value="">Select a category</option>
+                <option value="Heavy-Duty">Heavy-Duty</option>
+                <option value="Adjustable">Adjustable</option>
+                <option value="Modern">Modern</option>
+                <option value="Rustic">Rustic</option>
+                <option value="Industrial">Industrial</option>
+                <option value="Decorative">Decorative</option>
+                <option value="Kids">Kids</option>
+                <option value="Luxury">Luxury</option>
+              </select>
             </div>
 
-            {/* 5th Row */}
-            {/* Width */}
+            {/* Load Capacity */}
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Load Capacity (kg)</span>
+              </label>
+              <input
+                {...register("loadCapacity", { required: true })}
+                type="number"
+                placeholder="Load Capacity"
+                className="input input-bordered w-full"
+              />
+            </div>
+
+            {/* Dimensions */}
             <div className="flex items-center gap-8">
               <div className="form-control w-full max-w-xs">
                 <label className="label">
-                  <span className="label-text">Width</span>
+                  <span className="label-text">Width (cm)</span>
                 </label>
                 <input
+                  {...register("dimensions.width", { required: true })}
                   type="number"
                   placeholder="Width"
                   className="input input-bordered w-full"
                 />
               </div>
-              {/* Height */}
               <div className="form-control w-full max-w-xs">
                 <label className="label">
-                  <span className="label-text">Height</span>
+                  <span className="label-text">Height (cm)</span>
                 </label>
                 <input
+                  {...register("dimensions.height", { required: true })}
                   type="number"
                   placeholder="Height"
                   className="input input-bordered w-full"
@@ -184,33 +185,42 @@ const AddProduct = () => {
               </div>
             </div>
 
-            {/* 6th Row */}
             {/* Material */}
-            <div className="flex items-center gap-8">
-              <div className="form-control w-full max-w-xs">
-                <label className="label">
-                  <span className="label-text">Material</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Material"
-                  className="input input-bordered w-full"
-                />
-              </div>
-              {/* Stock Quantity */}
-              <div className="form-control w-full max-w-xs">
-                <label className="label">
-                  <span className="label-text">Stock Quantity</span>
-                </label>
-                <input
-                  type="number"
-                  placeholder="Stock Quantity"
-                  className="input input-bordered w-full"
-                />
-              </div>
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Material</span>
+              </label>
+              <input
+                {...register("material", { required: true })}
+                type="text"
+                placeholder="Material"
+                className="input input-bordered w-full"
+              />
             </div>
 
-            <button className="btn normal mt-5">Add Product</button>
+            {/* Stock */}
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Stock Quantity</span>
+              </label>
+              <input
+                {...register("stock", { required: true })}
+                type="number"
+                placeholder="Stock Quantity"
+                className="input input-bordered w-full"
+              />
+            </div>
+
+            {/* Images */}
+            <input
+              type="hidden"
+              {...register("images")}
+              value={JSON.stringify(images)} // Save images as a JSON string
+            />
+
+            <button className="btn normal mt-5" type="submit">
+              Add Product
+            </button>
           </form>
         </div>
 
