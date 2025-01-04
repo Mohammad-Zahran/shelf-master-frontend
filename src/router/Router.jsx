@@ -13,6 +13,7 @@ import DashboardLayout from "./../layout/DashboardLayout";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
 import Users from "../pages/dashboard/admin/Users";
 import Login from "../components/Auth/Login";
+import AddProduct from "../pages/dashboard/admin/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
         path: "users",
         element: <Users />,
       },
+      {
+        path: "add-product",
+        element: <AddProduct />
+      }
     ],
   },
 ]);
