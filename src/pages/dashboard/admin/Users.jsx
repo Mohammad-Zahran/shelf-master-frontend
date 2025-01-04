@@ -26,6 +26,13 @@ const Users = () => {
     });
   };
 
+  const handleDeleteUser = (user) => {
+    axiosSecure.delete(`/users/${user._id}`).then((res) => {
+      alert(`${user.name} is removed from database`);
+      refetch();
+    });
+  };
+
   // Custom Hooks
   const {
     search,
@@ -166,7 +173,7 @@ const Users = () => {
                   )}
                 </td>
                 <th>
-                  <button className="btn btn-ghost btn-lg text-[#959595]">
+                  <button onClick={() => handleDeleteUser(user)} className="btn btn-ghost btn-lg text-[#959595]">
                     <FaRegTrashAlt />
                   </button>
                 </th>
