@@ -14,6 +14,7 @@ import Dashboard from "../pages/dashboard/admin/Dashboard";
 import Users from "../pages/dashboard/admin/Users";
 import Login from "../components/Auth/Login";
 import AddProduct from "../pages/dashboard/admin/AddProduct";
+import ManageItems from "../pages/dashboard/admin/ManageItems";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
       {
         path: "add-product",
         element: <AddProduct />
+      },
+      {
+        path: "manage-items",
+        element: <ManageItems />
       }
     ],
   },
