@@ -85,28 +85,28 @@ const Users = () => {
 
   return (
     <div ref={containerRef}>
-      <div className="flex items-center justify-between mx-4 my-4">
+      <div className="flex flex-col md:flex-row items-center justify-between mx-4 my-4 gap-4">
         <h5 className="text-lg font-bold">All Users</h5>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
           <button
             onClick={exportToPDF}
-            className="btn normal btn-outline flex items-center gap-2"
+            className="btn normal btn-outline flex items-center gap-2 w-full md:w-auto"
           >
             <FaFilePdf className="text-red-500" />
             Download PDF
           </button>
-          <div className="relative">
+          <div className="relative w-full md:w-auto">
             <input
               type="text"
               placeholder="Search"
-              className="input input-bordered pr-10"
+              className="input input-bordered pr-10 w-full md:w-auto"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
             <IoSearchOutline className="absolute top-2/4 right-3 -translate-y-2/4 text-gray-500 text-xl" />
           </div>
           <select
-            className="select select-bordered"
+            className="select select-bordered w-full md:w-auto"
             value={filterValue}
             onChange={(e) => setFilterValue(e.target.value)}
           >
@@ -173,7 +173,10 @@ const Users = () => {
                   )}
                 </td>
                 <th>
-                  <button onClick={() => handleDeleteUser(user)} className="btn btn-ghost btn-lg text-[#959595]">
+                  <button
+                    onClick={() => handleDeleteUser(user)}
+                    className="btn btn-ghost btn-lg text-[#959595]"
+                  >
                     <FaRegTrashAlt />
                   </button>
                 </th>

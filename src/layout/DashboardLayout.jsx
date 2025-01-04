@@ -5,6 +5,7 @@ import { VscGraph } from "react-icons/vsc";
 import { FaUser } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
+import { IoMdAddCircle } from "react-icons/io";
 import Login from "../components/Auth/Login";
 import useAdmin from "../hooks/useAdmin";
 import useAuth from "../hooks/useAuth";
@@ -46,22 +47,18 @@ const DashboardLayout = () => {
         </Link>
       </li>
 
-      {/* Additional menu items */}
-      {Array(4)
-        .fill(null)
-        .map((_, i) => (
-          <li key={i} className="text-lg text-[#273240] hover:text-[#5A6ACF]">
-            <Link to="/dashboard/users" className="flex items-center space-x-2">
-              <FaUser className="text-steelBlue" />
-              <span>Accounts</span>
-            </Link>
-          </li>
-        ))}
+      {/* Menu Item: Accounts */}
+      <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+        <Link to="/dashboard/users" className="flex items-center space-x-2">
+          <IoMdAddCircle className="text-steelBlue" />
+          <span>Accounts</span>
+        </Link>
+      </li>
     </>
   );
 
   const [isAdmin, isAdminLoading] = useAdmin();
-  const {loading} = useAuth();
+  const { loading } = useAuth();
 
   return (
     <div>
