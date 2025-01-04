@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AddProduct = () => {
   const [images, setImages] = useState([]);
@@ -11,6 +13,7 @@ const AddProduct = () => {
   const [isDragging, setIsDragging] = useState(false);
 
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { register, handleSubmit, setValue } = useForm();
 
   const convertToBase64 = (file) =>
@@ -40,7 +43,7 @@ const AddProduct = () => {
         formData.append("image", base64Image);
 
         const response = await axiosPublic.post(
-          `https://api.imgbb.com/1/upload?expiration=600&key=${
+          `https://api.imgbb.com/1/upload?key=${
             import.meta.env.VITE_IMAGE_HOSTING_KEY
           }`,
           formData,
@@ -111,13 +114,27 @@ const AddProduct = () => {
         images, // Include uploaded image URLs
       };
 
-      console.log("Product Data Ready for Submission:", productData);
+      const response = await axiosSecure.post("/products", productData);
 
-      // Replace the following with your backend API call
-      // const response = await axiosPublic.post('/your-backend-api', productData);
-      // console.log("Product Added Successfully:", response.data);
+      if (response.status === 200) {
+        // Show success alert
+        Swal.fire({
+          icon: "success",
+          title: "Product Added",
+          text: "Your product has been added successfully!",
+          confirmButtonText: "OK",
+        });
+      }
     } catch (error) {
       console.error("Error submitting product data:", error);
+
+      // Show error alert
+      Swal.fire({
+        icon: "error",
+        title: "Submission Failed",
+        text: "There was an error while adding the product. Please try again.",
+        confirmButtonText: "OK",
+      });
     }
   };
 
