@@ -1,19 +1,23 @@
 import React, { useRef, useState } from "react";
 import { gsap } from "gsap";
 
-
 const AddProduct = () => {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const loaderRef = useRef(null);
   const checkmarkRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
     setIsLoading(true);
 
     // Start loading animation
-    gsap.to(loaderRef.current, { scaleX: 1, transformOrigin: "left", duration: 1 });
+    gsap.to(loaderRef.current, {
+      scaleX: 1,
+      transformOrigin: "left",
+      duration: 1,
+    });
 
     // Simulate an upload process
     setTimeout(() => {
@@ -29,13 +33,34 @@ const AddProduct = () => {
         onComplete: () => {
           // Hide checkmark after a delay
           setTimeout(() => {
-            gsap.to(checkmarkRef.current, { opacity: 0, scale: 0, duration: 0.5 });
+            gsap.to(checkmarkRef.current, {
+              opacity: 0,
+              scale: 0,
+              duration: 0.5,
+            });
             setIsLoading(false);
           }, 1000);
         },
       });
     }, 1500); // Simulate upload time
   };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    setIsDragging(false);
+    const files = event.dataTransfer.files; // Use files from dataTransfer
+    handleImageUpload({ target: { files } }); // Wrap in an object with target.files
+  };
+  
 
   const removeImage = (imageName) => {
     setImages((prevImages) =>
@@ -179,7 +204,15 @@ const AddProduct = () => {
           </form>
         </div>
 
-        <div className="w-full md:w-1/3 border-dashed border-2 border-gray-300 rounded-lg p-4">
+        {/* Image Upload Section */}
+        <div
+          className={`w-full md:w-1/3 border-dashed border-2 rounded-lg p-4 ${
+            isDragging ? "border-blue-500 bg-blue-100" : "border-gray-300"
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           <h3 className="text-lg font-semibold mb-4">Product Gallery</h3>
           <div className="flex flex-col items-center justify-center gap-4 h-full">
             <div className="w-full h-40 relative flex items-center justify-center bg-gray-100 border rounded-lg overflow-hidden">
@@ -204,14 +237,16 @@ const AddProduct = () => {
                     htmlFor="image-upload"
                     className="cursor-pointer text-steelBlue font-semibold z-10"
                   >
-                    Drop your image here, or <span>browse</span>
+                    {isDragging
+                      ? "Drop your image here..."
+                      : "Drop your image here, or browse"}
                   </label>
                   <input
                     type="file"
                     id="image-upload"
                     multiple
                     className="hidden"
-                    onChange={handleImageUpload}
+                    onChange={(event) => handleImageUpload(event.target.files)}
                   />
                 </>
               )}
