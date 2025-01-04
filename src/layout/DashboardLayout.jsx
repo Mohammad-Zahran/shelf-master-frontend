@@ -49,7 +49,7 @@ const DashboardLayout = () => {
 
       {/* Menu Item: Accounts */}
       <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
-        <Link to="/dashboard/users" className="flex items-center space-x-2">
+        <Link to="/dashboard/add-product" className="flex items-center space-x-2">
           <IoMdAddCircle className="text-steelBlue" />
           <span>Accounts</span>
         </Link>
