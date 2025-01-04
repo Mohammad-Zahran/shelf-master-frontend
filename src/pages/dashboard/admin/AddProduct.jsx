@@ -24,6 +24,31 @@ const AddProduct = () => {
           </div>
 
           {/* 2nd Row */}
+          {/* Description */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Description</span>
+            </label>
+            <textarea
+              className="textarea textarea-bordered h-24 max-w-2xl"
+              placeholder="Type Description here"
+            ></textarea>
+          </div>
+
+          {/* 3rd Row */}
+          {/* Price */}
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Price</span>
+            </label>
+            <input
+              type="number"
+              placeholder="Price"
+              className="input input-bordered w-full max-w-2xl"
+            />
+          </div>
+
+          {/* 4th Row */}
           <div className="flex items-center gap-8">
             {/* Category */}
             <div className="form-control w-full max-w-xs">
@@ -54,6 +79,60 @@ const AddProduct = () => {
               />
             </div>
           </div>
+
+          {/* 5th Row */}
+          {/* Width */}
+          <div className="flex items-center gap-8">
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Width</span>
+              </label>
+              <input
+                type="number"
+                placeholder="Width"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            {/* Height */}
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Height</span>
+              </label>
+              <input
+                type="number"
+                placeholder="Height"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </div>
+          </div>
+
+          {/* 5th Row */}
+          {/* Material */}
+          <div className="flex items-center gap-8">
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Material</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Material"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            {/* Stock Quantity */}
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Stock Quantity</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Height"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </div>
+          </div>
+
+          <button className="btn normal mt-5">Add Product</button>
         </form>
       </div>
     </div>
