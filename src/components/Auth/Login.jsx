@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { gsap } from "gsap";
 import Modal from "./Modal";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { AuthContext } from "../../contexts/AuthProvider";
-import axios from "axios";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAuth from "./../../hooks/useAuth";
 
 const Login = () => {
   const {
@@ -14,7 +14,8 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const { signUpWithGmail, login } = useContext(AuthContext);
+  const { signUpWithGmail, login } = useAuth();
+  const axiosPublic = useAxiosPublic();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,17 +41,27 @@ const Login = () => {
     );
   }, []);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const email = data.email;
     const password = data.password;
-    login(email, password)
-      .then((result) => {
-        alert("Login successful!");
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        console.error("Login failed:", error.message);
+
+    try {
+      const result = await login(email, password);
+      const user = result.user;
+      const photoURL = user.photoURL || "/assets/images/default-profile.png"; // Use default photo if none exists
+
+      alert("Login successful!");
+
+      navigate(from, { replace: true });
+
+      console.log("Logged-in user details:", {
+        email: user.email,
+        photoURL,
       });
+    } catch (error) {
+      console.error("Login failed:", error.message);
+      alert("Login failed. Please check your credentials.");
+    }
   };
 
   // Login with Google
@@ -62,7 +73,7 @@ const Login = () => {
           email: result?.user?.email,
           photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
         };
-        axios.post("http://localhost:8080/users", userInfo).then((response) => {
+        axiosPublic.post("/users", userInfo).then((response) => {
           alert("Login successful!");
           navigate(from, { replace: true });
         });

@@ -5,7 +5,8 @@ import { gsap } from "gsap";
 import Modal from "./Modal";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { AuthContext } from "../../contexts/AuthProvider";
-import axios from "axios";
+import useAxiosPublic from "./../../hooks/useAxiosPublic";
+import useAuth from "../../hooks/useAuth";
 
 const Signup = () => {
   const {
@@ -14,8 +15,8 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const { signUpWithGmail, createUser, updateuserProfile } =
-    useContext(AuthContext);
+  const { signUpWithGmail, createUser, updateuserProfile } = useAuth();
+  const axiosPublic = useAxiosPublic();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -44,7 +45,8 @@ const Signup = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    const defaultPhotoURL = "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
+    const defaultPhotoURL =
+      "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
 
     createUser(email, password)
       .then((result) => {
@@ -59,7 +61,7 @@ const Signup = () => {
           name: data.name,
           photoURL: userInfo.photoURL,
         }).then(() => {
-          axios.post("http://localhost:8080/users", userInfo).then(() => {
+          axiosPublic.post("/users", userInfo).then(() => {
             alert("Account creation successfully done!");
             navigate(from, { replace: true });
           });
@@ -80,7 +82,7 @@ const Signup = () => {
           photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
         };
 
-        axios.post("http://localhost:8080/users", userInfo).then(() => {
+        axiosPublic.post("/users", userInfo).then(() => {
           alert("Account creation successfully done!");
           navigate("/");
         });
