@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { gsap } from "gsap";
+
 
 const AddProduct = () => {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const loaderRef = useRef(null);
+  const checkmarkRef = useRef(null);
 
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
     setIsLoading(true);
 
+    // Start loading animation
+    gsap.to(loaderRef.current, { scaleX: 1, transformOrigin: "left", duration: 1 });
+
     // Simulate an upload process
     setTimeout(() => {
-      const uploadedImages = files.map((file) => file.name); // Here you can replace with actual uploaded URLs
+      const uploadedImages = files.map((file) => file.name); // Replace with actual uploaded URLs
       setImages((prevImages) => [...prevImages, ...uploadedImages]);
-      setIsLoading(false);
+
+      // Show checkmark animation
+      gsap.to(checkmarkRef.current, {
+        opacity: 1,
+        scale: 1,
+        transformOrigin: "center",
+        duration: 0.5,
+        onComplete: () => {
+          // Hide checkmark after a delay
+          setTimeout(() => {
+            gsap.to(checkmarkRef.current, { opacity: 0, scale: 0, duration: 0.5 });
+            setIsLoading(false);
+          }, 1000);
+        },
+      });
     }, 1500); // Simulate upload time
   };
 
@@ -158,20 +179,30 @@ const AddProduct = () => {
           </form>
         </div>
 
-        {/* Image Upload Section */}
         <div className="w-full md:w-1/3 border-dashed border-2 border-gray-300 rounded-lg p-4">
           <h3 className="text-lg font-semibold mb-4">Product Gallery</h3>
           <div className="flex flex-col items-center justify-center gap-4 h-full">
-            <div className="w-full h-40 flex items-center justify-center bg-gray-100 border rounded-lg">
+            <div className="w-full h-40 relative flex items-center justify-center bg-gray-100 border rounded-lg overflow-hidden">
+              <div
+                ref={loaderRef}
+                className="absolute inset-0 bg-blue-500 opacity-20 scale-x-0"
+                style={{ transformOrigin: "left", height: "4px", bottom: 0 }}
+              ></div>
+              <div
+                ref={checkmarkRef}
+                className="absolute inset-0 flex items-center justify-center opacity-0 scale-0 text-green-500 text-4xl font-bold"
+              >
+                &#10003;
+              </div>
               {isLoading ? (
-                <p className="text-gray-500 text-sm animate-pulse">
+                <p className="text-gray-500 text-sm animate-pulse z-10">
                   Uploading...
                 </p>
               ) : (
                 <>
                   <label
                     htmlFor="image-upload"
-                    className="cursor-pointer text-steelBlue font-semibold"
+                    className="cursor-pointer text-steelBlue font-semibold z-10"
                   >
                     Drop your image here, or <span>browse</span>
                   </label>
