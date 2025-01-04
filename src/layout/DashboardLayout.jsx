@@ -6,6 +6,8 @@ import { FaUser } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 import Login from "../components/Auth/Login";
+import useAdmin from "../hooks/useAdmin";
+import useAuth from "../hooks/useAuth";
 
 const DashboardLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,7 +60,8 @@ const DashboardLayout = () => {
     </>
   );
 
-  const isAdmin = true;
+  const [isAdmin, isAdminLoading] = useAdmin();
+  const {loading} = useAuth();
 
   return (
     <div>
