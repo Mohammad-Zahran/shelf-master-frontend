@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { gsap } from "gsap";
+import { useForm } from "react-hook-form";
 
 const AddProduct = () => {
   const [images, setImages] = useState([]);
@@ -60,13 +61,16 @@ const AddProduct = () => {
     const files = event.dataTransfer.files; // Use files from dataTransfer
     handleImageUpload({ target: { files } }); // Wrap in an object with target.files
   };
-  
 
   const removeImage = (imageName) => {
     setImages((prevImages) =>
       prevImages.filter((image) => image !== imageName)
     );
   };
+
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => console.log(data);
+
   return (
     <div className="w-full md:w-[1250px] px-4 mx-auto">
       <h2 className="text-2xl font-semibold my-4">
@@ -77,7 +81,7 @@ const AddProduct = () => {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Form Section */}
         <div className="flex-1">
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             {/* 1st Row */}
             {/* Product Name */}
             <div className="form-control w-full">
@@ -123,15 +127,21 @@ const AddProduct = () => {
                 <label className="label">
                   <span className="label-text">Choose Category</span>
                 </label>
-                <select className="select select-bordered">
-                  <option disabled selected>
+                <select
+                  className="select select-bordered"
+                  defaultValue="default"
+                >
+                  <option disabled value="default">
                     Select a category
                   </option>
-                  <option>Star Wars</option>
-                  <option>Harry Potter</option>
-                  <option>Lord of the Rings</option>
-                  <option>Planet of the Apes</option>
-                  <option>Star Trek</option>
+                  <option value="Heavy-Duty">Heavy-Duty</option>
+                  <option value="Adjustable">Adjustable</option>
+                  <option value="Modern">Modern</option>
+                  <option value="Rustic">Rustic</option>
+                  <option value="Industrial">Industrial</option>
+                  <option value="Decorative">Decorative</option>
+                  <option value="Kids">Kids</option>
+                  <option value="Luxury">Luxury</option>
                 </select>
               </div>
 
@@ -246,7 +256,7 @@ const AddProduct = () => {
                     id="image-upload"
                     multiple
                     className="hidden"
-                    onChange={(event) => handleImageUpload(event.target.files)}
+                    onChange={(event) => handleImageUpload(event)}
                   />
                 </>
               )}
