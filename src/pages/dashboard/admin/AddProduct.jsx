@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useForm } from "react-hook-form";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const AddProduct = () => {
   const [images, setImages] = useState([]);
@@ -9,9 +10,18 @@ const AddProduct = () => {
   const checkmarkRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  const axiosPublic = useAxiosPublic();
   const { register, handleSubmit, setValue } = useForm();
 
-  const handleImageUpload = (event) => {
+  const convertToBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(",")[1]); // Extract Base64 data
+      reader.onerror = (error) => reject(error);
+    });
+
+  const handleImageUpload = async (event) => {
     const files = Array.from(event.target.files);
     setIsLoading(true);
 
@@ -22,31 +32,54 @@ const AddProduct = () => {
       duration: 1,
     });
 
-    // Simulate an upload process
-    setTimeout(() => {
-      const uploadedImages = files.map((file) => file.name); // Replace with actual uploaded URLs
-      setImages((prevImages) => [...prevImages, ...uploadedImages]);
-      setValue("images", [...images, ...uploadedImages]); // Update react-hook-form images field
+    const uploadedImageUrls = [];
+    for (const file of files) {
+      try {
+        const base64Image = await convertToBase64(file);
+        const formData = new FormData();
+        formData.append("image", base64Image);
 
-      // Show checkmark animation
-      gsap.to(checkmarkRef.current, {
-        opacity: 1,
-        scale: 1,
-        transformOrigin: "center",
-        duration: 0.5,
-        onComplete: () => {
-          // Hide checkmark after a delay
-          setTimeout(() => {
-            gsap.to(checkmarkRef.current, {
-              opacity: 0,
-              scale: 0,
-              duration: 0.5,
-            });
-            setIsLoading(false);
-          }, 1000);
-        },
-      });
-    }, 1500); // Simulate upload time
+        const response = await axiosPublic.post(
+          `https://api.imgbb.com/1/upload?expiration=600&key=${
+            import.meta.env.VITE_IMAGE_HOSTING_KEY
+          }`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.data && response.data.data && response.data.data.url) {
+          uploadedImageUrls.push(response.data.data.url);
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+
+    setImages((prevImages) => [...prevImages, ...uploadedImageUrls]);
+    setValue("images", [...images, ...uploadedImageUrls]); // Update react-hook-form
+    setIsLoading(false);
+
+    // Show checkmark animation
+    gsap.to(checkmarkRef.current, {
+      opacity: 1,
+      scale: 1,
+      transformOrigin: "center",
+      duration: 0.5,
+      onComplete: () => {
+        // Hide checkmark after a delay
+        setTimeout(() => {
+          gsap.to(checkmarkRef.current, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.5,
+          });
+        }, 1000);
+      },
+    });
   };
 
   const handleDragOver = (event) => {
@@ -61,7 +94,7 @@ const AddProduct = () => {
   const handleDrop = (event) => {
     event.preventDefault();
     setIsDragging(false);
-    const files = event.dataTransfer.files; // Use files from dataTransfer
+    const files = event.dataTransfer.files;
     handleImageUpload({ target: { files } }); // Wrap in an object with target.files
   };
 
@@ -71,9 +104,21 @@ const AddProduct = () => {
     setValue("images", updatedImages); // Update react-hook-form images field
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // You can handle API submission here
+  const onSubmit = async (data) => {
+    try {
+      const productData = {
+        ...data,
+        images, // Include uploaded image URLs
+      };
+
+      console.log("Product Data Ready for Submission:", productData);
+
+      // Replace the following with your backend API call
+      // const response = await axiosPublic.post('/your-backend-api', productData);
+      // console.log("Product Added Successfully:", response.data);
+    } catch (error) {
+      console.error("Error submitting product data:", error);
+    }
   };
 
   return (
