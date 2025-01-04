@@ -29,9 +29,3 @@ export default useAdmin;
 // Overall, this custom hook useAdmin encapsulates the logic related to checking whether a user is an admin,
 // including authentication, making secure HTTP requests, and handling data fetching with React Query.
 // This hook can be used in React components to conditionally render UI elements based on the admin status of the user.
-
-
-
-
-
-

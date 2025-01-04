@@ -7,16 +7,15 @@ import { useSearch } from "../../../hooks/useSearch";
 import { useFilter } from "../../../hooks/useFilter";
 import { usePagination } from "../../../hooks/usePagination";
 import { usePDFExport } from "../../../hooks/usePDFExport";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Users = () => {
+  const axiosSecure = useAxiosSecure();
   const { data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:8080/users`);
-      if (!res.ok) {
-        throw new Error("Failed to fetch users");
-      }
-      return res.json();
+      const res = await axiosSecure.get(`/users`);
+      return res.data;
     },
   });
 

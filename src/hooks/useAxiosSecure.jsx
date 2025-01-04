@@ -1,10 +1,9 @@
 import axios from "axios";
-// axios: Axios library for making HTTP requests.
 import { useNavigate } from "react-router-dom"
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-  baseURL: 'http://localhost:6001',
+  baseURL: 'http://localhost:8080',
 })
 
 const useAxiosSecure = () => {
