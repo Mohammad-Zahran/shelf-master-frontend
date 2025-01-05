@@ -126,32 +126,33 @@ const ProductDetails = () => {
 
   return (
     <div className="w-full md:w-[1250px] px-4 mx-auto mt-8">
-      {/* Average Rating */}
-      <div className="flex items-center space-x-4 mb-6">
-        <div className="flex items-center">
-          {[...Array(5)].map((_, index) => (
-            <FaStar
-              key={index}
-              className={
-                index < Math.round(averageRating)
-                  ? "text-yellow-500"
-                  : "text-gray-300"
-              }
-            />
-          ))}
-        </div>
-        <p className="text-lg text-gray-700 font-medium">
-          {averageRating.toFixed(1)} / 5.0 ({reviews.length} reviews)
-        </p>
-      </div>
-
       {/* Product Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="order-2 md:order-1">
-          <h1 className="text-2xl font-medium">{product.name}</h1>
-          <p className="text-xl text-red-500 font-semibold my-2">
-            ${product.price.toFixed(2)}
-          </p>
+          <h1 className="text-6xl text-charcoal">{product.name}</h1>
+          <div className="flex justify-between items-center space-x-2 my-2">
+            {/* Product Price */}
+            <p className="text-5xl">${product.price.toFixed(2)}</p>
+
+            {/* Average Rating */}
+            <div className="flex items-center space-x-2">
+              <div className="flex items-center">
+                {[...Array(5)].map((_, index) => (
+                  <FaStar
+                    key={index}
+                    className={
+                      index < Math.round(averageRating)
+                        ? "text-yellow-500"
+                        : "text-gray-300"
+                    }
+                  />
+                ))}
+              </div>
+              <p className="text-lg text-gray-700 font-medium">
+                {averageRating.toFixed(1)} / 5.0 ({reviews.length} reviews)
+              </p>
+            </div>
+          </div>
           <p className="text-sm text-gray-600">{product.description}</p>
           <div className="mt-6">
             <ul className="text-sm text-gray-600 space-y-2">
