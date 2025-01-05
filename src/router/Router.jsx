@@ -15,7 +15,7 @@ import Users from "../pages/dashboard/admin/Users";
 import Login from "../components/Auth/Login";
 import AddProduct from "../pages/dashboard/admin/AddProduct";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
-import UpdateMenu from "../pages/dashboard/admin/UpdateMenu";
+import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
 
 const router = createBrowserRouter([
   {
@@ -95,8 +95,8 @@ const router = createBrowserRouter([
         element: <ManageItems />
       },
       {
-        path: "update-menu/:id",
-        element: <UpdateMenu />
+        path: "update-product/:id",
+        element: <UpdateProduct />
       }
     ],
   },
