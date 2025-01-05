@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import useProduct from "../../../hooks/useProduct";
 import Swal from "sweetalert2";
 import useAxiosSecure from "./../../../hooks/useAxiosSecure";
-import { FaEllipsisH } from "react-icons/fa";
+import { FaEllipsisH, FaFilePdf } from "react-icons/fa";
+import { IoSearchOutline } from "react-icons/io5";
+import gsap from "gsap";
+import { useSearch } from "../../../hooks/useSearch";
+import { useFilter } from "../../../hooks/useFilter";
+import { usePagination } from "../../../hooks/usePagination";
+import { usePDFExport } from "../../../hooks/usePDFExport";
 
 const ManageItems = () => {
   const [product, , refetch] = useProduct();
@@ -56,14 +62,86 @@ const ManageItems = () => {
     return "bg-red-500";
   };
 
+  // Custom Hooks for search, filter, and pagination
+  const {
+    search,
+    setSearch,
+    filteredData: searchResults,
+  } = useSearch(product, "name");
+  const {
+    filterValue,
+    setFilterValue,
+    filteredData: filteredItems,
+  } = useFilter(searchResults, "category");
+  const { currentPage, setCurrentPage, totalPages, paginatedData } =
+    usePagination(filteredItems, 6);
+
+  const { exportToPDF } = usePDFExport(
+    product,
+    ["name", "price", "stock", "category"],
+    "Product List"
+  );
+
+  // GSAP Animation Refs
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    gsap.set(containerRef.current, { opacity: 0, scale: 0.9 });
+
+    setTimeout(() => {
+      gsap.to(containerRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "power3.out",
+      });
+    }, 100);
+  }, [paginatedData]);
+
   return (
-    <div className="w-full md:w-[1250px] px-4 mx-auto">
+    <div ref={containerRef} className="w-full md:w-[1250px] px-4 mx-auto">
       <h2 className="text-2xl font-semibold my-4">
         Manage All <span className="text-steelBlue">Items</span>
       </h2>
+
+      {/* Search, Filter, and PDF Export */}
+      <div className="flex flex-col md:flex-row items-center justify-between mx-4 my-4 gap-4">
+        <button
+          onClick={exportToPDF}
+          className="btn normal btn-outline flex items-center gap-2"
+        >
+          <FaFilePdf className="text-red-500" />
+          Download PDF
+        </button>
+        <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
+          <div className="relative w-full md:w-auto">
+            <input
+              type="text"
+              placeholder="Search by Name"
+              className="input input-bordered pr-10 w-full md:w-auto"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <IoSearchOutline className="absolute top-2/4 right-3 -translate-y-2/4 text-gray-500 text-xl" />
+          </div>
+          <select
+            className="select select-bordered w-full md:w-auto"
+            value={filterValue}
+            onChange={(e) => setFilterValue(e.target.value)}
+          >
+            <option value="">All Categories</option>
+            <option value="Heavy-Duty">Heavy-Duty</option>
+            <option value="Adjustable">Adjustable</option>
+            <option value="Modern">Modern</option>
+            <option value="Rustic">Rustic</option>
+            <option value="Industrial">Industrial</option>
+          </select>
+        </div>
+      </div>
+
       {/* Card Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {product.map((item) => (
+        {paginatedData.map((item) => (
           <div
             key={item._id}
             className="flex flex-col bg-[#FAFAFA] rounded-lg p-4"
@@ -80,7 +158,6 @@ const ManageItems = () => {
               <div className="ml-4 flex-1">
                 <div className="flex justify-between items-start">
                   <h3 className="text-lg font-semibold">{item.name}</h3>
-                  {/* 3 Dots Menu */}
                   <button
                     onClick={() => handleMenuClick(item)}
                     className="text-gray-500 hover:text-gray-800"
@@ -104,19 +181,15 @@ const ManageItems = () => {
 
             {/* Footer - Sales and Stock */}
             <div className="mt-4 p-3 bg-[#FAFAFA] rounded-lg border border-gray-300">
-              {/* Sales */}
               <div className="flex justify-between items-center">
                 <p className="text-gray-500 text-sm">Sales</p>
                 <p className="text-gray-800 font-medium">1269</p>
               </div>
-              {/* Divider Line */}
               <div className="border-b border-gray-300 my-2"></div>
-              {/* Remaining Products */}
               <div className="flex justify-between items-center">
                 <p className="text-gray-500 text-sm">Remaining Products</p>
                 <div className="flex items-center gap-2">
                   <p className="text-gray-800 font-medium">{item.stock}</p>
-                  {/* Stock Progress Line */}
                   <div className="w-24 h-2 rounded-full bg-gray-300">
                     <div
                       className={`h-2 rounded-full ${getStockColor(
@@ -129,6 +202,23 @@ const ManageItems = () => {
               </div>
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center items-center mt-4 gap-2">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentPage(index + 1)}
+            className={`btn-sm btn-circle ${
+              currentPage === index + 1
+                ? "btn-active bg-steelBlue text-white"
+                : "btn-outline"
+            }`}
+          >
+            {index + 1}
+          </button>
         ))}
       </div>
     </div>
