@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaHeart, FaShareAlt, FaShoppingCart, FaStar } from "react-icons/fa";
+import { FaHeart, FaShoppingCart, FaStar } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -13,20 +13,18 @@ const ProductDetails = () => {
 
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [averageRating, setAverageRating] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Fetch product details and reviews
   useEffect(() => {
     const fetchProductAndReviews = async () => {
       try {
-        // Fetch product details
         const productResponse = await axiosPublic.get(`/products/${id}`);
         setProduct(productResponse.data);
 
-        // Fetch reviews
-        const reviewsResponse = await axiosPublic.get(`/reviews/${id}`); // Update the endpoint here
+        const reviewsResponse = await axiosPublic.get(`/reviews/${id}`);
         setReviews(reviewsResponse.data.reviews);
       } catch (error) {
         console.error("Error fetching product or reviews:", error);
@@ -34,6 +32,22 @@ const ProductDetails = () => {
     };
 
     fetchProductAndReviews();
+  }, [id, axiosPublic]);
+
+  // Fetch average rating
+  useEffect(() => {
+    const fetchAverageRating = async () => {
+      try {
+        const response = await axiosPublic.get(
+          `/reviews/products/${id}/average-rating`
+        );
+        setAverageRating(response.data.averageRating || 0);
+      } catch (error) {
+        console.error("Error fetching average rating:", error);
+      }
+    };
+
+    fetchAverageRating();
   }, [id, axiosPublic]);
 
   const handleAddToCart = async () => {
@@ -111,6 +125,25 @@ const ProductDetails = () => {
 
   return (
     <div className="w-full md:w-[1250px] px-4 mx-auto mt-8">
+      {/* Average Rating */}
+      <div className="flex items-center space-x-4 mb-6">
+        <div className="flex items-center">
+          {[...Array(5)].map((_, index) => (
+            <FaStar
+              key={index}
+              className={
+                index < Math.round(averageRating)
+                  ? "text-yellow-500"
+                  : "text-gray-300"
+              }
+            />
+          ))}
+        </div>
+        <p className="text-lg text-gray-700 font-medium">
+          {averageRating.toFixed(1)} / 5.0 ({reviews.length} reviews)
+        </p>
+      </div>
+
       {/* Product Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="order-2 md:order-1">
@@ -283,6 +316,7 @@ const ProductDetails = () => {
         </div>
       )}
 
+      {/* Customer Reviews */}
       <div className="mt-8 mb-8">
         <h2 className="text-2xl font-semibold border-b pb-2">
           Customer Reviews
