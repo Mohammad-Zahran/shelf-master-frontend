@@ -122,6 +122,28 @@ const ProductDetails = () => {
             <p className="text-sm text-gray-500 ml-2">(556 reviews)</p>
           </div>
 
+          {/* Additional Product Details */}
+          <div className="mt-6">
+            <ul className="text-sm text-gray-600 space-y-2">
+              <li>
+                <strong>Dimensions:</strong> {product.dimensions.width}cm (W) x{" "}
+                {product.dimensions.height}cm (H)
+              </li>
+              <li>
+                <strong>Category:</strong> {product.category}
+              </li>
+              <li>
+                <strong>Material:</strong> {product.material}
+              </li>
+              <li>
+                <strong>Load Capacity:</strong> {product.loadCapacity} kg
+              </li>
+              <li>
+                <strong>Stock:</strong> {product.stock} available
+              </li>
+            </ul>
+          </div>
+
           {/* Add to Cart */}
           <div className="flex items-center space-x-4 mt-6">
             <button
