@@ -17,6 +17,7 @@ import AddProduct from "../pages/dashboard/admin/AddProduct";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
 import ProductDetails from "../pages/shop/ProductDetails";
+import Payment from "../pages/shop/Payment";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <CartPage />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/process-checkout",
+        element: (
+          <PrivateRouter>
+            <Payment />
           </PrivateRouter>
         ),
       },
