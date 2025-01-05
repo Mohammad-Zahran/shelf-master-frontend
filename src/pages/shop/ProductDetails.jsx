@@ -189,17 +189,18 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Reviews Section */}
       <div className="mt-8">
-        <h2 className="text-xl font-semibold">Reviews</h2>
-        <div className="mt-4 space-y-4">
+        <h2 className="text-2xl font-semibold border-b pb-2">
+          Customer Reviews
+        </h2>
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="border p-4 rounded-lg bg-gray-50 shadow-sm"
+              className="p-6 border border-gray-200 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow"
             >
-              <div className="flex items-center space-x-2">
-                <div className="text-yellow-500">
+              <div className="flex items-center mb-4">
+                <div className="text-yellow-500 flex">
                   {[...Array(5)].map((_, idx) => (
                     <FaStar
                       key={idx}
@@ -211,12 +212,24 @@ const ProductDetails = () => {
                     />
                   ))}
                 </div>
-                <p className="text-sm text-gray-500">{review.userName}</p>
+                <p className="ml-2 text-sm font-medium text-gray-600">
+                  {review.userName}
+                </p>
               </div>
-              <p className="mt-2 text-sm text-gray-600">{review.comment}</p>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                "{review.comment}"
+              </p>
+              <p className="text-gray-400 text-xs mt-4">
+                Posted on {new Date(review.createdAt).toLocaleDateString()}
+              </p>
             </div>
           ))}
         </div>
+        {reviews.length === 0 && (
+          <p className="text-center text-gray-500 mt-4">
+            No reviews yet. Be the first to leave a review!
+          </p>
+        )}
       </div>
     </div>
   );
