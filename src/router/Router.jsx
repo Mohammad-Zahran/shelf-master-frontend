@@ -9,6 +9,14 @@ import Products from "../pages/shop/Products";
 import PrivateRouter from "./../PrivateRouter/PrivateRouter";
 import CartPage from "../pages/shop/CartPage";
 import WishListPage from "../pages/shop/WishListPage";
+import DashboardLayout from "./../layout/DashboardLayout";
+import Dashboard from "../pages/dashboard/admin/Dashboard";
+import Users from "../pages/dashboard/admin/Users";
+import Login from "../components/Auth/Login";
+import AddProduct from "../pages/dashboard/admin/AddProduct";
+import ManageItems from "../pages/dashboard/admin/ManageItems";
+import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
+import ProductDetails from "../pages/shop/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetails />,
       },
       {
         path: "/cart-page",
@@ -58,6 +70,40 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRouter>
+        <DashboardLayout />
+      </PrivateRouter>
+    ),
+    children: [
+      {
+        path: "",
+        element: <Dashboard />,
+      },
+      {
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "add-product",
+        element: <AddProduct />
+      },
+      {
+        path: "manage-items",
+        element: <ManageItems />
+      },
+      {
+        path: "update-product/:id",
+        element: <UpdateProduct />
+      }
+    ],
   },
 ]);
 

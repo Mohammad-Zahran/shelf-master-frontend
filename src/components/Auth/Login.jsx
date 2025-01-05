@@ -4,18 +4,17 @@ import { useForm } from "react-hook-form";
 import { gsap } from "gsap";
 import Modal from "./Modal";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { AuthContext } from "../../contexts/AuthProvider";
-import useAxiosPublic from "./../../hooks/useAxiosPublic";
-import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAuth from "./../../hooks/useAuth";
 
-const Signup = () => {
+const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const { signUpWithGmail, createUser, updateuserProfile } = useAuth();
+  const { signUpWithGmail, login } = useAuth();
   const axiosPublic = useAxiosPublic();
 
   const location = useLocation();
@@ -42,95 +41,83 @@ const Signup = () => {
     );
   }, []);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const email = data.email;
     const password = data.password;
-    const defaultPhotoURL =
-      "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
 
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        const userInfo = {
-          name: data.name,
-          email: data.email,
-          photoURL: data.photoURL || defaultPhotoURL, // Use default if not provided
-        };
+    try {
+      const result = await login(email, password);
+      const user = result.user;
+      const photoURL = user.photoURL || "/assets/images/default-profile.png"; // Use default photo if none exists
 
-        updateuserProfile({
-          name: data.name,
-          photoURL: userInfo.photoURL,
-        }).then(() => {
-          axiosPublic.post("/users", userInfo).then(() => {
-            alert("Account creation successfully done!");
-            navigate(from, { replace: true });
-          });
-        });
-      })
-      .catch((error) => {
-        console.error("Error creating user:", error.message);
+      alert("Login successful!");
+
+      navigate(from, { replace: true });
+
+      console.log("Logged-in user details:", {
+        email: user.email,
+        photoURL,
       });
+    } catch (error) {
+      console.error("Login failed:", error.message);
+      alert("Login failed. Please check your credentials.");
+    }
   };
 
   // Login with Google
-  const handleRegister = () => {
+  const handleLoginWithGoogle = () => {
     signUpWithGmail()
       .then((result) => {
         const userInfo = {
-          name: result.user.displayName,
-          email: result.user.email,
+          name: result?.user?.displayName,
+          email: result?.user?.email,
           photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
         };
-
-        axiosPublic.post("/users", userInfo).then(() => {
-          alert("Account creation successfully done!");
-          navigate("/");
+        axiosPublic.post("/users", userInfo).then((response) => {
+          alert("Login successful!");
+          navigate(from, { replace: true });
         });
       })
-      .catch((error) => console.error("Google sign-up error:", error));
+      .catch((error) => console.error("Google Sign-In failed:", error));
   };
 
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-white">
-      {/* Left Section: Signup Form */}
+      {/* Left Section: Login Form */}
       <div
         ref={leftSectionRef}
         className="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 md:px-10"
       >
-        <div className="w-full max-w-md" method="dialog">
+        <div className="w-full max-w-md">
           <h2 className="text-3xl font-bold text-charcoal mb-4 text-center lg:text-left">
-            Get Started Now
+            Welcome Back
           </h2>
           <p className="text-steelBlue mb-6 text-center lg:text-left">
-            Enter your credentials to access your account
+            Enter your credentials to log in to your account
           </p>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <input
-              type="text"
-              placeholder="Name"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
-              {...register("name")}
-            />
             <input
               type="email"
               placeholder="Email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
-              {...register("email")}
+              {...register("email", { required: true })}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm">Email is required</p>
+            )}
+
             <input
               type="password"
               placeholder="Password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
-              {...register("password")}
+              {...register("password", { required: true })}
             />
-            <div className="flex items-center gap-2">
-              <input type="checkbox" id="terms" />
-              <label htmlFor="terms" className="text-sm text-black">
-                I agree to the terms & policy
-              </label>
-            </div>
-            <button type="submit" value="Login" className="btn w-full normal">
-              Sign Up
+            {errors.password && (
+              <p className="text-red-500 text-sm">Password is required</p>
+            )}
+
+            <button type="submit" className="btn w-full normal">
+              Log In
             </button>
           </form>
 
@@ -144,7 +131,7 @@ const Signup = () => {
           {/* Social Login Buttons */}
           <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-4 md:space-y-0 mt-4">
             <button
-              onClick={handleRegister}
+              onClick={handleLoginWithGoogle}
               className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition"
             >
               <img
@@ -167,9 +154,9 @@ const Signup = () => {
           {/* Centered Footer */}
           <div className="mt-6 text-center">
             <p className="text-sm text-black">
-              Have an Acocunt?{" "}
-              <Link to="/login" className="text-blue-500 hover:underline">
-                Login
+              Don’t have an account?{" "}
+              <Link to="/signup" className="text-blue-500 hover:underline">
+                Sign Up
               </Link>
             </p>
             <Link
@@ -190,7 +177,7 @@ const Signup = () => {
       >
         <img
           src="/assets/images/signup.png"
-          alt="Signup"
+          alt="Login"
           className="h-auto"
           style={{
             width: "75%",
@@ -203,4 +190,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;

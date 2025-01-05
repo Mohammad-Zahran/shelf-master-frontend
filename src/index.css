@@ -229,3 +229,9 @@ input::-webkit-inner-spin-button {
   font-size: 1.5rem;
   cursor: pointer;
 }
+
+.admin-hover:hover {
+  background-color: rgba(112, 127, 221, 0.1); /* Background color with 10% opacity */
+  color: #5A6ACF; /* Text color */
+}
+

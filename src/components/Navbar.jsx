@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import logo from "../../public/assets/images/logo.png";
 import { FaRegUser } from "react-icons/fa";
 import Modal from "./Auth/Modal";
-import { AuthContext } from "../contexts/AuthProvider";
 import Profile from "./Auth/Profile";
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import { FaRegHeart } from "react-icons/fa";
 import useWishList from "../hooks/useWishList";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const navItems = (
@@ -33,12 +33,13 @@ const Navbar = () => {
     </>
   );
 
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useAuth();
   const [cart, refetch] = useCart();
   const [wishlist, refetch1] = useWishList();
 
   
   const wishListCount = wishlist?.length || 0;
+
 
   return (
     <header className="max-w-screen-2xl container mx-auto">

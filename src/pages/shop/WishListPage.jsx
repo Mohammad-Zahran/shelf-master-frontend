@@ -11,7 +11,6 @@ const WishListPage = () => {
   const [cart, refetchCart] = useCart();
   const [localWishlist, setLocalWishlist] = useState([]);
 
-  // Sync local state with fetched wishlist
   useEffect(() => {
     setLocalWishlist(wishlist);
   }, [wishlist]);
@@ -115,12 +114,12 @@ const WishListPage = () => {
               {localWishlist.map((item, index) => (
                 <div
                   key={index}
-                  className="relative flex flex-wrap sm:flex-nowrap gap-6 pb-6 border-b border-gray-300"
+                  className="relative flex flex-col sm:flex-row gap-6 pb-6 border-b border-gray-300"
                 >
                   <img
                     src={item.images[0]}
                     alt={item.name}
-                    className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded"
+                    className="w-full sm:w-32 sm:h-32 object-cover rounded"
                   />
 
                   <div className="flex-1">
@@ -136,20 +135,20 @@ const WishListPage = () => {
                     </button>
                   </div>
 
-                  <div className="absolute sm:static top-0 right-0 sm:right-auto text-right">
+                  <div className="sm:static text-right">
                     <p className="text-lg font-medium">
                       ${item.price.toFixed(2)}
                     </p>
                     {isItemInCart(item._id) ? (
                       <Link
                         to="/cart-page"
-                        className="mt-4 w-full btn normal text-white py-2 rounded-md bg-blue-500"
+                        className="mt-4 btn normal text-white py-2 rounded-md bg-blue-500 w-full sm:w-auto"
                       >
                         View in Cart
                       </Link>
                     ) : (
                       <button
-                        className="mt-4 w-full btn normal text-white py-2 rounded-md bg-green-500"
+                        className="mt-4 btn normal text-white py-2 rounded-md bg-green-500 w-full sm:w-auto"
                         onClick={() => handleAddToCart(item)}
                       >
                         Add to Cart

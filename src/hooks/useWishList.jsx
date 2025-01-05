@@ -8,7 +8,6 @@ const useWishList = () => {
   const { refetch, data: wishListData = { wishlist: [] }, error } = useQuery({
     queryKey: ["wishlists", user?.email],
     queryFn: async () => {
-      console.log(`Fetching wishlist for email: ${user?.email}`);
       const res = await fetch(
         `http://localhost:8080/wishlists?email=${user?.email}`
       );
@@ -17,7 +16,6 @@ const useWishList = () => {
         throw new Error("Failed to fetch wishlist data");
       }
       const data = await res.json();
-      console.log("Fetched wishlist data:", data);
       return data;
     },
     enabled: !!user?.email, // Ensure query runs only when user is logged in

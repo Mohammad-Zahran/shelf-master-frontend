@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="bg-steelBlue text-white py-10">
       {/* Top Section */}
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Column 1: Product Section */}
         <div>
           <h3 className="font-bold text-lg mb-4">Product</h3>
@@ -98,7 +98,8 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-lg mb-4">Subscribe</h3>
           <p className="mb-4">
-            Hello, we are ShelfMaster. Our goal is to translate the shelf for our customers the best way possible
+            Hello, we are ShelfMaster. Our goal is to translate the shelf for
+            our customers the best way possible
           </p>
           <form>
             <div className="flex flex-wrap md:flex-nowrap items-center">

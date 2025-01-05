@@ -4,11 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 
 const useCart = () => {
   const { user } = useContext(AuthContext);
+  const token = localStorage.getItem("access-token");
   const { refetch, data: cartData = { cart: [] } } = useQuery({
     queryKey: ["carts", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:8080/carts?email=${user?.email}`
+        `http://localhost:8080/carts?email=${user?.email}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!res.ok) {
         throw new Error("Failed to fetch wishlist data");

@@ -38,15 +38,21 @@ const Modal = () => {
       });
   };
 
-  // google signin
+  // Login with Google
   const handleLogin = () => {
     signUpWithGmail()
       .then((result) => {
-        const user = result.user;
-        alert("Login successfull");
-        navigate(from, { replace: true });
+        const userInfo = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
+        };
+        axios.post("http://localhost:8080/users", userInfo).then((response) => {
+          alert("Login successful!");
+          navigate(from, { replace: true });
+        });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error("Google Sign-In failed:", error));
   };
 
   return (
@@ -119,7 +125,7 @@ const Modal = () => {
           </form>
 
           {/* Social sign in */}
-          <div className="text-center space-3 mb-5">
+          <div className="text-center space-x-4 mb-5">
             <button className="btn btn-circle normal" onClick={handleLogin}>
               <FaGoogle />
             </button>

@@ -39,8 +39,27 @@ const Cards = ({
   const location = useLocation();
 
   // Function to handle cart addition
-  const handleAddtoCart = (item) => {
+  const handleAddtoCart = async (item) => {
     if (user && user?.email) {
+      const existingCartItem = cart.find((cartItem) => cartItem.productId === _id);
+
+      if (existingCartItem) {
+        Swal.fire({
+          title: "Item Already in Cart",
+          text: "This item is already in your cart.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Go to Cart",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/cart-page");
+          }
+        });
+        return;
+      }
+
       const cartItem = {
         productId: _id,
         name,
@@ -63,7 +82,7 @@ const Cards = ({
           refetch(); 
           if (data?.cart) {
             Swal.fire({
-              position: "top-end",
+              position: "center",
               icon: "success",
               title: "Item added to cart successfully!",
               showConfirmButton: false,
@@ -90,7 +109,7 @@ const Cards = ({
         confirmButtonText: "Login Now",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/signup", { state: { from: location } });
+          navigate("/login", { state: { from: location } });
         }
       });
     }
@@ -301,7 +320,7 @@ const Cards = ({
         {/* See More Button */}
         <div className="mt-3">
           <Link
-            to={`/product/${item._id}`}
+            to={`/products/${item._id}`}
             className="text-sm font-medium text-blue-500 hover:underline"
           >
             See More

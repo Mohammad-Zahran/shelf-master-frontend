@@ -48,24 +48,24 @@ export const UI = () => {
       <div className="z-10 flex flex-col items-center">
         <a className="pointer-events-auto mb-4">
           <img
-            className="w-20"
+            className="w-16 sm:w-20"
             src="/public/assets/images/logo.png"
             alt="Logo"
           />
         </a>
         <div className="w-full flex justify-center">
-          <div className="flex items-center gap-4 max-w-full px-4">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4 max-w-full px-2 sm:px-4">
             {[...pages].map((_, index) => (
               <button
                 key={index}
-                className={"btn round"}
+                className="btn round text-sm sm:text-base"
                 onClick={() => setPage(index)}
               >
                 {index === 0 ? "Cover" : `Page ${index}`}
               </button>
             ))}
             <button
-              className={'btn round'}
+              className="btn round text-sm sm:text-base"
               onClick={() => setPage(pages.length)}
             >
               Back Cover
