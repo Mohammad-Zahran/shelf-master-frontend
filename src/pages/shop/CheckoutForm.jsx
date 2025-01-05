@@ -1,11 +1,40 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React from "react";
+import { FaPaypal } from "react-icons/fa";
 
 const CheckoutForm = ({ price, cart }) => {
   const stripe = useStripe();
   const elements = useElements();
-  
-  const handleSubmit = async (event) => {};
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!stripe || !elements) {
+      // Stripe.js has not loaded yet. Make sure to disable
+      // form submission until Stripe.js has loaded.
+      return;
+    }
+
+    // create a card element
+    const card = elements.getElement(CardElement);
+
+    if (card == null) {
+      return;
+    }
+
+    // Use your card Element with other Stripe.js APIs
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card,
+    });
+
+    if (error) {
+      console.log("[error]", error);
+    } else {
+      console.log("[PaymentMethod]", paymentMethod);
+    }
+
+    
+  };
   return (
     <div className="flex flex-col sm:flex-row justify-start items-start gap-8">
       {/* left side */}
@@ -15,7 +44,7 @@ const CheckoutForm = ({ price, cart }) => {
         <p>Number of Items: {cart.length}</p>
       </div>
       {/* right side */}
-      <div className="md:w-1/3 space-y-3 card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl px-4 py-7">
+      <div className="md:w-1/3 space-y-5 card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl px-4 py-7">
         <h4 className="text-lg font-semibold">Process your Payment!</h4>
         <h5 className="font-medium">Credit/Debit Card</h5>
         {/* Stripe form */}
@@ -36,10 +65,25 @@ const CheckoutForm = ({ price, cart }) => {
               },
             }}
           />
-          <button type="submit" disabled={!stripe}>
+          <button
+            type="submit"
+            disabled={!stripe}
+            className="btn btn-sm mt-5 w-full bg-steelBlue text-white hover:bg-white hover:text-steelBlue"
+          >
             Pay
           </button>
         </form>
+        {/* paypal */}
+        <div className="mt-5 text-center">
+          <hr />
+          <button
+            type="submit"
+            disabled={!stripe}
+            className="btn btn-sm mt-5 bg-[#168BD7] text-white hover:bg-white hover:text-[#168BD7]"
+          >
+            <FaPaypal /> Pay with Paypal
+          </button>
+        </div>
       </div>
     </div>
   );
