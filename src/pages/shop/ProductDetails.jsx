@@ -12,21 +12,28 @@ const ProductDetails = () => {
   const { user } = useContext(AuthContext);
 
   const [product, setProduct] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [reviews, setReviews] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Fetch product details and reviews
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProductAndReviews = async () => {
       try {
-        const response = await axiosPublic.get(`/products/${id}`);
-        setProduct(response.data);
+        // Fetch product details
+        const productResponse = await axiosPublic.get(`/products/${id}`);
+        setProduct(productResponse.data);
+
+        // Fetch reviews
+        const reviewsResponse = await axiosPublic.get(`/reviews/${id}`); // Update the endpoint here
+        setReviews(reviewsResponse.data.reviews);
       } catch (error) {
-        console.error("Error fetching product:", error);
+        console.error("Error fetching product or reviews:", error);
       }
     };
 
-    fetchProduct();
+    fetchProductAndReviews();
   }, [id, axiosPublic]);
 
   const handleAddToCart = async () => {
@@ -104,26 +111,14 @@ const ProductDetails = () => {
 
   return (
     <div className="w-full md:w-[1250px] px-4 mx-auto mt-8">
+      {/* Product Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left: Product Details */}
         <div className="order-2 md:order-1">
           <h1 className="text-2xl font-medium">{product.name}</h1>
           <p className="text-xl text-red-500 font-semibold my-2">
             ${product.price.toFixed(2)}
           </p>
           <p className="text-sm text-gray-600">{product.description}</p>
-
-          {/* Rating */}
-          <div className="flex items-center mt-4">
-            <div className="flex items-center text-yellow-500">
-              {[...Array(5)].map((_, index) => (
-                <FaStar key={index} />
-              ))}
-            </div>
-            <p className="text-sm text-gray-500 ml-2">(556 reviews)</p>
-          </div>
-
-          {/* Additional Product Details */}
           <div className="mt-6">
             <ul className="text-sm text-gray-600 space-y-2">
               <li>
@@ -144,8 +139,6 @@ const ProductDetails = () => {
               </li>
             </ul>
           </div>
-
-          {/* Add to Cart */}
           <div className="flex items-center space-x-4 mt-6">
             <button
               onClick={handleAddToCart}
@@ -166,18 +159,7 @@ const ProductDetails = () => {
               {isLiked ? "Remove from Wishlist" : "Add to Wishlist"}
             </button>
           </div>
-
-          {/* Additional Info */}
-          <div className="mt-6">
-            <ul className="text-sm text-gray-600">
-              <li>Free 3-5 day shipping</li>
-              <li>Tool-free assembly</li>
-              <li>30-day trial</li>
-            </ul>
-          </div>
         </div>
-
-        {/* Right: Product Images */}
         <div className="order-1 md:order-2 relative">
           <div
             className="relative cursor-zoom-in"
@@ -189,7 +171,6 @@ const ProductDetails = () => {
               className="rounded-lg w-full h-96 object-cover hover:scale-110 transition-transform duration-300"
             />
           </div>
-          {/* Image thumbnails */}
           <div className="flex mt-4 space-x-4">
             {product.images.map((img, index) => (
               <img
@@ -208,19 +189,35 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Full-Screen Image Modal */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50"
-          onClick={() => setIsModalOpen(false)}
-        >
-          <img
-            src={product.images[currentImageIndex]}
-            alt="Full Screen"
-            className="max-w-full max-h-full"
-          />
+      {/* Reviews Section */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold">Reviews</h2>
+        <div className="mt-4 space-y-4">
+          {reviews.map((review, index) => (
+            <div
+              key={index}
+              className="border p-4 rounded-lg bg-gray-50 shadow-sm"
+            >
+              <div className="flex items-center space-x-2">
+                <div className="text-yellow-500">
+                  {[...Array(5)].map((_, idx) => (
+                    <FaStar
+                      key={idx}
+                      className={
+                        idx < review.rating
+                          ? "text-yellow-500"
+                          : "text-gray-300"
+                      }
+                    />
+                  ))}
+                </div>
+                <p className="text-sm text-gray-500">{review.userName}</p>
+              </div>
+              <p className="mt-2 text-sm text-gray-600">{review.comment}</p>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
