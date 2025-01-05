@@ -320,7 +320,7 @@ const Cards = ({
         {/* See More Button */}
         <div className="mt-3">
           <Link
-            to={`/product/${item._id}`}
+            to={`/products/${item._id}`}
             className="text-sm font-medium text-blue-500 hover:underline"
           >
             See More

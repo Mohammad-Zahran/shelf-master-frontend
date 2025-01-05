@@ -16,6 +16,7 @@ import Login from "../components/Auth/Login";
 import AddProduct from "../pages/dashboard/admin/AddProduct";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
+import ProductDetails from "../pages/shop/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetails />,
       },
       {
         path: "/cart-page",
