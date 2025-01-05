@@ -4,6 +4,8 @@ import { FaHeart, FaShoppingCart, FaStar, FaTimes } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AuthContext } from "../../contexts/AuthProvider";
+import useCart from "../../hooks/useCart";
+import useWishList from "../../hooks/useWishList";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -17,6 +19,9 @@ const ProductDetails = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state for full-screen image
+  const [cart, refetch] = useCart();
+  const [wishlist, refetch1] = useWishList();
+
 
   // Fetch product details and reviews
   useEffect(() => {
@@ -66,7 +71,7 @@ const ProductDetails = () => {
       });
       return;
     }
-
+  
     try {
       const cartItem = {
         productId: product._id,
@@ -76,22 +81,32 @@ const ProductDetails = () => {
         quantity: 1,
         email: user.email,
       };
-
+  
       const response = await axiosPublic.post("/carts", cartItem);
-
-      if (response.status === 200) {
+  
+      // Check for success response
+      if (response.status === 201 || response.status === 200) {
+        refetch(); // Update the cart count in the navbar
         Swal.fire({
           icon: "success",
           title: "Added to Cart",
           text: "The item has been added to your cart.",
           timer: 1500,
+          showConfirmButton: false,
         });
+      } else {
+        throw new Error("Failed to add item to cart.");
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.response?.data?.message || "Could not add item to cart.",
+      });
     }
   };
-
+  
   const handleToggleWishlist = async () => {
     if (!user) {
       Swal.fire({
@@ -103,22 +118,29 @@ const ProductDetails = () => {
       });
       return;
     }
-
+  
     try {
       const response = await axiosPublic.post("/wishlists/toggle", {
         email: user.email,
         product: product,
       });
-
+  
       if (response.status === 200) {
         setIsLiked(!isLiked);
+        refetch1(); // Update the wishlist count in the navbar
         const message = isLiked ? "Removed from wishlist" : "Added to wishlist";
         Swal.fire("Success", message, "success");
       }
     } catch (error) {
       console.error("Error toggling wishlist:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.response?.data?.message || "Could not update wishlist.",
+      });
     }
   };
+  
 
   if (!product) {
     return <div>Loading...</div>;
