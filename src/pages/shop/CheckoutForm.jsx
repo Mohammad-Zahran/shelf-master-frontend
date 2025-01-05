@@ -1,10 +1,12 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React from "react";
+import React, { useState } from "react";
 import { FaPaypal } from "react-icons/fa";
 
 const CheckoutForm = ({ price, cart }) => {
   const stripe = useStripe();
   const elements = useElements();
+
+  const [cardError, setCardError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -29,11 +31,11 @@ const CheckoutForm = ({ price, cart }) => {
 
     if (error) {
       console.log("[error]", error);
+      setCardError(error.message);
     } else {
+      setCardError("success!");
       console.log("[PaymentMethod]", paymentMethod);
     }
-
-    
   };
   return (
     <div className="flex flex-col sm:flex-row justify-start items-start gap-8">
@@ -73,6 +75,7 @@ const CheckoutForm = ({ price, cart }) => {
             Pay
           </button>
         </form>
+        {cardError ? <p className="text-red-500">{cardError}</p> : ""}
         {/* paypal */}
         <div className="mt-5 text-center">
           <hr />
