@@ -14,6 +14,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -178,29 +179,15 @@ const ProductDetails = () => {
 
         {/* Right: Product Images */}
         <div className="order-1 md:order-2 relative">
-          <img
-            src={product.images[currentImageIndex]}
-            alt={product.name}
-            className="rounded-lg w-full h-96 object-cover"
-          />
-          <div className="absolute top-2 right-2 flex flex-col space-y-4">
-            <button
-              onClick={handleToggleWishlist}
-              className={`p-3 rounded-full ${
-                isLiked ? "bg-red-500 text-white" : "bg-gray-300 text-gray-800"
-              }`}
-            >
-              <FaHeart />
-            </button>
-            <button className="p-3 rounded-full bg-gray-300 text-gray-800">
-              <FaShareAlt />
-            </button>
-            <button
-              onClick={handleAddToCart}
-              className="p-3 rounded-full bg-gray-300 text-gray-800"
-            >
-              <FaShoppingCart />
-            </button>
+          <div
+            className="relative cursor-zoom-in"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <img
+              src={product.images[currentImageIndex]}
+              alt={product.name}
+              className="rounded-lg w-full h-96 object-cover hover:scale-110 transition-transform duration-300"
+            />
           </div>
           {/* Image thumbnails */}
           <div className="flex mt-4 space-x-4">
@@ -220,6 +207,20 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* Full-Screen Image Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <img
+            src={product.images[currentImageIndex]}
+            alt="Full Screen"
+            className="max-w-full max-h-full"
+          />
+        </div>
+      )}
     </div>
   );
 };
