@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaHeart, FaShoppingCart, FaStar } from "react-icons/fa";
+import { FaHeart, FaShoppingCart, FaStar, FaTimes } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -16,6 +16,7 @@ const ProductDetails = () => {
   const [averageRating, setAverageRating] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state for full-screen image
 
   // Fetch product details and reviews
   useEffect(() => {
@@ -193,6 +194,8 @@ const ProductDetails = () => {
             </button>
           </div>
         </div>
+
+        {/* Image and Modal Section */}
         <div className="order-1 md:order-2 relative">
           <div
             className="relative cursor-zoom-in"
@@ -219,102 +222,30 @@ const ProductDetails = () => {
               />
             ))}
           </div>
+
+          {/* Full-Screen Modal */}
+          {isModalOpen && (
+            <div
+              className="fixed inset-0 z-50 bg-black bg-opacity-80 flex justify-center items-center"
+              onClick={() => setIsModalOpen(false)}
+            >
+              <div className="relative" onClick={(e) => e.stopPropagation()}>
+                <img
+                  src={product.images[currentImageIndex]}
+                  alt={product.name}
+                  className="max-w-[90%] max-h-[80%] object-contain rounded-lg"
+                />
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="absolute top-4 right-4 text-white text-2xl"
+                >
+                  <FaTimes />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Add Review Section */}
-      {user && (
-        <div className="mt-8 mb-8">
-          <h2 className="text-2xl font-semibold border-b pb-2">Add a Review</h2>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              const rating = parseInt(e.target.rating.value, 10);
-              const comment = e.target.comment.value;
-
-              if (!rating || !comment) {
-                Swal.fire("Error", "Please fill out all fields!", "error");
-                return;
-              }
-
-              try {
-                const review = {
-                  productId: id,
-                  userId: user.id,
-                  userName: user.name,
-                  rating,
-                  comment,
-                };
-
-                const response = await axiosPublic.post(`/reviews`, review);
-
-                if (response.status === 201) {
-                  Swal.fire(
-                    "Success",
-                    "Your review has been added!",
-                    "success"
-                  );
-                  setReviews((prevReviews) => [...prevReviews, review]);
-                  e.target.reset();
-                }
-              } catch (error) {
-                Swal.fire(
-                  "Error",
-                  "Something went wrong while adding the review.",
-                  "error"
-                );
-              }
-            }}
-            className="mt-6 space-y-4"
-          >
-            <div>
-              <label
-                htmlFor="rating"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Rating
-              </label>
-              <select
-                id="rating"
-                name="rating"
-                required
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option value="">Select a rating</option>
-                {[...Array(5)].map((_, index) => (
-                  <option key={index} value={index + 1}>
-                    {index + 1} Star{index > 0 ? "s" : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label
-                htmlFor="comment"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Comment
-              </label>
-              <textarea
-                id="comment"
-                name="comment"
-                rows="4"
-                required
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="Write your review here..."
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Submit Review
-            </button>
-          </form>
-        </div>
-      )}
 
       {/* Customer Reviews */}
       <div className="mt-8 mb-8">
