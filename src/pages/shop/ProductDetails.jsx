@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaHeart, FaShareAlt, FaShoppingCart } from "react-icons/fa";
+import { FaHeart, FaShareAlt, FaShoppingCart, FaStar } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -89,9 +89,7 @@ const ProductDetails = () => {
 
       if (response.status === 200) {
         setIsLiked(!isLiked);
-        const message = isLiked
-          ? "Removed from wishlist"
-          : "Added to wishlist";
+        const message = isLiked ? "Removed from wishlist" : "Added to wishlist";
         Swal.fire("Success", message, "success");
       }
     } catch (error) {
@@ -116,7 +114,11 @@ const ProductDetails = () => {
 
           {/* Rating */}
           <div className="flex items-center mt-4">
-            <div className="text-yellow-500 font-bold">4.6</div>
+            <div className="flex items-center text-yellow-500">
+              {[...Array(5)].map((_, index) => (
+                <FaStar key={index} />
+              ))}
+            </div>
             <p className="text-sm text-gray-500 ml-2">(556 reviews)</p>
           </div>
 
@@ -124,18 +126,20 @@ const ProductDetails = () => {
           <div className="flex items-center space-x-4 mt-6">
             <button
               onClick={handleAddToCart}
-              className="bg-steelBlue text-white px-6 py-2 rounded-lg hover:bg-transparent hover:border hover:text-steelBlue"
+              className="bg-steelBlue text-white px-6 py-2 rounded-lg flex items-center gap-2 hover:bg-transparent hover:border hover:text-steelBlue"
             >
+              <FaShoppingCart />
               Add to Cart
             </button>
             <button
               onClick={handleToggleWishlist}
-              className={`px-6 py-2 rounded-lg ${
+              className={`px-6 py-2 rounded-lg flex items-center gap-2 ${
                 isLiked
                   ? "bg-red-500 text-white"
                   : "border border-gray-300 text-gray-800 hover:text-steelBlue"
               }`}
             >
+              <FaHeart />
               {isLiked ? "Remove from Wishlist" : "Add to Wishlist"}
             </button>
           </div>
@@ -151,29 +155,30 @@ const ProductDetails = () => {
         </div>
 
         {/* Right: Product Images */}
-        <div className="order-1 md:order-2">
-          <div className="relative">
-            <img
-              src={product.images[currentImageIndex]}
-              alt={product.name}
-              className="rounded-lg w-full h-96 object-cover"
-            />
-            <div className="absolute top-2 right-2 flex items-center space-x-4">
-              <button
-                onClick={handleToggleWishlist}
-                className={`p-3 rounded-full ${
-                  isLiked ? "bg-red-500 text-white" : "bg-gray-300 text-gray-800"
-                }`}
-              >
-                <FaHeart />
-              </button>
-              <button className="p-3 rounded-full bg-gray-300 text-gray-800">
-                <FaShareAlt />
-              </button>
-              <button className="p-3 rounded-full bg-gray-300 text-gray-800">
-                <FaShoppingCart />
-              </button>
-            </div>
+        <div className="order-1 md:order-2 relative">
+          <img
+            src={product.images[currentImageIndex]}
+            alt={product.name}
+            className="rounded-lg w-full h-96 object-cover"
+          />
+          <div className="absolute top-2 right-2 flex flex-col space-y-4">
+            <button
+              onClick={handleToggleWishlist}
+              className={`p-3 rounded-full ${
+                isLiked ? "bg-red-500 text-white" : "bg-gray-300 text-gray-800"
+              }`}
+            >
+              <FaHeart />
+            </button>
+            <button className="p-3 rounded-full bg-gray-300 text-gray-800">
+              <FaShareAlt />
+            </button>
+            <button
+              onClick={handleAddToCart}
+              className="p-3 rounded-full bg-gray-300 text-gray-800"
+            >
+              <FaShoppingCart />
+            </button>
           </div>
           {/* Image thumbnails */}
           <div className="flex mt-4 space-x-4">
