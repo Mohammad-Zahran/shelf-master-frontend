@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import {
   FaFacebookF,
   FaGithub,
@@ -9,6 +10,59 @@ import { MdEmail } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 
 const ContactUs = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState("");
+
+  // Handle input change
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const emailData = {
+      name: `${formData.firstName} ${formData.lastName}`,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+    };
+
+    try {
+      setStatus("Sending...");
+      const response = await axios.post(
+        "http://localhost:8080/send-email",
+        emailData
+      );
+      if (response.data.success) {
+        setStatus("Email sent successfully!");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        setStatus("Failed to send email.");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setStatus("Failed to send email.");
+    }
+  };
+
   return (
     <div className="relative max-w-screen-xl mx-auto px-6 py-16">
       <h1 className="text-4xl font-bold text-center mb-12">Contact Us</h1>
@@ -60,8 +114,9 @@ const ContactUs = () => {
           </div>
         </div>
 
+        {/* Form Section */}
         <div className="bg-white p-8 rounded-lg shadow-md">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label htmlFor="firstName" className="block text-gray-700 mb-2">
@@ -70,6 +125,8 @@ const ContactUs = () => {
                 <input
                   type="text"
                   id="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
                   className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                   placeholder="First Name"
                 />
@@ -81,6 +138,8 @@ const ContactUs = () => {
                 <input
                   type="text"
                   id="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
                   className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                   placeholder="Last Name"
                 />
@@ -94,6 +153,8 @@ const ContactUs = () => {
               <input
                 type="email"
                 id="email"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                 placeholder="Your Email"
               />
@@ -106,6 +167,8 @@ const ContactUs = () => {
               <input
                 type="text"
                 id="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                 placeholder="Your Phone Number"
               />
@@ -117,8 +180,11 @@ const ContactUs = () => {
               </label>
               <select
                 id="subject"
+                value={formData.subject}
+                onChange={handleChange}
                 className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
               >
+                <option value="">Select Subject</option>
                 <option>General Inquiry</option>
                 <option>Support</option>
                 <option>Feedback</option>
@@ -131,6 +197,8 @@ const ContactUs = () => {
               </label>
               <textarea
                 id="message"
+                value={formData.message}
+                onChange={handleChange}
                 className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                 placeholder="Write your message..."
                 rows="5"
@@ -140,6 +208,9 @@ const ContactUs = () => {
             <button type="submit" className="w-full btn normal">
               Send Message
             </button>
+            {status && (
+              <p className="mt-4 text-center text-gray-600">{status}</p>
+            )}
           </form>
         </div>
       </div>
