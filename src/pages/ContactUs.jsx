@@ -1,4 +1,7 @@
 import React from "react";
+import { FaPhoneVolume } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+import { FaLocationDot } from "react-icons/fa6";
 
 const ContactUs = () => {
   return (
@@ -6,25 +9,35 @@ const ContactUs = () => {
       <h1 className="text-4xl font-bold text-center mb-12">Contact Us</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Contact Information Section */}
-        <div className="bg-blue-500 text-white p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-4">Contact Information</h2>
-          <p className="mb-6">Say something to start a live chat!</p>
-          <ul className="space-y-4">
-            <li className="flex items-center space-x-4">
-              <span className="material-icons">phone</span>
-              <span>+1012 3456 789</span>
-            </li>
-            <li className="flex items-center space-x-4">
-              <span className="material-icons">email</span>
-              <span>demo@gmail.com</span>
-            </li>
-            <li className="flex items-center space-x-4">
-              <span className="material-icons">location_on</span>
-              <span>
-                132 Dartmouth Street Boston, Massachusetts 02156 United States
-              </span>
-            </li>
-          </ul>
+        <div className="bg-steelBlue text-white p-8 rounded-lg shadow-md">
+          <h2 className="text-4xl font-semibold mb-4">Contact Information</h2>
+          <p className="mb-6 text-xl text-[#C9C9C9]">
+            Say something to start a live chat!
+          </p>
+          <div className="mt-36">
+            <ul className="space-y-12">
+              <li className="flex items-center space-x-4 text-xl">
+                <span className="material-icons">
+                  <FaPhoneVolume />
+                </span>
+                <span>+1012 3456 789</span>
+              </li>
+              <li className="flex items-center space-x-4 text-xl">
+                <span className="material-icons">
+                  <MdEmail />
+                </span>
+                <span>demo@gmail.com</span>
+              </li>
+              <li className="flex items-center space-x-4 text-xl">
+                <span className="material-icons mb-7">
+                  <FaLocationDot />
+                </span>
+                <span>
+                  132 Dartmouth Street Boston, Massachusetts 02156 United States
+                </span>
+              </li>
+            </ul>
+          </div>
           <div className="flex space-x-4 mt-6">
             <a href="#" className="text-white hover:text-gray-200">
               <i className="fab fa-facebook-f"></i>
