@@ -1,7 +1,13 @@
 import React from "react";
-import { FaPhoneVolume } from "react-icons/fa6";
+import {
+  FaFacebookF,
+  FaGithub,
+  FaGoogle,
+  FaPhoneVolume,
+} from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
+import { FaFacebook } from "react-icons/fa";
 
 const ContactUs = () => {
   return (
@@ -38,16 +44,16 @@ const ContactUs = () => {
               </li>
             </ul>
           </div>
-          <div className="flex space-x-4 mt-6">
-            <a href="#" className="text-white hover:text-gray-200">
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" className="text-white hover:text-gray-200">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="#" className="text-white hover:text-gray-200">
-              <i className="fab fa-linkedin-in"></i>
-            </a>
+          <div className="mt-36 flex justify-start gap-5 ">
+            <button className="rounded-full border border-white p-2">
+              <FaGoogle />
+            </button>
+            <button className="rounded-full border border-white p-2">
+              <FaFacebookF />
+            </button>
+            <button className="rounded-full border border-white p-2">
+              <FaGithub />
+            </button>
           </div>
         </div>
 
