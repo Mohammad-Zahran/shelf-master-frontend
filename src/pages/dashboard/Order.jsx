@@ -4,6 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { FaEnvelope } from "react-icons/fa";
 import axios from "axios";
+import { useSearch } from "./../../hooks/useSearch";
+import { useFilter } from "./../../hooks/useFilter";
+import { usePagination } from "./../../hooks/usePagination";
+import { usePDFExport } from "./../../hooks/usePDFExport";
 
 const Order = () => {
   const { user } = useAuth();
@@ -49,6 +53,24 @@ const Order = () => {
     },
   });
 
+  const {
+    search,
+    setSearch,
+    filteredData: searchedOrders,
+  } = useSearch(orders, "status");
+  const {
+    filterValue,
+    setFilterValue,
+    filteredData: filteredOrders,
+  } = useFilter(searchedOrders, "status");
+  const { currentPage, setCurrentPage, totalPages, paginatedData } =
+    usePagination(filteredOrders, 5);
+  const { exportToPDF } = usePDFExport(
+    paginatedData,
+    ["status", "createdAt", "price"],
+    "Orders Export"
+  );
+
   const formatDate = (createdAt) => {
     const createdAtDate = new Date(createdAt);
     return createdAtDate.toLocaleDateString();
@@ -56,6 +78,31 @@ const Order = () => {
 
   return (
     <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
+      {/* Filters and Actions */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+        <div className="flex items-center space-x-4">
+          <input
+            type="text"
+            placeholder="Search status..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="p-2 border border-gray-300 rounded shadow-sm"
+          />
+          <select
+            value={filterValue}
+            onChange={(e) => setFilterValue(e.target.value)}
+            className="p-2 border border-gray-300 rounded shadow-sm"
+          >
+            <option value="">All</option>
+            <option value="New">New</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <button onClick={exportToPDF} className="btn normal">
+          Export to PDF
+        </button>
+      </div>
       {/* Table Section */}
       <div>
         {orders.length > 0 ? (
@@ -75,7 +122,7 @@ const Order = () => {
                 </thead>
                 {/* Table Body */}
                 <tbody className="text-gray-700 text-sm">
-                  {orders.map((item, index) => (
+                  {paginatedData.map((item, index) => (
                     <tr
                       key={index}
                       className={`${
@@ -83,7 +130,7 @@ const Order = () => {
                       } hover:bg-gray-100`}
                     >
                       <td className="px-6 py-4 font-medium text-gray-900">
-                        {index + 1}
+                        {index + 1 + (currentPage - 1) * 5}
                       </td>
                       <td className="px-6 py-4">
                         {formatDate(item.createdAt)}
@@ -107,13 +154,26 @@ const Order = () => {
                 </tbody>
               </table>
             </div>
-            {/* Currency Conversion Button */}
-            <div className="flex justify-end py-4 px-6 bg-gray-100">
+            {/* Pagination */}
+            <div className="flex justify-between items-center py-4 px-6 bg-gray-100">
               <button
-                className="btn normal"
-                onClick={() => setCurrency(currency === "USD" ? "LBP" : "USD")}
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                className="bg-steelBlue text-white px-4 py-2 rounded shadow-md hover:bg-white hover:text-steelBlue"
+                disabled={currentPage === 1}
               >
-                Convert to {currency === "USD" ? "LBP" : "USD"}
+                Previous
+              </button>
+              <span>
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                className="bg-steelBlue text-white px-4 py-2 rounded shadow-md hover:bg-white hover:text-steelBlue"
+                disabled={currentPage === totalPages}
+              >
+                Next
               </button>
             </div>
           </div>
