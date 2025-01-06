@@ -7,15 +7,18 @@ import {
 } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
-import { FaFacebook } from "react-icons/fa";
 
 const ContactUs = () => {
   return (
-    <div className="max-w-screen-xl mx-auto px-6 py-16">
+    <div className="relative max-w-screen-xl mx-auto px-6 py-16">
       <h1 className="text-4xl font-bold text-center mb-12">Contact Us</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Contact Information Section */}
-        <div className="bg-steelBlue text-white p-8 rounded-lg shadow-md">
+        <div className="relative bg-steelBlue text-white p-8 rounded-lg shadow-md overflow-hidden">
+          {/* Background Circles */}
+          <div className="absolute -bottom-10 -right-3 w-72 h-72 bg-gray-400 rounded-full opacity-30"></div>
+          <div className="absolute -bottom-20 -right-32 w-72 h-72 bg-black rounded-full opacity-100"></div>
+
           <h2 className="text-4xl font-semibold mb-4">Contact Information</h2>
           <p className="mb-6 text-xl text-[#C9C9C9]">
             Say something to start a live chat!
