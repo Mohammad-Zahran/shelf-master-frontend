@@ -19,6 +19,7 @@ import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
 import ProductDetails from "../pages/shop/ProductDetails";
 import Payment from "../pages/shop/Payment";
 import Order from "../pages/dashboard/Order";
+import ManageOrders from "../pages/dashboard/admin/ManageOrders";
 
 const router = createBrowserRouter([
   {
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
       {
         path: "update-product/:id",
         element: <UpdateProduct />,
+      },
+      {
+        path: "manage-orders",
+        element: <ManageOrders />,
       },
     ],
   },

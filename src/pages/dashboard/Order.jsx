@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useAuth from "./../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { FaEnvelope } from "react-icons/fa";
+import { FaEnvelope, FaFilePdf } from "react-icons/fa";
 import axios from "axios";
 import { useSearch } from "./../../hooks/useSearch";
 import { useFilter } from "./../../hooks/useFilter";
@@ -77,7 +77,7 @@ const Order = () => {
   };
 
   return (
-    <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
+    <div className="max-w-screen-2xl mt-16 container mx-auto xl:px-24 px-4">
       {/* Filters and Actions */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-6">
         <div className="flex items-center space-x-4">
@@ -100,7 +100,8 @@ const Order = () => {
           </select>
         </div>
         <button onClick={exportToPDF} className="btn normal">
-          Export to PDF
+          <FaFilePdf className="text-red-500" />
+          Download PDF
         </button>
       </div>
       {/* Table Section */}
