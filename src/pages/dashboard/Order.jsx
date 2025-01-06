@@ -59,38 +59,47 @@ const Order = () => {
       {/* Table Section */}
       <div>
         {orders.length > 0 ? (
-          <div>
+          <div className="bg-white shadow-md rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="table w-full border border-gray-200">
+              <table className="table-auto w-full text-left border-collapse">
                 {/* Table Head */}
-                <thead className="bg-green text-white">
+                <thead className="bg-gray-100 text-gray-600 uppercase text-sm font-medium">
                   <tr>
-                    <th>#</th>
-                    <th>Order Date</th>
-                    <th>Number of Items</th>
-                    <th>Price ({currency})</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th className="px-6 py-4">#</th>
+                    <th className="px-6 py-4">Order Date</th>
+                    <th className="px-6 py-4">Number of Items</th>
+                    <th className="px-6 py-4">Price ({currency})</th>
+                    <th className="px-6 py-4">Status</th>
+                    <th className="px-6 py-4">Action</th>
                   </tr>
                 </thead>
                 {/* Table Body */}
-                <tbody>
+                <tbody className="text-gray-700 text-sm">
                   {orders.map((item, index) => (
-                    <tr key={index} className="border-b">
-                      <td>{index + 1}</td>
-                      <td>{formatDate(item.createdAt)}</td>
-                      <td>{item.quantity || 0}</td>
-                      <td>
+                    <tr
+                      key={index}
+                      className={`${
+                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                      } hover:bg-gray-100`}
+                    >
+                      <td className="px-6 py-4 font-medium text-gray-900">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-4">
+                        {formatDate(item.createdAt)}
+                      </td>
+                      <td className="px-6 py-4">{item.quantity || 0}</td>
+                      <td className="px-6 py-4">
                         {currency === "LBP" ? "LBP" : "$"}{" "}
                         {convertCurrency(item.price)}
                       </td>
-                      <td>{item.status}</td>
-                      <td>
+                      <td className="px-6 py-4 capitalize">{item.status}</td>
+                      <td className="px-6 py-4">
                         <Link
                           to="/contact"
-                          className="btn btn-xs bg-blue-500 text-white"
+                          className="inline-flex items-center justify-center w-8 h-8 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600"
                         >
-                          <FaEnvelope style={{ verticalAlign: "middle" }} />
+                          <FaEnvelope />
                         </Link>
                       </td>
                     </tr>
@@ -98,11 +107,10 @@ const Order = () => {
                 </tbody>
               </table>
             </div>
-            <hr />
             {/* Currency Conversion Button */}
-            <div className="flex justify-end my-4">
+            <div className="flex justify-end py-4 px-6 bg-gray-100">
               <button
-                className="btn btn-md bg-green text-white px-8 py-1"
+                className="btn normal"
                 onClick={() => setCurrency(currency === "USD" ? "LBP" : "USD")}
               >
                 Convert to {currency === "USD" ? "LBP" : "USD"}
@@ -111,9 +119,11 @@ const Order = () => {
           </div>
         ) : (
           <div className="text-center mt-20">
-            <p>No orders found. Please place an order.</p>
+            <p className="text-gray-500">
+              No orders found. Please place an order.
+            </p>
             <Link to="/menu">
-              <button className="btn bg-green text-white mt-3">
+              <button className="btn bg-green-500 text-white mt-3 font-bold py-2 px-4 rounded shadow-md hover:bg-green-600">
                 Back to Menu
               </button>
             </Link>
