@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import gsap from "gsap";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"; // Import the custom hook
-import axios from "axios";
+import useAxiosPublic from "../../hooks/useAxiosPublic"; // Import the Axios public hook
 import swipeAudioFile from "../../../public/assets/audios/swipe-236674.mp3";
 
 const SwipeCards = () => {
@@ -10,12 +10,13 @@ const SwipeCards = () => {
   const cardsRef = useRef([]);
   const sectionRef = useRef(null);
   const { observe, entries } = useIntersectionObserver({ threshold: 0.3 });
+  const axiosPublic = useAxiosPublic();
 
   // Fetch reviews from the backend
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/testimonials/all"); 
+        const response = await axiosPublic.get("/testimonials/all"); 
         setReviews(response.data);
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -23,7 +24,7 @@ const SwipeCards = () => {
     };
 
     fetchReviews();
-  }, []);
+  }, [axiosPublic]);
 
   // Observe cards when the section comes into view
   useEffect(() => {
@@ -133,6 +134,5 @@ const Card = React.forwardRef(({ name, comment, rating, photoURL }, ref) => {
     </motion.div>
   );
 });
-
 
 export default SwipeCards;
