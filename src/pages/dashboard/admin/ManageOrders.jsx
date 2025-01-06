@@ -191,7 +191,7 @@ const ManageOrders = () => {
                   ) : (
                     <button
                       onClick={() => handleConfirm(item)}
-                      className="btn btn-xs bg-green text-white"
+                      className="btn btn-xs bg-steelBlue hover:bg-white text-white hover:text-steelBlue"
                     >
                       <GiConfirmed />
                     </button>
@@ -200,7 +200,7 @@ const ManageOrders = () => {
                 <td>
                   <button
                     onClick={() => handleDeleteItem(item)}
-                    className="btn btn-xs bg-orange-500 text-white"
+                    className="btn btn-xs bg-steelBlue hover:bg-white text-white hover:text-steelBlue"
                   >
                     <FaTrashAlt />
                   </button>
@@ -230,7 +230,7 @@ const ManageOrders = () => {
 
       <div className="flex justify-end my-4">
         <button
-          className="btn btn-md bg-green text-white px-8 py-1 mt-5"
+          className="btn normal"
           onClick={() => setCurrency(currency === "USD" ? "LBP" : "USD")}
         >
           Convert to {currency === "USD" ? "LBP" : "USD"}

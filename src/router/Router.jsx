@@ -20,6 +20,7 @@ import ProductDetails from "../pages/shop/ProductDetails";
 import Payment from "../pages/shop/Payment";
 import Order from "../pages/dashboard/Order";
 import ManageOrders from "../pages/dashboard/admin/ManageOrders";
+import ReviewPage from "../pages/ReviewPage";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
             <WishListPage />
           </PrivateRouter>
         ),
+      },
+      {
+        path: "/review-page",
+        element: <ReviewPage />,
       },
     ],
   },

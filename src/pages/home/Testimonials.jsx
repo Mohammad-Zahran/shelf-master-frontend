@@ -1,7 +1,7 @@
 import React from "react";
 import SwipeCards from "../../components/home/SwipeCards";
 
-const Reviews = () => {
+const Testimonials = () => {
   const handleReviewButtonClick = () => {
     alert("Review button clicked!");
   };
@@ -26,4 +26,4 @@ const Reviews = () => {
   );
 };
 
-export default Reviews;
+export default Testimonials;
