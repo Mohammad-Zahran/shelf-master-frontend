@@ -60,7 +60,6 @@ const ContactUs = () => {
           </div>
         </div>
 
-        {/* Form Section */}
         <div className="bg-white p-8 rounded-lg shadow-md">
           <form>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -71,7 +70,7 @@ const ContactUs = () => {
                 <input
                   type="text"
                   id="firstName"
-                  className="w-full p-3 border border-gray-300 rounded-lg"
+                  className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                   placeholder="First Name"
                 />
               </div>
@@ -82,7 +81,7 @@ const ContactUs = () => {
                 <input
                   type="text"
                   id="lastName"
-                  className="w-full p-3 border border-gray-300 rounded-lg"
+                  className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                   placeholder="Last Name"
                 />
               </div>
@@ -95,7 +94,7 @@ const ContactUs = () => {
               <input
                 type="email"
                 id="email"
-                className="w-full p-3 border border-gray-300 rounded-lg"
+                className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                 placeholder="Your Email"
               />
             </div>
@@ -107,7 +106,7 @@ const ContactUs = () => {
               <input
                 type="text"
                 id="phone"
-                className="w-full p-3 border border-gray-300 rounded-lg"
+                className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                 placeholder="Your Phone Number"
               />
             </div>
@@ -118,7 +117,7 @@ const ContactUs = () => {
               </label>
               <select
                 id="subject"
-                className="w-full p-3 border border-gray-300 rounded-lg"
+                className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
               >
                 <option>General Inquiry</option>
                 <option>Support</option>
@@ -132,16 +131,13 @@ const ContactUs = () => {
               </label>
               <textarea
                 id="message"
-                className="w-full p-3 border border-gray-300 rounded-lg"
+                className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-steelBlue transition duration-300"
                 placeholder="Write your message..."
                 rows="5"
               ></textarea>
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600"
-            >
+            <button type="submit" className="w-full btn normal">
               Send Message
             </button>
           </form>
