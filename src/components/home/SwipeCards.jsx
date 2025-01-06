@@ -1,16 +1,32 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import gsap from "gsap";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"; // Import the custom hook
+import axios from "axios";
 import swipeAudioFile from "../../../public/assets/audios/swipe-236674.mp3";
 
 const SwipeCards = () => {
+  const [reviews, setReviews] = useState([]);
   const cardsRef = useRef([]);
   const sectionRef = useRef(null);
   const { observe, entries } = useIntersectionObserver({ threshold: 0.3 });
 
+  // Fetch reviews from the backend
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/testimonials/all"); 
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
   // Observe cards when the section comes into view
-  React.useEffect(() => {
+  useEffect(() => {
     if (sectionRef.current) {
       const cardElements = Array.from(cardsRef.current);
       observe(cardElements);
@@ -18,7 +34,7 @@ const SwipeCards = () => {
   }, [observe]);
 
   // Trigger animations when cards are in view
-  React.useEffect(() => {
+  useEffect(() => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
         gsap.fromTo(
@@ -42,20 +58,22 @@ const SwipeCards = () => {
       ref={sectionRef}
       className="grid h-[500px] w-full place-items-center bg-white px-4 md:px-8"
     >
-      {cardData.map((card, index) => (
-        <Card
-          key={card.id}
-          cards={cardData}
-          setCards={() => {}}
-          {...card}
-          ref={(el) => (cardsRef.current[index] = el)}
-        />
-      ))}
+      {reviews.length > 0 ? (
+        reviews.map((review, index) => (
+          <Card
+            key={review._id || index}
+            {...review}
+            ref={(el) => (cardsRef.current[index] = el)}
+          />
+        ))
+      ) : (
+        <p className="text-center text-gray-500">No reviews available.</p>
+      )}
     </div>
   );
 };
 
-const Card = React.forwardRef(({ id, name, review, rating, picture }, ref) => {
+const Card = React.forwardRef(({ name, comment, rating, photoURL }, ref) => {
   const x = useMotionValue(0);
   const rotateRaw = useTransform(x, [-150, 150], [-12, 12]);
   const opacity = useTransform(x, [-150, 0, 150], [0, 1, 0]);
@@ -97,7 +115,7 @@ const Card = React.forwardRef(({ id, name, review, rating, picture }, ref) => {
       {/* Top Section: Profile Picture and Name */}
       <div className="flex items-center">
         <img
-          src={picture}
+          src={photoURL || "https://via.placeholder.com/150"}
           alt={name}
           className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover"
         />
@@ -110,54 +128,11 @@ const Card = React.forwardRef(({ id, name, review, rating, picture }, ref) => {
       </div>
       {/* Review Text */}
       <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-        {review}
+        {comment}
       </p>
     </motion.div>
   );
 });
 
-export default SwipeCards;
 
-// Dummy data for reviews
-const cardData = [
-  {
-    id: 1,
-    name: "Rim Zahran",
-    review:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium.",
-    rating: 4,
-    picture: "https://randomuser.me/api/portraits/women/1.jpg",
-  },
-  {
-    id: 2,
-    name: "John Doe",
-    review:
-      "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.",
-    rating: 5,
-    picture: "https://randomuser.me/api/portraits/men/2.jpg",
-  },
-  {
-    id: 3,
-    name: "Jane Smith",
-    review:
-      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-    rating: 3,
-    picture: "https://randomuser.me/api/portraits/women/3.jpg",
-  },
-  {
-    id: 4,
-    name: "Alice Brown",
-    review:
-      "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
-    rating: 5,
-    picture: "https://randomuser.me/api/portraits/women/4.jpg",
-  },
-  {
-    id: 5,
-    name: "Bob Johnson",
-    review:
-      "Neque porro quisquam est qui dolorem ipsum quia voluptas sit amet, consectetur, adipisci velit.",
-    rating: 4,
-    picture: "https://randomuser.me/api/portraits/men/5.jpg",
-  },
-];
+export default SwipeCards;
