@@ -39,7 +39,7 @@ const Profile = ({ user }) => {
               <a href="/update-profile">Profile</a>
             </li>
             <li>
-              <a>Order</a>
+              <a href="/order">Order</a>
             </li>
             <li>
               <a>Settings</a>

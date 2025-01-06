@@ -18,6 +18,7 @@ import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
 import ProductDetails from "../pages/shop/ProductDetails";
 import Payment from "../pages/shop/Payment";
+import Order from "../pages/dashboard/Order";
 
 const router = createBrowserRouter([
   {
