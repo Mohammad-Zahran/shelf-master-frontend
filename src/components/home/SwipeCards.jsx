@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import gsap from "gsap";
-import useIntersectionObserver from "../../hooks/useIntersectionObserver"; // Import the custom hook
-import useAxiosPublic from "../../hooks/useAxiosPublic"; // Import the Axios public hook
+import useIntersectionObserver from "../../hooks/useIntersectionObserver"; 
+import useAxiosPublic from "../../hooks/useAxiosPublic"; 
 import swipeAudioFile from "../../../public/assets/audios/swipe-236674.mp3";
 
 const SwipeCards = () => {
