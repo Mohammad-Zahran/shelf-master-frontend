@@ -4,12 +4,14 @@ import { FaPaypal } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ price, cart }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
@@ -99,6 +101,7 @@ const CheckoutForm = ({ price, cart }) => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate('/order')
       });
     }
   };
