@@ -19,6 +19,7 @@ const CheckoutForm = ({ price, cart }) => {
       return;
     }
     axiosSecure.post("/create-payment-intent", { price }).then((res) => {
+      console.log(res.data.clientSecret);
       setClientSecret(res.data.clientSecret);
     });
   }, [price, axiosSecure]);
@@ -49,9 +50,10 @@ const CheckoutForm = ({ price, cart }) => {
       setCardError(error.message);
     } else {
       setCardError("success!");
-      console.log("[PaymentMethod]", paymentMethod);
+      //console.log("[PaymentMethod]", paymentMethod);
     }
 
+    const userEmail = user?.email || "unknown@example.com";
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -62,6 +64,28 @@ const CheckoutForm = ({ price, cart }) => {
           },
         },
       });
+
+    if (confirmError) {
+      console.log(confirmError);
+    }
+    console.log(paymentIntent);
+    if (paymentIntent.status === "succeeded") {
+      console.log(paymentIntent.id);
+      setCardError(`Your transactionId is ${paymentIntent.id}`);
+      // payment info
+      const paymentInfo = {
+        email: user.email,
+        transitionId: paymentIntent.id,
+        price,
+        quantity: cart.length,
+        status: "Order pending",
+        itemName: cart.map((item) => item.name),
+        cartItems: cart.map((item) => item._id),
+        productItems: cart.map((item) => item.productId),
+      };
+
+      console.log(paymentInfo);
+    }
   };
   return (
     <div className="flex flex-col sm:flex-row justify-start items-start gap-8">
