@@ -10,7 +10,7 @@ import Login from "../components/Auth/Login";
 import useAdmin from "../hooks/useAdmin";
 import useAuth from "../hooks/useAuth";
 import { FaRegEdit } from "react-icons/fa";
-
+import { FaClipboardList } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,7 +51,10 @@ const DashboardLayout = () => {
 
       {/* Menu Item: Accounts */}
       <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
-        <Link to="/dashboard/add-product" className="flex items-center space-x-2">
+        <Link
+          to="/dashboard/add-product"
+          className="flex items-center space-x-2"
+        >
           <IoMdAddCircle className="text-steelBlue" />
           <span>Add Shelf</span>
         </Link>
@@ -59,9 +62,23 @@ const DashboardLayout = () => {
 
       {/* Menu Item: Accounts */}
       <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
-        <Link to="/dashboard/manage-items" className="flex items-center space-x-2">
+        <Link
+          to="/dashboard/manage-items"
+          className="flex items-center space-x-2"
+        >
           <FaRegEdit className="text-steelBlue" />
           <span>Manage Shelfs</span>
+        </Link>
+      </li>
+
+      {/* Menu Item: Accounts */}
+      <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+        <Link
+          to="/dashboard/manage-orders"
+          className="flex items-center space-x-2"
+        >
+          <FaClipboardList className="text-steelBlue" />
+          <span>Manage Orders</span>
         </Link>
       </li>
     </>
