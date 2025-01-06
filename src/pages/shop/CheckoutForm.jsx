@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaPaypal } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const CheckoutForm = ({ price, cart }) => {
   const stripe = useStripe();
@@ -81,10 +82,24 @@ const CheckoutForm = ({ price, cart }) => {
         status: "Order pending",
         itemName: cart.map((item) => item.name),
         cartItems: cart.map((item) => item._id),
-        productItems: cart.map((item) => item.productId),
+        productItems: cart.map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity,
+        })),
       };
 
       console.log(paymentInfo);
+      // send information to backend
+      axiosSecure.post("/payments", paymentInfo).then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Payment Successful!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
     }
   };
   return (
