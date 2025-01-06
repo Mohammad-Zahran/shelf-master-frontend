@@ -21,6 +21,7 @@ import Payment from "../pages/shop/Payment";
 import Order from "../pages/dashboard/Order";
 import ManageOrders from "../pages/dashboard/admin/ManageOrders";
 import ReviewPage from "../pages/ReviewPage";
+import ContactUs from "../pages/ContactUs";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
       {
         path: "/review-page",
         element: <ReviewPage />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
       },
     ],
   },

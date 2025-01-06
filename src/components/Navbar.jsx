@@ -28,7 +28,7 @@ const Navbar = () => {
         <a>Shelf Assistant AI</a>
       </li>
       <li>
-        <a>Contact Us</a>
+        <a href="/contact">Contact Us</a>
       </li>
     </>
   );

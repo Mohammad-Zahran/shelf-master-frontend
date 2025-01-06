@@ -84,25 +84,25 @@ const ReviewPage = () => {
       <h1 className="text-3xl font-bold mb-4">Add a Review</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+          <label htmlFor="name" className="block text-sm font-medium text-steelBlue">Name</label>
           <input type="text" id="name" name="name" value={reviewData.name} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded-md w-full" required />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium text-steelBlue">Email</label>
           <input type="email" id="email" name="email" value={reviewData.email} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded-md w-full" required disabled={user ? true : false} />
         </div>
         <div>
-          <label htmlFor="rating" className="block text-sm font-medium text-gray-700">Rating</label>
+          <label htmlFor="rating" className="block text-sm font-medium text-steelBlue">Rating</label>
           <input type="number" id="rating" name="rating" value={reviewData.rating} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded-md w-full" min="1" max="5" required />
         </div>
         <div>
-          <label htmlFor="comment" className="block text-sm font-medium text-gray-700">Comment</label>
+          <label htmlFor="comment" className="block text-sm font-medium text-steelBlue">Comment</label>
           <textarea id="comment" name="comment" value={reviewData.comment} onChange={handleInputChange} rows="4" className="mt-1 p-2 border border-gray-300 rounded-md w-full" required></textarea>
         </div>
         <div className="flex justify-center mt-3">
           <button
             type="submit"
-            className="btn bg-green text-white w-48"
+            className="btn normal"
           >
             Submit Review
           </button>
