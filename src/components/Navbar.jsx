@@ -19,7 +19,7 @@ const Navbar = () => {
         <a href="/products">Shelves</a>
       </li>
       <li>
-        <a>Add Review</a>
+        <a href="/review-page">Add Review</a>
       </li>
       <li>
         <a href="/floor-planner">3d Floor Planner</a>
@@ -37,9 +37,7 @@ const Navbar = () => {
   const [cart, refetch] = useCart();
   const [wishlist, refetch1] = useWishList();
 
-  
   const wishListCount = wishlist?.length || 0;
-
 
   return (
     <header className="max-w-screen-2xl container mx-auto">
