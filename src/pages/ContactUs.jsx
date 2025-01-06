@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import axios from "axios";
 import {
   FaFacebookF,
@@ -20,6 +21,32 @@ const ContactUs = () => {
   });
 
   const [status, setStatus] = useState("");
+
+  // Refs for animation
+  const contactInfoRef = useRef(null);
+  const formRef = useRef(null);
+  const titleRef = useRef(null);
+
+  // GSAP Animation
+  useEffect(() => {
+    gsap.fromTo(
+      titleRef.current,
+      { opacity: 0, y: -50 },
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+    );
+
+    gsap.fromTo(
+      contactInfoRef.current,
+      { opacity: 0, x: -100 },
+      { opacity: 1, x: 0, duration: 1, ease: "power3.out", delay: 0.5 }
+    );
+
+    gsap.fromTo(
+      formRef.current,
+      { opacity: 0, x: 100 },
+      { opacity: 1, x: 0, duration: 1, ease: "power3.out", delay: 0.5 }
+    );
+  }, []);
 
   // Handle input change
   const handleChange = (e) => {
@@ -65,10 +92,24 @@ const ContactUs = () => {
 
   return (
     <div className="relative max-w-screen-xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-bold text-center mb-12">Contact Us</h1>
+      <h1
+        ref={titleRef}
+        className="text-4xl font-bold text-center mb-12 text-charcoal"
+      >
+        Contact Us
+      </h1>
+      <p
+        ref={titleRef}
+        className="text-xl font-semibold text-center mb-12 text-[#717171]"
+      >
+        Any question or remarks? Just write us a message!{" "}
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Contact Information Section */}
-        <div className="relative bg-steelBlue text-white p-8 rounded-lg shadow-md overflow-hidden">
+        <div
+          ref={contactInfoRef}
+          className="relative bg-steelBlue text-white p-8 rounded-lg shadow-md overflow-hidden"
+        >
           {/* Background Circles */}
           <div className="absolute -bottom-10 -right-3 w-72 h-72 bg-gray-400 rounded-full opacity-30"></div>
           <div className="absolute -bottom-20 -right-32 w-72 h-72 bg-black rounded-full opacity-100"></div>
@@ -115,7 +156,7 @@ const ContactUs = () => {
         </div>
 
         {/* Form Section */}
-        <div className="bg-white p-8 rounded-lg shadow-md">
+        <div ref={formRef} className="bg-white p-8 rounded-lg shadow-md">
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
