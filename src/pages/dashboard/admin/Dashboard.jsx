@@ -13,6 +13,7 @@ import {
   PieChart,
   Pie,
   Legend,
+  Cell,
 } from "recharts";
 
 const Dashboard = () => {
@@ -26,7 +27,6 @@ const Dashboard = () => {
     },
   });
 
-  // console.log(state);
   const { data: chartData = [] } = useQuery({
     queryKey: ["order-stats"],
     queryFn: async () => {
@@ -35,7 +35,38 @@ const Dashboard = () => {
     },
   });
 
-  console.log(chartData);
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+  }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
+  const PieChartData = chartData.map((data) => {
+    return { name: data.category, value: data.revenue };
+  });
 
   return (
     <div className="w-full md:w-[1250px] px-4 mx-auto">
@@ -71,9 +102,9 @@ const Dashboard = () => {
       </div>
 
       {/* charts and graphs */}
-      <div className="mt-12">
-        {/* bar chart */}
-        <div>
+      <div className="mt-16 flex flex-col sm:flex-row items-center justify-between">
+        {/* Bar Chart */}
+        <div className="sm:w-1/2 w-full">
           <div style={{ width: "100%", height: 300 }}>
             <ResponsiveContainer>
               <AreaChart
@@ -99,16 +130,33 @@ const Dashboard = () => {
             </ResponsiveContainer>
           </div>
         </div>
-      </div>
 
-      {/* Pie Chart */}
-      <div>
-        <div style={{ width: "100%", height: 300 }}>
-          <ResponsiveContainer>
-            <PieChart>
-              <Pie dataKey="revenue" data={chartData} fill="#8884d8" label />
-            </PieChart>
-          </ResponsiveContainer>
+        {/* Pie Chart */}
+        <div className="sm:w-1/2 w-full">
+          <div style={{ width: "100%", height: 300 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart width={400} height={400}>
+                <Pie
+                  data={PieChartData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={renderCustomizedLabel}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {PieChartData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
     </div>
