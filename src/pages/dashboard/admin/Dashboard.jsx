@@ -14,6 +14,8 @@ import {
   Pie,
   Legend,
   Cell,
+  BarChart,
+  Bar,
 } from "recharts";
 
 const Dashboard = () => {
@@ -31,6 +33,14 @@ const Dashboard = () => {
     queryKey: ["order-stats"],
     queryFn: async () => {
       const res = await axiosSecure.get("/orderStats");
+      return res.data;
+    },
+  });
+
+  const { data: mostOrderedProducts = [] } = useQuery({
+    queryKey: ["most-ordered-products"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/mostOrderedProducts");
       return res.data;
     },
   });
@@ -67,6 +77,8 @@ const Dashboard = () => {
   const PieChartData = chartData.map((data) => {
     return { name: data.category, value: data.revenue };
   });
+
+  console.log(mostOrderedProducts);
 
   return (
     <div className="w-full md:w-[1250px] px-4 mx-auto">
@@ -157,6 +169,49 @@ const Dashboard = () => {
               </PieChart>
             </ResponsiveContainer>
           </div>
+        </div>
+      </div>
+
+      {/* Most Ordered Products */}
+      <div className="mt-16">
+        <h3 className="text-lg font-semibold mb-4">Most Ordered Products</h3>
+        <div style={{ width: "100%", height: 300 }}>
+          <ResponsiveContainer>
+            <BarChart
+              data={mostOrderedProducts}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              {/* Minimalistic Grid */}
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+
+              {/* Axes */}
+              <XAxis
+                dataKey="name"
+                tick={{ fontSize: 12, fill: "#666" }}
+                interval={0} // Ensures all labels are shown
+              />
+              <YAxis tick={{ fontSize: 12, fill: "#666" }} />
+
+              {/* Custom Tooltip */}
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#fff",
+                  borderRadius: 5,
+                  border: "1px solid #ddd",
+                }}
+                itemStyle={{ color: "#333" }}
+                labelStyle={{ fontWeight: "bold", color: "#888" }}
+              />
+
+              {/* Bars with rounded corners */}
+              <Bar dataKey="quantity" fill="#8884d8" radius={[10, 10, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       </div>
     </div>
