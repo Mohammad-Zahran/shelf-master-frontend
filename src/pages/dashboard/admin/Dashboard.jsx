@@ -10,6 +10,9 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Legend,
 } from "recharts";
 
 const Dashboard = () => {
@@ -98,7 +101,16 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* charts and graphs */}
+      {/* Pie Chart */}
+      <div>
+        <div style={{ width: "100%", height: 300 }}>
+          <ResponsiveContainer>
+            <PieChart>
+              <Pie dataKey="revenue" data={chartData} fill="#8884d8" label />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </div>
   );
 };
