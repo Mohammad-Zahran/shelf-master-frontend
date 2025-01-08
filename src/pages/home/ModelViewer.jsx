@@ -93,112 +93,116 @@ const ModelViewer = () => {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center h-screen px-4 ${
+      className={`flex flex-col items-center justify-center h-auto px-4 py-8 space-y-6 ${
         backgroundColor === "white" ? "bg-white" : "bg-black"
       }`}
     >
-      <div className="text-left mr mb-8">
+      {/* Section Title */}
+      <div className="text-center space-y-2">
         <p className={`subtitle ${textColor}`}>Popular Shelves</p>
-        <h2 className={`title md:w-[520px] ${textColor}`}>
+        <h2 className={`title md:w-[520px] mx-auto ${textColor}`}>
           Best Shelves for Sale
         </h2>
       </div>
-      <div className="flex flex-col items-center gap-6 w-full h-[80%]">
-        <div className="relative w-full h-full rounded-lg">
-          <Canvas className="w-full h-full">
-            <PerspectiveCamera
-              makeDefault
-              position={[0, 0, 4]}
-              ref={cameraRef}
-            />
-            <Lights />
-            <OrbitControls
-              ref={controlRef}
-              enableZoom={false}
-              enablePan={false}
-              rotateSpeed={0.4}
-              target={new THREE.Vector3(0, 0, 0)}
-            />
-            <Suspense
-              fallback={
-                <Html>
-                  <div>Loading</div>
-                </Html>
-              }
-            >
-              <group ref={groupRef} position={[0, 0, 0]}>
-                <Model
-                  path={currentModel.path}
-                  scale={currentModel.scale}
-                  position={currentModel.position}
-                  rotation={currentModel.rotation}
-                />
-              </group>
-            </Suspense>
-          </Canvas>
-        </div>
 
-        <div className="flex items-center gap-4">
-          <button onClick={handlePrevious} className="control-btn">
-            <IoIosArrowBack className="text-steelBlue text-3xl" />
-          </button>
-          <p className={`text-lg font-medium ${textColor}`}>
-            {currentModel.title}
-          </p>
-          <button onClick={handleNext} className="control-btn">
-            <IoIosArrowForward className="text-steelBlue text-3xl" />
-          </button>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => setAutoRotate(!autoRotate)}
-            className="btn round"
-          >
-            {autoRotate ? (
-              <>
-                <FaPause className="text-lg" />
-                Pause Rotation
-              </>
-            ) : (
-              <>
-                <FaPlay className="text-lg" />
-                Start Rotation
-              </>
-            )}
-          </button>
-
-          <button
-            onClick={() =>
-              setBackgroundColor((prev) =>
-                prev === "white" ? "black" : "white"
-              )
+      {/* 3D Model Viewer */}
+      <div className="w-full h-[300px] md:h-[500px] lg:h-[600px]">
+        <Canvas className="w-full h-full">
+          <PerspectiveCamera
+            makeDefault
+            position={[0, 0, 4]}
+            ref={cameraRef}
+          />
+          <Lights />
+          <OrbitControls
+            ref={controlRef}
+            enableZoom={false}
+            enablePan={false}
+            rotateSpeed={0.4}
+            target={new THREE.Vector3(0, 0, 0)}
+          />
+          <Suspense
+            fallback={
+              <Html>
+                <div>Loading</div>
+              </Html>
             }
-            className="btn round"
           >
-            {backgroundColor === "white" ? (
-              <>
-                <FaMoon className="text-yellow-500 text-lg" />
-                Dark Background
-              </>
-            ) : (
-              <>
-                <IoMdSunny className="text-yellow-300 text-lg" />
-                Light Background
-              </>
-            )}
-          </button>
+            <group ref={groupRef} position={[0, 0, 0]}>
+              <Model
+                path={currentModel.path}
+                scale={currentModel.scale}
+                position={currentModel.position}
+                rotation={currentModel.rotation}
+              />
+            </group>
+          </Suspense>
+        </Canvas>
+      </div>
 
-          <button onClick={() => handleZoom(true)} className="btn round">
-            Zoom In <MdOutlineZoomIn className="text-xl" />
-          </button>
-          <button onClick={() => handleZoom(false)} className="btn round">
-            Zoom Out <MdOutlineZoomOut />
-          </button>
-        </div>
+      {/* Controls */}
+      <div className="flex items-center justify-between w-full max-w-md mx-auto gap-4">
+        <button onClick={handlePrevious} className="control-btn">
+          <IoIosArrowBack className="text-steelBlue text-3xl" />
+        </button>
+        <p className={`text-lg font-medium ${textColor}`}>
+          {currentModel.title}
+        </p>
+        <button onClick={handleNext} className="control-btn">
+          <IoIosArrowForward className="text-steelBlue text-3xl" />
+        </button>
+      </div>
+
+      {/* Actions */}
+      <div className="flex flex-wrap items-center justify-center gap-4">
+        <button
+          onClick={() => setAutoRotate(!autoRotate)}
+          className="btn round"
+        >
+          {autoRotate ? (
+            <>
+              <FaPause className="text-lg" />
+              Pause
+            </>
+          ) : (
+            <>
+              <FaPlay className="text-lg" />
+              Start
+            </>
+          )}
+        </button>
+
+        <button
+          onClick={() =>
+            setBackgroundColor((prev) =>
+              prev === "white" ? "black" : "white"
+            )
+          }
+          className="btn round"
+        >
+          {backgroundColor === "white" ? (
+            <>
+              <FaMoon className="text-yellow-500 text-lg" />
+              Dark Mode
+            </>
+          ) : (
+            <>
+              <IoMdSunny className="text-yellow-300 text-lg" />
+              Light Mode
+            </>
+          )}
+        </button>
+
+        <button onClick={() => handleZoom(true)} className="btn round">
+          Zoom In <MdOutlineZoomIn className="text-xl" />
+        </button>
+        <button onClick={() => handleZoom(false)} className="btn round">
+          Zoom Out <MdOutlineZoomOut />
+        </button>
       </div>
     </div>
   );
 };
+
 
 export default ModelViewer;
