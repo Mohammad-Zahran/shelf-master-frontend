@@ -13,6 +13,8 @@ import gsap from "gsap";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaPlay, FaPause, FaMoon } from "react-icons/fa";
 import { IoMdSunny } from "react-icons/io";
+import { MdOutlineZoomIn } from "react-icons/md";
+import { MdOutlineZoomOut } from "react-icons/md";
 
 const Model = ({ path, scale, position, rotation }) => {
   const { scene } = useGLTF(path);
@@ -72,8 +74,22 @@ const ModelViewer = () => {
     );
   };
 
+  const handleZoom = (zoomIn) => {
+    if (cameraRef.current) {
+      const zoomFactor = zoomIn ? 0.9 : 1.1;
+      gsap.to(cameraRef.current.position, {
+        duration: 0.5,
+        x: cameraRef.current.position.x * zoomFactor,
+        y: cameraRef.current.position.y * zoomFactor,
+        z: cameraRef.current.position.z * zoomFactor,
+        ease: "power3.out",
+      });
+    }
+  };
+
   const currentModel = models[currentModelIndex];
-  const textColor = backgroundColor === "white" ? "text-charcoal" : "text-white";
+  const textColor =
+    backgroundColor === "white" ? "text-charcoal" : "text-white";
 
   return (
     <div
@@ -83,7 +99,9 @@ const ModelViewer = () => {
     >
       <div className="text-left mr mb-8">
         <p className={`subtitle ${textColor}`}>Popular Shelves</p>
-        <h2 className={`title md:w-[520px] ${textColor}`}>Best Shelves for Sale</h2>
+        <h2 className={`title md:w-[520px] ${textColor}`}>
+          Best Shelves for Sale
+        </h2>
       </div>
       <div className="flex flex-col items-center gap-6 w-full h-[80%]">
         <div className="relative w-full h-full rounded-lg">
@@ -124,7 +142,9 @@ const ModelViewer = () => {
           <button onClick={handlePrevious} className="control-btn">
             <IoIosArrowBack className="text-steelBlue text-3xl" />
           </button>
-          <p className={`text-lg font-medium ${textColor}`}>{currentModel.title}</p>
+          <p className={`text-lg font-medium ${textColor}`}>
+            {currentModel.title}
+          </p>
           <button onClick={handleNext} className="control-btn">
             <IoIosArrowForward className="text-steelBlue text-3xl" />
           </button>
@@ -167,6 +187,13 @@ const ModelViewer = () => {
                 Light Background
               </>
             )}
+          </button>
+
+          <button onClick={() => handleZoom(true)} className="btn round">
+            Zoom In <MdOutlineZoomIn className="text-xl" />
+          </button>
+          <button onClick={() => handleZoom(false)} className="btn round">
+            Zoom Out <MdOutlineZoomOut />
           </button>
         </div>
       </div>
