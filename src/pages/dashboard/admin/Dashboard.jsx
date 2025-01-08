@@ -17,6 +17,9 @@ import {
   BarChart,
   Bar,
 } from "recharts";
+import { FaDollarSign, FaUsers, FaUtensils } from "react-icons/fa6";
+import { FaShoppingCart } from "react-icons/fa";
+import { GiTrophiesShelf } from "react-icons/gi";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -86,27 +89,38 @@ const Dashboard = () => {
         Hi, <span className="text-steelBlue">{user.displayName}</span>
       </h2>
 
-      {/* Stats div */}
       <div className="stats stats-vertical w-full lg:stats-horizontal shadow">
-        <div className="stat">
+        <div className="stat bg-emerald-200">
+          <div className="stat-figure text-secondary text-3xl">
+            <FaDollarSign />
+          </div>
           <div className="stat-title">Revenue</div>
           <div className="stat-value">{stats.revenue}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
 
-        <div className="stat">
-          <div className="stat-title">Shelf Items</div>
-          <div className="stat-value">{stats.shelfItems}</div>
+        <div className="stat bg-orange-200">
+          <div className="stat-figure text-secondary text-3xl">
+            <FaUsers />
+          </div>
+          <div className="stat-title">Users</div>
+          <div className="stat-value">{stats.users}</div>
           <div className="stat-desc">↗︎ 400 (22%)</div>
         </div>
 
-        <div className="stat">
-          <div className="stat-title">Users</div>
-          <div className="stat-value">{stats.users}</div>
+        <div className="stat bg-indigo-400">
+          <div className="stat-figure text-secondary text-3xl">
+            <GiTrophiesShelf />
+          </div>
+          <div className="stat-title">Shelf Items</div>
+          <div className="stat-value">{stats.menuItems}</div>
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
 
-        <div className="stat">
+        <div className="stat bg-purple-300">
+          <div className="stat-figure text-secondary text-3xl">
+            <FaShoppingCart />
+          </div>
           <div className="stat-title">All Orders</div>
           <div className="stat-value">{stats.orders}</div>
           <div className="stat-desc">↘︎ 90 (14%)</div>
