@@ -68,11 +68,9 @@ const Popular = () => {
   return (
     <div className="section-container my-20 relative px-4 md:px-8 lg:px-16">
       {/* Section Title */}
-      <div className="text-center mb-8">
-        <p className="subtitle text-sm md:text-base">Popular Shelves</p>
-        <h2 className="title md:w-[520px] mx-auto text-lg md:text-2xl lg:text-3xl font-bold">
-          Best Shelves for Sale
-        </h2>
+      <div className="text-left mr mb-8">
+        <p className="subtitle">Customer Favorites</p>
+        <h2 className="title md:w-[520px]">Popular Shelves</h2>
       </div>
 
       {/* Slider */}

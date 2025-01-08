@@ -11,7 +11,8 @@ import models from "../../constants/models";
 import * as THREE from "three";
 import gsap from "gsap";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { FaPlay, FaPause, FaToggleOff, FaToggleOn } from "react-icons/fa";
+import { FaPlay, FaPause, FaMoon } from "react-icons/fa";
+import { IoMdSunny } from "react-icons/io";
 
 const Model = ({ path, scale, position, rotation }) => {
   const { scene } = useGLTF(path);
@@ -36,7 +37,6 @@ const ModelViewer = () => {
   const animationRef = useRef();
 
   useEffect(() => {
-    // Animate camera to focus on the current model
     if (cameraRef.current) {
       const model = models[currentModelIndex];
       gsap.to(cameraRef.current.position, {
@@ -50,7 +50,6 @@ const ModelViewer = () => {
   }, [currentModelIndex]);
 
   useEffect(() => {
-    // Rotation animation loop
     const rotateModel = () => {
       if (autoRotate && groupRef.current) {
         groupRef.current.rotation.y += 0.01;
@@ -74,15 +73,17 @@ const ModelViewer = () => {
   };
 
   const currentModel = models[currentModelIndex];
+  const textColor = backgroundColor === "white" ? "text-charcoal" : "text-white";
 
   return (
     <div
-      className="flex flex-col items-center justify-center h-screen px-4"
-      style={{ backgroundColor }}
+      className={`flex flex-col items-center justify-center h-screen px-4 ${
+        backgroundColor === "white" ? "bg-white" : "bg-black"
+      }`}
     >
       <div className="text-left mr mb-8">
-        <p className="subtitle">Popular Shelves</p>
-        <h2 className="title md:w-[520px]">Best Shelves for Sale</h2>
+        <p className={`subtitle ${textColor}`}>Popular Shelves</p>
+        <h2 className={`title md:w-[520px] ${textColor}`}>Best Shelves for Sale</h2>
       </div>
       <div className="flex flex-col items-center gap-6 w-full h-[80%]">
         <div className="relative w-full h-full rounded-lg">
@@ -123,9 +124,7 @@ const ModelViewer = () => {
           <button onClick={handlePrevious} className="control-btn">
             <IoIosArrowBack className="text-steelBlue text-3xl" />
           </button>
-          <p className="text-lg font-medium text-charcoal">
-            {currentModel.title}
-          </p>
+          <p className={`text-lg font-medium ${textColor}`}>{currentModel.title}</p>
           <button onClick={handleNext} className="control-btn">
             <IoIosArrowForward className="text-steelBlue text-3xl" />
           </button>
@@ -152,19 +151,19 @@ const ModelViewer = () => {
           <button
             onClick={() =>
               setBackgroundColor((prev) =>
-                prev === "white" ? "#f0f0f0" : "white"
+                prev === "white" ? "black" : "white"
               )
             }
             className="btn round"
           >
             {backgroundColor === "white" ? (
               <>
-                <FaToggleOff className="text-red-500 text-lg" />
+                <FaMoon className="text-yellow-500 text-lg" />
                 Dark Background
               </>
             ) : (
               <>
-                <FaToggleOn className="text-green-500 text-lg" />
+                <IoMdSunny className="text-yellow-300 text-lg" />
                 Light Background
               </>
             )}
