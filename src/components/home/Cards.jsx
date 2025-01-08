@@ -13,7 +13,6 @@ import Swal from "sweetalert2";
 import useCart from "../../hooks/useCart";
 import useWishList from "../../hooks/useWishList";
 
-
 const ROTATION_RANGE = 20;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
 
@@ -41,7 +40,9 @@ const Cards = ({
   // Function to handle cart addition
   const handleAddtoCart = async (item) => {
     if (user && user?.email) {
-      const existingCartItem = cart.find((cartItem) => cartItem.productId === _id);
+      const existingCartItem = cart.find(
+        (cartItem) => cartItem.productId === _id
+      );
 
       if (existingCartItem) {
         Swal.fire({
@@ -79,7 +80,7 @@ const Cards = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          refetch(); 
+          refetch();
           if (data?.cart) {
             Swal.fire({
               position: "center",
@@ -262,7 +263,7 @@ const Cards = ({
         width,
         height,
       }}
-      className="relative rounded-lg bg-white shadow-lg transition-all border-4 border-blue-300 mt-7"
+      className="relative rounded-lg bg-white shadow-lg transition-all border-4 border-[#C8E6FF] mt-7"
     >
       {/* Heart Icon */}
       <div
@@ -318,10 +319,10 @@ const Cards = ({
           </button>
         </div>
         {/* See More Button */}
-        <div className="mt-3">
+        <div className="mt-3 flex justify-end">
           <Link
             to={`/products/${item._id}`}
-            className="text-sm font-medium text-blue-500 hover:underline"
+            className="text-m font-medium text-blue-500 opacity-75 hover:underline"
           >
             See More
           </Link>

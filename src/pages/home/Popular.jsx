@@ -43,8 +43,27 @@ const Popular = () => {
         },
       },
     ],
-    arrows: false,
+    arrows: false, // Disable default arrows
   };
+
+  // Custom arrow component
+  const Arrow = ({ direction, onClick }) => (
+    <button
+      onClick={onClick}
+      className={`absolute top-1/2 transform -translate-y-1/2 ${
+        direction === "left"
+          ? "left-[-40px] md:left-[-60px] lg:left-[-80px]" // Move left arrow further outside
+          : "right-[-40px] md:right-[-60px] lg:right-[-70px]" // Move right arrow further outside
+      } p-3 rounded-full bg-steelBlue shadow-md hover:bg-white transition-colors z-10`}
+      aria-label={`${direction === "left" ? "Previous" : "Next"} slide`}
+    >
+      {direction === "left" ? (
+        <FaAngleLeft className="h-6 w-6 text-white hover:text-steelBlue" />
+      ) : (
+        <FaAngleRight className="h-6 w-6 text-white hover:text-steelBlue" />
+      )}
+    </button>
+  );
 
   return (
     <div className="section-container my-20 relative px-4 md:px-8 lg:px-16">
@@ -56,39 +75,27 @@ const Popular = () => {
         </h2>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="absolute right-4 md:right-10 lg:right-20 top-0 z-10 flex space-x-2">
-        <button
-          onClick={() => slider?.current?.slickPrev()}
-          className="btn p-2 rounded-full bg-steelBlue shadow-md hover:bg-white transition-colors"
-          aria-label="Previous slide"
-        >
-          <FaAngleLeft className="h-6 w-6 text-white hover:text-steelBlue" />
-        </button>
-        <button
-          onClick={() => slider?.current?.slickNext()}
-          className="btn p-2 rounded-full bg-steelBlue shadow-md hover:bg-white transition-colors"
-          aria-label="Next slide"
-        >
-          <FaAngleRight className="h-6 w-6 text-white hover:text-steelBlue" />
-        </button>
-      </div>
-
       {/* Slider */}
-      <Slider ref={slider} {...settings}>
-        {products.map((item, i) => (
-          <div key={i} className="px-2">
-            <Cards
-              item={item}
-              width="100%" // Adjusted for responsiveness
-              height="auto" // Maintain aspect ratio for images
-              imageRatio="80%"
-              buttonClass="btn normal"
-              onButtonClick={(item) => console.log("Clicked:", item)}
-            />
-          </div>
-        ))}
-      </Slider>
+      <div className="relative">
+        {/* Custom Navigation Buttons */}
+        <Arrow direction="left" onClick={() => slider?.current?.slickPrev()} />
+        <Arrow direction="right" onClick={() => slider?.current?.slickNext()} />
+
+        <Slider ref={slider} {...settings}>
+          {products.map((item, i) => (
+            <div key={i} className="px-2">
+              <Cards
+                item={item}
+                width="100%" // Adjusted for responsiveness
+                height="550px" // Maintain aspect ratio for images
+                imageRatio="70%"
+                buttonClass="btn normal"
+                onButtonClick={(item) => console.log("Clicked:", item)}
+              />
+            </div>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 };
