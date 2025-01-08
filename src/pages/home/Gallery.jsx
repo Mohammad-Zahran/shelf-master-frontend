@@ -7,8 +7,8 @@ import { UI } from "../../components/home/UI";
 
 const Gallery = () => {
   return (
-    <>
-      <div className="text-center py-8">
+    <div className="mt-5">
+      <div className="text-center space-y-2">
         <p className="text-steelBlue text-lg">
           See our latest models of the shelves
         </p>
@@ -35,7 +35,8 @@ const Gallery = () => {
       >
         <UI />
       </section>
-    </>
+      </div>
+    
   );
 };
 

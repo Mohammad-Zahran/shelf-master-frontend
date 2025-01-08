@@ -61,7 +61,7 @@ export const UI = () => {
                 className="btn round text-sm sm:text-base"
                 onClick={() => setPage(index)}
               >
-                {index === 0 ? "Cover" : `Page ${index}`}
+                {index === 0 ? "Cover" : `${index}`}
               </button>
             ))}
             <button
