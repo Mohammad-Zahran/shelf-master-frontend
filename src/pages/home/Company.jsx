@@ -70,8 +70,7 @@ const Company = () => {
     >
       {/* Left Section: Stats */}
       <div className="flex flex-col items-center w-full lg:w-1/2 relative">
-        {/* Vertical Line */}
-        <div className="absolute h-full w-[2px] bg-gray-300 left-1/2 -translate-x-1/2 hidden lg:block"></div>
+        
 
         <div className="flex flex-col items-start lg:flex-row lg:items-center gap-4 relative z-10">
           <TiltCard
@@ -113,7 +112,7 @@ const Company = () => {
           Our company has been the leading provider of construction services to
           clients throughout the Lebanon since 2015.
         </p>
-        <button className="btn normal">Contact Us</button>
+        <a href="/contact" className="btn round">Contact Us</a>
       </div>
     </div>
   );

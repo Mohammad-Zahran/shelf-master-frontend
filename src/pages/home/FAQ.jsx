@@ -54,15 +54,15 @@ const FAQ = () => {
   }, [selectedIndex]);
 
   return (
-    <section className="bg-white py-12 px-4">
-      <div className="text-center py-8">
-        <p className="text-steelBlue text-lg">
+    <section className="section-container bg-white py-12 px-4">
+      {/* Section Title */}
+      <div className="text-left ml-10 mb-12">
+        <p className="subtitle">
           See the most asked questions in the community
         </p>
-        <h1 className="text-4xl md:text-5xl font-bold text-charcoal">
-          Frequentley Asked Questions
-        </h1>
+        <h2 className="title md:w-[800px]">Frequentley Asked Questions</h2>
       </div>
+
       <div className="max-w-7xl mx-auto grid grid-cols-2 gap-6 relative">
         {/* Left Side: Questions */}
         <div

@@ -86,7 +86,9 @@ const Users = () => {
   return (
     <div ref={containerRef}>
       <div className="flex flex-col md:flex-row items-center justify-between mx-4 my-4 gap-4">
-        <h5 className="text-lg font-bold">All Users</h5>
+        <h2 className="text-2xl font-semibold my-4">
+          All <span className="text-steelBlue">Users</span>
+        </h2>
         <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
           <button
             onClick={exportToPDF}
@@ -194,8 +196,8 @@ const Users = () => {
             onClick={() => setCurrentPage(index + 1)}
             className={`btn-sm btn-circle ${
               currentPage === index + 1
-                ? "btn-active bg-steelBlue text-white"
-                : "btn-outline"
+                ? "btn-active bg-steelBlue text-white hover:bg-white hover:text-steelBlue"
+                : "btn-outline bg-text-white text-steelBlue hover:bg-white hover:text-steelBlue"
             }`}
           >
             {index + 1}

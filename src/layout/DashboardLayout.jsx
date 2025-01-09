@@ -10,7 +10,8 @@ import Login from "../components/Auth/Login";
 import useAdmin from "../hooks/useAdmin";
 import useAuth from "../hooks/useAuth";
 import { FaRegEdit } from "react-icons/fa";
-
+import { FaClipboardList } from "react-icons/fa";
+import { FaCommentDots } from "react-icons/fa6";
 
 const DashboardLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,7 +34,7 @@ const DashboardLayout = () => {
 
   const sharedLinks = (
     <>
-      {/* Menu Item: Dashboard */}
+      {/* Dashboard */}
       <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
         <Link to="/dashboard" className="flex items-center space-x-2">
           <VscGraph className="text-steelBlue" />
@@ -41,7 +42,7 @@ const DashboardLayout = () => {
         </Link>
       </li>
 
-      {/* Menu Item: Accounts */}
+      {/* Accounts */}
       <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
         <Link to="/dashboard/users" className="flex items-center space-x-2">
           <FaUser className="text-steelBlue" />
@@ -49,19 +50,47 @@ const DashboardLayout = () => {
         </Link>
       </li>
 
-      {/* Menu Item: Accounts */}
+      {/* Add Shelf */}
       <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
-        <Link to="/dashboard/add-product" className="flex items-center space-x-2">
+        <Link
+          to="/dashboard/add-product"
+          className="flex items-center space-x-2"
+        >
           <IoMdAddCircle className="text-steelBlue" />
           <span>Add Shelf</span>
         </Link>
       </li>
 
-      {/* Menu Item: Accounts */}
+      {/* Manage Items */}
       <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
-        <Link to="/dashboard/manage-items" className="flex items-center space-x-2">
+        <Link
+          to="/dashboard/manage-items"
+          className="flex items-center space-x-2"
+        >
           <FaRegEdit className="text-steelBlue" />
           <span>Manage Shelfs</span>
+        </Link>
+      </li>
+
+      {/* Manage Orders */}
+      <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+        <Link
+          to="/dashboard/manage-orders"
+          className="flex items-center space-x-2"
+        >
+          <FaClipboardList className="text-steelBlue" />
+          <span>Manage Orders</span>
+        </Link>
+      </li>
+
+      {/* Manage Reviews */}
+      <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+        <Link
+          to="/dashboard/manage-reviews"
+          className="flex items-center space-x-2"
+        >
+          <FaCommentDots className="text-steelBlue" />
+          <span>Manage Reviews</span>
         </Link>
       </li>
     </>
@@ -106,7 +135,7 @@ const DashboardLayout = () => {
                     </button>
                   </div>
                   <ul className="menu text-base-content mt-4">
-                    {/* Menu Item: Dashboard */}
+                    {/*Dashboard */}
                     <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
                       <Link
                         to="/dashboard"
@@ -118,7 +147,7 @@ const DashboardLayout = () => {
                       </Link>
                     </li>
 
-                    {/* Menu Item: Accounts */}
+                    {/*Accounts */}
                     <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
                       <Link
                         to="/dashboard/users"
@@ -130,24 +159,53 @@ const DashboardLayout = () => {
                       </Link>
                     </li>
 
-                    {/* Additional menu items */}
-                    {Array(4)
-                      .fill(null)
-                      .map((_, i) => (
-                        <li
-                          key={i}
-                          className="text-lg text-[#273240] hover:text-[#5A6ACF]"
-                        >
-                          <Link
-                            to="/dashboard/users"
-                            className="flex items-center space-x-2"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            <FaUser className="text-steelBlue" />
-                            <span>Accounts</span>
-                          </Link>
-                        </li>
-                      ))}
+                    {/* Add Shelf */}
+                    <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+                      <Link
+                        to="/dashboard/add-product"
+                        className="flex items-center space-x-2"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <IoMdAddCircle className="text-steelBlue" />
+                        <span>Add Shelf</span>
+                      </Link>
+                    </li>
+
+                    {/* Manage Items */}
+                    <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+                      <Link
+                        to="/dashboard/manage-items"
+                        className="flex items-center space-x-2"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <FaRegEdit className="text-steelBlue" />
+                        <span>Manage Shelfs</span>
+                      </Link>
+                    </li>
+
+                    {/* Manage Orders */}
+                    <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+                      <Link
+                        to="/dashboard/manage-orders"
+                        className="flex items-center space-x-2"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <FaClipboardList className="text-steelBlue" />
+                        <span>Manage Orders</span>
+                      </Link>
+                    </li>
+
+                    {/* Manage Reviews */}
+                    <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+                      <Link
+                        to="/dashboard/manage-reviews"
+                        className="flex items-center space-x-2"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <FaCommentDots className="text-steelBlue" />
+                        <span>Manage Reviews</span>
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               )}

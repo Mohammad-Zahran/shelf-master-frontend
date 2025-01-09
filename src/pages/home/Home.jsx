@@ -3,7 +3,7 @@ import Hero from "./Hero";
 import Popular from "./Popular";
 import ModelViewer from "./ModelViewer";
 import Company from "./Company";
-import Reviews from "./Reviews";
+import Testimonials from "./Testimonials";
 import FAQ from "./FAQ";
 import Gallery from "./Gallery";
 
@@ -14,7 +14,7 @@ const Home = () => {
       <Popular />
       <ModelViewer />
       <Company />
-      <Reviews />
+      <Testimonials />
       <FAQ />
       <Gallery />
     </div>

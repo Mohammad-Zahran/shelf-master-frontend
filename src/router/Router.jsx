@@ -17,6 +17,12 @@ import AddProduct from "../pages/dashboard/admin/AddProduct";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
 import ProductDetails from "../pages/shop/ProductDetails";
+import Payment from "../pages/shop/Payment";
+import Order from "../pages/dashboard/Order";
+import ManageOrders from "../pages/dashboard/admin/ManageOrders";
+import ReviewPage from "../pages/ReviewPage";
+import ContactUs from "../pages/ContactUs";
+import ManageReviews from "../pages/dashboard/admin/ManageReviews";
 
 const router = createBrowserRouter([
   {
@@ -48,12 +54,36 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/process-checkout",
+        element: (
+          <PrivateRouter>
+            <Payment />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/order",
+        element: (
+          <PrivateRouter>
+            <Order />
+          </PrivateRouter>
+        ),
+      },
+      {
         path: "/wishlist-page",
         element: (
           <PrivateRouter>
             <WishListPage />
           </PrivateRouter>
         ),
+      },
+      {
+        path: "/review-page",
+        element: <ReviewPage />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
       },
     ],
   },
@@ -93,16 +123,24 @@ const router = createBrowserRouter([
       },
       {
         path: "add-product",
-        element: <AddProduct />
+        element: <AddProduct />,
       },
       {
         path: "manage-items",
-        element: <ManageItems />
+        element: <ManageItems />,
       },
       {
         path: "update-product/:id",
-        element: <UpdateProduct />
-      }
+        element: <UpdateProduct />,
+      },
+      {
+        path: "manage-orders",
+        element: <ManageOrders />,
+      },
+      {
+        path: "manage-reviews",
+        element: <ManageReviews />,
+      },
     ],
   },
 ]);

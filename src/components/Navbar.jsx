@@ -1,45 +1,69 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useLocation, Link } from "react-router-dom";
 import logo from "../../public/assets/images/logo.png";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaRegHeart } from "react-icons/fa";
 import Modal from "./Auth/Modal";
 import Profile from "./Auth/Profile";
-import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
-import { FaRegHeart } from "react-icons/fa";
 import useWishList from "../hooks/useWishList";
 import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const { user } = useAuth();
+  const [cart] = useCart();
+  const [wishlist] = useWishList();
+
+  const wishListCount = wishlist?.length || 0;
+
   const navItems = (
     <>
-      <li>
-        <a href="/">Home</a>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/">Home</Link>
       </li>
-      <li>
-        <a href="/products">Shelves</a>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/products" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/products">Shelves</Link>
       </li>
-      <li>
-        <a>Add Review</a>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/review-page" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/review-page">Add Review</Link>
       </li>
-      <li>
-        <a href="/floor-planner">3d Floor Planner</a>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/floor-planner" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/floor-planner">3D Floor Planner</Link>
       </li>
-      <li>
-        <a>Shelf Assistant AI</a>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/assistant-ai" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/assistant-ai">Shelf Assistant AI</Link>
       </li>
-      <li>
-        <a>Contact Us</a>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/contact" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/contact">Contact Us</Link>
       </li>
     </>
   );
-
-  const { user, loading } = useAuth();
-  const [cart, refetch] = useCart();
-  const [wishlist, refetch1] = useWishList();
-
-  
-  const wishListCount = wishlist?.length || 0;
-
 
   return (
     <header className="max-w-screen-2xl container mx-auto">
@@ -125,7 +149,6 @@ const Navbar = () => {
               </label>
             </Link>
 
-            {/* Login */}
             {user ? (
               <Profile user={user} />
             ) : (
