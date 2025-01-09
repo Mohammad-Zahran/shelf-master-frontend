@@ -20,31 +20,6 @@ const ManageOrders = () => {
   const containerRef = useRef(null);
   const tableRef = useRef(null);
 
-  useEffect(() => {
-    fetchExchangeRate();
-
-    // GSAP Animations
-    const rows = tableRef.current?.querySelectorAll("tbody tr");
-    gsap.set(containerRef.current, { opacity: 0, scale: 0.9 });
-    gsap.set(rows, { opacity: 0, x: -50 });
-
-    setTimeout(() => {
-      gsap.to(containerRef.current, {
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        ease: "power3.out",
-      });
-      gsap.to(rows, {
-        opacity: 1,
-        x: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power3.out",
-      });
-    }, 100);
-  }, []);
-
   const fetchExchangeRate = async () => {
     try {
       const response = await axios.get(
@@ -55,6 +30,10 @@ const ManageOrders = () => {
       console.error("Error fetching exchange rate:", error);
     }
   };
+
+  useEffect(() => {
+    fetchExchangeRate();
+  }, []);
 
   const convertCurrency = (price) => {
     if (currency === "LBP" && exchangeRate) {
@@ -126,6 +105,23 @@ const ManageOrders = () => {
     "Orders List"
   );
 
+  // GSAP Animation for pagination
+  useEffect(() => {
+    const rows = tableRef.current.querySelectorAll("tbody tr");
+
+    // Set initial hidden state
+    gsap.set(rows, { opacity: 0, x: -50 });
+
+    // Animate rows into view
+    gsap.to(rows, {
+      opacity: 1,
+      x: 0,
+      duration: 0.6,
+      stagger: 0.1,
+      ease: "power3.out",
+    });
+  }, [paginatedData]);
+
   return (
     <div ref={containerRef}>
       <div className="flex flex-col md:flex-row items-center justify-between mx-4 my-4 gap-4">
@@ -133,7 +129,6 @@ const ManageOrders = () => {
           Manage <span className="text-steelBlue">Orders</span>
         </h2>
         <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
-          {/* Download PDF Button */}
           <button
             onClick={exportToPDF}
             className="btn normal btn-outline flex items-center gap-2 w-full md:w-auto"
@@ -142,7 +137,6 @@ const ManageOrders = () => {
             Download PDF
           </button>
 
-          {/* Convert to LBP Button */}
           <button
             className="btn normal btn-outline flex items-center gap-2 w-full md:w-auto"
             onClick={() => setCurrency(currency === "USD" ? "LBP" : "USD")}
@@ -150,7 +144,6 @@ const ManageOrders = () => {
             Convert to {currency === "USD" ? "LBP" : "USD"}
           </button>
 
-          {/* Search Input */}
           <div className="relative w-full md:w-auto">
             <input
               type="text"
@@ -162,7 +155,6 @@ const ManageOrders = () => {
             <IoSearchOutline className="absolute top-2/4 right-3 -translate-y-2/4 text-gray-500 text-xl" />
           </div>
 
-          {/* Filter Dropdown */}
           <select
             className="select select-bordered w-full md:w-auto"
             value={filterValue}
@@ -175,7 +167,6 @@ const ManageOrders = () => {
         </div>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto">
         <table className="table table-zebra" ref={tableRef}>
           <thead>
@@ -191,15 +182,12 @@ const ManageOrders = () => {
           </thead>
           <tbody>
             {paginatedData.map((item, index) => (
-              <tr key={item._id} className="h-16">
-                {" "}
-                {/* Added className for row height */}
+              <tr key={item._id}>
                 <td>{index + 1 + (currentPage - 1) * 5}</td>
                 <td>{item.email}</td>
                 <td>{item.transitionId}</td>
                 <td>
-                  {currency === "LBP" ? "LBP" : "$"}{" "}
-                  {convertCurrency(item.price)}
+                  {currency === "LBP" ? "LBP" : "$"} {convertCurrency(item.price)}
                 </td>
                 <td>{item.status}</td>
                 <td>
@@ -228,7 +216,6 @@ const ManageOrders = () => {
         </table>
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-center items-center mt-4 gap-2">
         {Array.from({ length: totalPages }, (_, index) => (
           <button
