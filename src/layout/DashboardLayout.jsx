@@ -11,6 +11,7 @@ import useAdmin from "../hooks/useAdmin";
 import useAuth from "../hooks/useAuth";
 import { FaRegEdit } from "react-icons/fa";
 import { FaClipboardList } from "react-icons/fa";
+import { FaCommentDots } from "react-icons/fa6";
 
 const DashboardLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,7 +34,7 @@ const DashboardLayout = () => {
 
   const sharedLinks = (
     <>
-      {/* Menu Item: Dashboard */}
+      {/* Dashboard */}
       <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
         <Link to="/dashboard" className="flex items-center space-x-2">
           <VscGraph className="text-steelBlue" />
@@ -41,7 +42,7 @@ const DashboardLayout = () => {
         </Link>
       </li>
 
-      {/* Menu Item: Accounts */}
+      {/* Accounts */}
       <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
         <Link to="/dashboard/users" className="flex items-center space-x-2">
           <FaUser className="text-steelBlue" />
@@ -79,6 +80,17 @@ const DashboardLayout = () => {
         >
           <FaClipboardList className="text-steelBlue" />
           <span>Manage Orders</span>
+        </Link>
+      </li>
+
+      {/* Manage Reviews */}
+      <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+        <Link
+          to="/dashboard/manage-reviews"
+          className="flex items-center space-x-2"
+        >
+          <FaCommentDots className="text-steelBlue" />
+          <span>Manage Reviews</span>
         </Link>
       </li>
     </>
@@ -180,6 +192,18 @@ const DashboardLayout = () => {
                       >
                         <FaClipboardList className="text-steelBlue" />
                         <span>Manage Orders</span>
+                      </Link>
+                    </li>
+
+                    {/* Manage Reviews */}
+                    <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+                      <Link
+                        to="/dashboard/manage-reviews"
+                        className="flex items-center space-x-2"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <FaCommentDots className="text-steelBlue" />
+                        <span>Manage Reviews</span>
                       </Link>
                     </li>
                   </ul>
