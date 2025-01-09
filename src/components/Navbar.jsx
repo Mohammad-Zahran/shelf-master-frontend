@@ -1,43 +1,70 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useLocation, Link } from "react-router-dom";
 import logo from "../../public/assets/images/logo.png";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaRegHeart } from "react-icons/fa";
 import Modal from "./Auth/Modal";
 import Profile from "./Auth/Profile";
-import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
-import { FaRegHeart } from "react-icons/fa";
 import useWishList from "../hooks/useWishList";
 import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
-  const navItems = (
-    <>
-      <li>
-        <a href="/">Home</a>
-      </li>
-      <li>
-        <a href="/products">Shelves</a>
-      </li>
-      <li>
-        <a href="/review-page">Add Review</a>
-      </li>
-      <li>
-        <a href="/floor-planner">3d Floor Planner</a>
-      </li>
-      <li>
-        <a>Shelf Assistant AI</a>
-      </li>
-      <li>
-        <a href="/contact">Contact Us</a>
-      </li>
-    </>
-  );
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-  const { user, loading } = useAuth();
-  const [cart, refetch] = useCart();
-  const [wishlist, refetch1] = useWishList();
+  const { user } = useAuth();
+  const [cart] = useCart();
+  const [wishlist] = useWishList();
 
   const wishListCount = wishlist?.length || 0;
+
+ const navItems = (
+  <>
+    <li
+      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+        currentPath === "/" ? "text-steelBlue" : ""
+      }`}
+    >
+      <Link to="/">Home</Link>
+    </li>
+    <li
+      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+        currentPath === "/products" ? "text-steelBlue" : ""
+      }`}
+    >
+      <Link to="/products">Shelves</Link>
+    </li>
+    <li
+      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+        currentPath === "/review-page" ? "text-steelBlue" : ""
+      }`}
+    >
+      <Link to="/review-page">Add Review</Link>
+    </li>
+    <li
+      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+        currentPath === "/floor-planner" ? "text-steelBlue" : ""
+      }`}
+    >
+      <Link to="/floor-planner">3D Floor Planner</Link>
+    </li>
+    <li
+      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+        currentPath === "/assistant-ai" ? "text-steelBlue" : ""
+      }`}
+    >
+      <Link to="/assistant-ai">Shelf Assistant AI</Link>
+    </li>
+    <li
+      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+        currentPath === "/contact" ? "text-steelBlue" : ""
+      }`}
+    >
+      <Link to="/contact">Contact Us</Link>
+    </li>
+  </>
+);
+
 
   return (
     <header className="max-w-screen-2xl container mx-auto">
@@ -123,7 +150,6 @@ const Navbar = () => {
               </label>
             </Link>
 
-            {/* Login */}
             {user ? (
               <Profile user={user} />
             ) : (
