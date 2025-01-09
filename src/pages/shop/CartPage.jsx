@@ -209,7 +209,8 @@ const CartPage = () => {
                 {/* Price */}
                 <div className="absolute sm:static top-0 right-0 sm:right-auto">
                   <p className="text-lg font-medium">
-                    ${convertCurrency(item.price * item.quantity)}
+                    {currency === "USD" ? "$" : "LBP"}
+                    {convertCurrency(item.price * item.quantity)}
                   </p>
                 </div>
               </div>
@@ -223,15 +224,23 @@ const CartPage = () => {
           <div className="space-y-3">
             <p className="flex justify-between">
               <span>Subtotal:</span>
-              <span className="font-medium">${cartSubtotal.toFixed(2)}</span>
+              <span className="font-medium">
+                {currency === "USD" ? "$" : "LBP"}
+                {cartSubtotal.toFixed(2)}
+              </span>
             </p>
             <p className="flex justify-between">
               <span>Estimated Tax:</span>
-              <span className="font-medium">$0.00</span>
+              <span className="font-medium">
+                {currency === "USD" ? "$" : "LBP"}0.00
+              </span>
             </p>
             <p className="flex justify-between font-semibold text-lg border-t pt-3">
               <span>Total:</span>
-              <span>${cartSubtotal.toFixed(2)}</span>
+              <span>
+                {currency === "USD" ? "$" : "LBP"}
+                {cartSubtotal.toFixed(2)}
+              </span>
             </p>
           </div>
           <button
