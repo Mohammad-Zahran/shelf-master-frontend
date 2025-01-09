@@ -95,7 +95,7 @@ const Card = React.forwardRef(({ name, comment, rating, photoURL }, ref) => {
   return (
     <motion.div
       ref={ref}
-      className="h-[350px] w-[90%] md:h-[400px] md:w-[500px] lg:w-[550px] bg-white border-2 border-steelBlue rounded-lg shadow-md p-6 md:p-8 flex flex-col space-y-4 md:space-y-6"
+      className="h-[350px] w-[90%] md:h-[400px] md:w-[500px] lg:w-[550px] bg-white border-2 border-steelBlue rounded-lg p-6 md:p-8 flex flex-col space-y-4 md:space-y-6"
       style={{
         gridRow: 1,
         gridColumn: 1,
@@ -103,7 +103,6 @@ const Card = React.forwardRef(({ name, comment, rating, photoURL }, ref) => {
         opacity,
         rotate,
         transition: "transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1)",
-        boxShadow: "0 20px 35px -5px rgba(0, 0, 0, 0.7)",
       }}
       drag="x"
       dragConstraints={{ left: -300, right: 300 }}
