@@ -178,7 +178,7 @@ const DashboardLayout = () => {
                         className="flex items-center space-x-2"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <FaRegEdit className="text-steelBlue" />
+                        <FaClipboardList className="text-steelBlue" />
                         <span>Manage Orders</span>
                       </Link>
                     </li>

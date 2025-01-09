@@ -48,7 +48,23 @@ const Dashboard = () => {
     },
   });
 
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = [
+    "#0D2535", // Dark blue
+    "#5388D8", // Soft blue
+    "#F4BE37", // Bright yellow
+    "#FF9F40", // Warm orange
+    "#1E3A5F", // Deep navy
+    "#73A3E8", // Light sky blue
+    "#FFD700", // Gold
+    "#FF7F50", // Coral orange
+    "#2A9D8F", // Teal green
+    "#E76F51", // Terracotta
+    "#F2C14E", // Honey yellow
+    "#90BE6D", // Soft green
+    "#577590", // Muted blue-gray
+    "#B5838D", // Dusty rose
+    "#F4A261", // Sandy orange
+  ];
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
@@ -159,16 +175,20 @@ const Dashboard = () => {
 
         {/* Pie Chart */}
         <div className="sm:w-1/2 w-full">
-          <div style={{ width: "100%", height: 300 }}>
+          <div style={{ width: "100%", height: 400 }}>
+            {" "}
+            {/* Adjusted height */}
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart width={400} height={400}>
+              <PieChart width={500} height={500}>
+                {" "}
+                {/* Increased dimensions */}
                 <Pie
                   data={PieChartData}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
                   label={renderCustomizedLabel}
-                  outerRadius={80}
+                  outerRadius={120}
                   fill="#8884d8"
                   dataKey="value"
                 >
