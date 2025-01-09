@@ -106,6 +106,7 @@ const ManageReviews = () => {
           <thead>
             <tr>
               <th>#</th>
+              <th>Avatar</th>
               <th>Name</th>
               <th>Rating</th>
               <th>Comment</th>
@@ -116,6 +117,19 @@ const ManageReviews = () => {
             {paginatedData.map((review, index) => (
               <tr key={review._id}>
                 <td>{index + 1 + (currentPage - 1) * 5}</td>
+                <td>
+                  <div className="avatar">
+                    <div className="mask mask-squircle h-12 w-12">
+                      <img
+                        alt="User Avatar"
+                        src={
+                          review.photoURL ||
+                          "https://via.placeholder.com/150" // Default image if photoURL is missing
+                        }
+                      />
+                    </div>
+                  </div>
+                </td>
                 <td>{review.name}</td>
                 <td>{review.rating}</td>
                 <td>{review.comment}</td>
