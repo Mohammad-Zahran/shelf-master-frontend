@@ -219,8 +219,8 @@ const ManageOrders = () => {
             onClick={() => setCurrentPage(index + 1)}
             className={`btn-sm btn-circle ${
               currentPage === index + 1
-                ? "btn-active bg-steelBlue text-white"
-                : "btn-outline"
+                ? "btn-active bg-steelBlue text-white hover:bg-white hover:text-steelBlue"
+                : "btn-outline bg-text-white text-steelBlue hover:bg-white hover:text-steelBlue"
             }`}
           >
             {index + 1}
