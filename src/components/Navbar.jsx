@@ -18,53 +18,52 @@ const Navbar = () => {
 
   const wishListCount = wishlist?.length || 0;
 
- const navItems = (
-  <>
-    <li
-      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
-        currentPath === "/" ? "text-steelBlue font-bold" : ""
-      }`}
-    >
-      <Link to="/">Home</Link>
-    </li>
-    <li
-      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
-        currentPath === "/products" ? "text-steelBlue font-bold" : ""
-      }`}
-    >
-      <Link to="/products">Shelves</Link>
-    </li>
-    <li
-      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
-        currentPath === "/review-page" ? "text-steelBlue font-bold" : ""
-      }`}
-    >
-      <Link to="/review-page">Add Review</Link>
-    </li>
-    <li
-      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
-        currentPath === "/floor-planner" ? "text-steelBlue font-bold" : ""
-      }`}
-    >
-      <Link to="/floor-planner">3D Floor Planner</Link>
-    </li>
-    <li
-      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
-        currentPath === "/assistant-ai" ? "text-steelBlue font-bold" : ""
-      }`}
-    >
-      <Link to="/assistant-ai">Shelf Assistant AI</Link>
-    </li>
-    <li
-      className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
-        currentPath === "/contact" ? "text-steelBlue font-bold" : ""
-      }`}
-    >
-      <Link to="/contact font-bold">Contact Us</Link>
-    </li>
-  </>
-);
-
+  const navItems = (
+    <>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/">Home</Link>
+      </li>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/products" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/products">Shelves</Link>
+      </li>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/review-page" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/review-page">Add Review</Link>
+      </li>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/floor-planner" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/floor-planner">3D Floor Planner</Link>
+      </li>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/assistant-ai" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/assistant-ai">Shelf Assistant AI</Link>
+      </li>
+      <li
+        className={`hover:text-steelBlue hover:bg-transparent active:bg-transparent ${
+          currentPath === "/contact" ? "text-steelBlue font-bold" : ""
+        }`}
+      >
+        <Link to="/contact">Contact Us</Link>
+      </li>
+    </>
+  );
 
   return (
     <header className="max-w-screen-2xl container mx-auto">

@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "./../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const {
@@ -48,9 +49,15 @@ const Login = () => {
     try {
       const result = await login(email, password);
       const user = result.user;
-      const photoURL = user.photoURL || "/assets/images/default-profile.png"; // Use default photo if none exists
+      const photoURL = user.photoURL || "/assets/images/default-profile.png";
 
-      alert("Login successful!");
+      // Show success alert
+      Swal.fire({
+        title: "Login Successful!",
+        text: "You have successfully logged in.",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
 
       navigate(from, { replace: true });
 
@@ -60,7 +67,14 @@ const Login = () => {
       });
     } catch (error) {
       console.error("Login failed:", error.message);
-      alert("Login failed. Please check your credentials.");
+
+      // Show error alert
+      Swal.fire({
+        title: "Login Failed",
+        text: "Please check your credentials and try again.",
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
     }
   };
 
@@ -71,16 +85,33 @@ const Login = () => {
         const userInfo = {
           name: result?.user?.displayName,
           email: result?.user?.email,
-          photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
+          photoURL: result.user.photoURL || defaultPhotoURL,
         };
+
         axiosPublic.post("/users", userInfo).then((response) => {
-          alert("Login successful!");
+          // Show success alert
+          Swal.fire({
+            title: "Login Successful!",
+            text: "You have successfully logged in with Google.",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+
           navigate(from, { replace: true });
         });
       })
-      .catch((error) => console.error("Google Sign-In failed:", error));
-  };
+      .catch((error) => {
+        console.error("Google Sign-In failed:", error);
 
+        // Show error alert
+        Swal.fire({
+          title: "Google Sign-In Failed",
+          text: "An error occurred while signing in with Google.",
+          icon: "error",
+          confirmButtonText: "Retry",
+        });
+      });
+  };
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-white">
       {/* Left Section: Login Form */}
