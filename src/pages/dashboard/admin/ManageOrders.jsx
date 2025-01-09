@@ -129,8 +129,11 @@ const ManageOrders = () => {
   return (
     <div ref={containerRef}>
       <div className="flex flex-col md:flex-row items-center justify-between mx-4 my-4 gap-4">
-        <h5 className="text-lg font-bold">Manage Orders</h5>
+        <h2 className="text-2xl font-semibold my-4">
+          Manage <span className="text-steelBlue">Orders</span>
+        </h2>
         <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
+          {/* Download PDF Button */}
           <button
             onClick={exportToPDF}
             className="btn normal btn-outline flex items-center gap-2 w-full md:w-auto"
@@ -138,6 +141,16 @@ const ManageOrders = () => {
             <FaFilePdf className="text-red-500" />
             Download PDF
           </button>
+
+          {/* Convert to LBP Button */}
+          <button
+            className="btn normal btn-outline flex items-center gap-2 w-full md:w-auto"
+            onClick={() => setCurrency(currency === "USD" ? "LBP" : "USD")}
+          >
+            Convert to {currency === "USD" ? "LBP" : "USD"}
+          </button>
+
+          {/* Search Input */}
           <div className="relative w-full md:w-auto">
             <input
               type="text"
@@ -148,6 +161,8 @@ const ManageOrders = () => {
             />
             <IoSearchOutline className="absolute top-2/4 right-3 -translate-y-2/4 text-gray-500 text-xl" />
           </div>
+
+          {/* Filter Dropdown */}
           <select
             className="select select-bordered w-full md:w-auto"
             value={filterValue}
@@ -176,7 +191,9 @@ const ManageOrders = () => {
           </thead>
           <tbody>
             {paginatedData.map((item, index) => (
-              <tr key={item._id}>
+              <tr key={item._id} className="h-16">
+                {" "}
+                {/* Added className for row height */}
                 <td>{index + 1 + (currentPage - 1) * 5}</td>
                 <td>{item.email}</td>
                 <td>{item.transitionId}</td>
@@ -226,15 +243,6 @@ const ManageOrders = () => {
             {index + 1}
           </button>
         ))}
-      </div>
-
-      <div className="flex justify-end my-4">
-        <button
-          className="btn normal"
-          onClick={() => setCurrency(currency === "USD" ? "LBP" : "USD")}
-        >
-          Convert to {currency === "USD" ? "LBP" : "USD"}
-        </button>
       </div>
     </div>
   );
