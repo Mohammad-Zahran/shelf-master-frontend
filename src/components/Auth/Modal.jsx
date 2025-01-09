@@ -5,6 +5,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthProvider";
+import Swal from "sweetalert2";
 
 const Modal = () => {
   const {
@@ -16,7 +17,7 @@ const Modal = () => {
   const { signUpWithGmail, login } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // redirecting to home page or specific page
+  // Redirecting to home page or specific page
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
@@ -24,17 +25,33 @@ const Modal = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    // console.log(email, password);
+
     login(email, password)
       .then((result) => {
         const user = result.user;
-        alert("Login Successful");
+
+        // Show success alert
+        Swal.fire({
+          title: "Login Successful!",
+          text: "You have successfully logged in.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+
         document.getElementById("my_modal_5").close();
         navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;
         setErrorMessage("Provide a correct email and password");
+
+        // Show error alert
+        Swal.fire({
+          title: "Login Failed",
+          text: "Please provide a correct email and password.",
+          icon: "error",
+          confirmButtonText: "Retry",
+        });
       });
   };
 
