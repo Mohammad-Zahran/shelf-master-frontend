@@ -13,15 +13,19 @@ const ProductDetails = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
 
+  const [email, setEmail] = useState(user?.email || ""); // Pre-fill for logged-in users
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state for full-screen image
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [cart, refetch] = useCart();
   const [wishlist, refetch1] = useWishList();
-
 
   // Fetch product details and reviews
   useEffect(() => {
@@ -71,7 +75,7 @@ const ProductDetails = () => {
       });
       return;
     }
-  
+
     try {
       const cartItem = {
         productId: product._id,
@@ -81,12 +85,11 @@ const ProductDetails = () => {
         quantity: 1,
         email: user.email,
       };
-  
+
       const response = await axiosPublic.post("/carts", cartItem);
-  
-      // Check for success response
+
       if (response.status === 201 || response.status === 200) {
-        refetch(); // Update the cart count in the navbar
+        refetch();
         Swal.fire({
           icon: "success",
           title: "Added to Cart",
@@ -106,7 +109,7 @@ const ProductDetails = () => {
       });
     }
   };
-  
+
   const handleToggleWishlist = async () => {
     if (!user) {
       Swal.fire({
@@ -118,16 +121,16 @@ const ProductDetails = () => {
       });
       return;
     }
-  
+
     try {
       const response = await axiosPublic.post("/wishlists/toggle", {
         email: user.email,
         product: product,
       });
-  
+
       if (response.status === 200) {
         setIsLiked(!isLiked);
-        refetch1(); // Update the wishlist count in the navbar
+        refetch1();
         const message = isLiked ? "Removed from wishlist" : "Added to wishlist";
         Swal.fire("Success", message, "success");
       }
@@ -140,7 +143,50 @@ const ProductDetails = () => {
       });
     }
   };
-  
+
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+
+    if (!email.trim() || rating === 0 || comment.trim() === "") {
+      Swal.fire(
+        "Validation Error",
+        "Email, rating, and comment are required.",
+        "error"
+      );
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      const reviewData = {
+        email,
+        userId: user?._id || null, // If logged in, include the user ID
+        userName: user?.displayName || "Guest", // Default to "Guest" for logged-out users
+        rating,
+        comment,
+      };
+
+      const response = await axiosPublic.post(`/reviews/${id}`, reviewData);
+
+      if (response.status === 201) {
+        Swal.fire("Success", "Review submitted successfully!", "success");
+        setReviews((prevReviews) => [...prevReviews, response.data.review]);
+        setEmail(user?.email || ""); // Reset email to logged-in user or empty
+        setRating(0);
+        setComment("");
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      Swal.fire(
+        "Error",
+        error.response?.data?.message || "Could not submit review.",
+        "error"
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (!product) {
     return <div>Loading...</div>;
@@ -268,6 +314,56 @@ const ProductDetails = () => {
             </div>
           )}
         </div>
+      </div>
+
+      <div className="mt-8 mb-8">
+        <h2 className="text-2xl font-semibold border-b pb-2">Add a Review</h2>
+        <form onSubmit={handleSubmitReview} className="mt-4 space-y-4">
+          {/* Email Input */}
+          <input
+            type="email"
+            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-steelBlue"
+            placeholder="Enter your email"
+            value={user?.email || ""}
+            onChange={(e) => {
+              if (!user) setEmail(e.target.value);
+            }}
+            disabled={!!user}
+            required
+          />
+
+          {/* Rating Input */}
+          <div className="flex items-center space-x-2">
+            {[...Array(5)].map((_, index) => (
+              <FaStar
+                key={index}
+                className={`cursor-pointer ${
+                  index < rating ? "text-yellow-500" : "text-gray-300"
+                }`}
+                onClick={() => setRating(index + 1)}
+              />
+            ))}
+          </div>
+
+          {/* Comment Input */}
+          <textarea
+            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-steelBlue"
+            placeholder="Write your review here..."
+            rows={4}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            required
+          ></textarea>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="bg-steelBlue text-white px-6 py-2 rounded-lg hover:bg-transparent hover:text-steelBlue border border-steelBlue"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Submit Review"}
+          </button>
+        </form>
       </div>
 
       {/* Customer Reviews */}
