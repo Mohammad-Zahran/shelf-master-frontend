@@ -1,5 +1,5 @@
 import React from "react";
-import ChatBody from "../components/ChatBody";
+import ChatBody from "../components/chatbot/ChatBody";
 
 const ChatBot = () => {
   return (
@@ -13,13 +13,13 @@ const ChatBot = () => {
         Start Talking with Shelfie
       </div>
 
-      {/* input */}
-      <div>
+      {/* body */}
+      <div className="h-[90%] overflow-auto w-full max-w-4xl min-w-[20rem] py-8 px-4 self-center">
         <ChatBody />
       </div>
 
-      {/* body */}
-      <div>body</div>
+      {/* input */}
+      <div>input</div>
     </div>
   );
 };
