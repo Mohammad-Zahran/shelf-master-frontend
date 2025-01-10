@@ -1,25 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const ChatBot = () => {
   const axiosPublic = useAxiosPublic();
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
+  const chatContainerRef = useRef(null);
 
-  // Function to send a message to the API
   const sendMessage = async () => {
     if (!userMessage.trim()) return;
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { role: "user", content: userMessage },
-    ]);
+
+    const newMessage = { role: "user", content: userMessage };
+
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
 
     try {
-      const response = await axiosPublic.post("/ask", { message: userMessage });
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { role: "assistant", content: response.data.message },
-      ]);
+      const response = await axiosPublic.post("ai/ask", {
+        message: userMessage,
+      });
+      const assistantMessage = { role: "assistant", content: response.data.message };
+      setMessages((prevMessages) => [...prevMessages, assistantMessage]);
     } catch (error) {
       console.error("Error communicating with chatbot API:", error);
       setMessages((prevMessages) => [
@@ -31,38 +32,62 @@ const ChatBot = () => {
     setUserMessage("");
   };
 
+  // GSAP animation for the last message
+  useEffect(() => {
+    if (chatContainerRef.current?.lastElementChild) {
+      const lastMessage = chatContainerRef.current.lastElementChild;
+      gsap.fromTo(
+        lastMessage,
+        { scale: 0.8, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
+      );
+
+      // Scroll to the bottom
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
-    <div className="flex flex-col items-center p-6 mx-auto max-w-2xl h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800">ChatBot</h1>
-      <div className="flex flex-col w-full h-4/5 bg-white shadow-md rounded-lg overflow-hidden">
-        <div className="flex-grow p-4 overflow-y-scroll">
-          {messages.map((msg, index) => (
+    <div className="flex flex-col h-screen bg-gray-100">
+      {/* Chat Display Area */}
+      <div
+        ref={chatContainerRef}
+        className="flex-1 overflow-y-auto p-4 space-y-4 bg-white"
+      >
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`flex ${
+              message.role === "user" ? "justify-end" : "justify-start"
+            }`}
+          >
             <div
-              key={index}
-              className={`mb-4 ${
-                msg.role === "user"
-                  ? "text-right text-blue-600"
-                  : "text-left text-gray-700"
+              className={`p-3 rounded-lg max-w-xs text-sm ${
+                message.role === "user"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-300 text-gray-800"
               }`}
             >
-              <span className="font-semibold">
-                {msg.role === "user" ? "You" : "Bot"}:
-              </span>{" "}
-              {msg.content}
+              {message.content}
             </div>
-          ))}
-        </div>
-        <div className="flex items-center border-t border-gray-300 p-4">
+          </div>
+        ))}
+      </div>
+
+      {/* Input Area */}
+      <div className="p-4 border-t bg-gray-50">
+        <div className="flex items-center space-x-2">
           <input
             type="text"
+            className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="Type a message..."
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
-            placeholder="Type your message here..."
-            className="flex-grow px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+            onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           />
           <button
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
             onClick={sendMessage}
-            className="ml-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"
           >
             Send
           </button>
