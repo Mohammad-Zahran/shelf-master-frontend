@@ -6,7 +6,40 @@ const ChatBot = () => {
   const axiosPublic = useAxiosPublic();
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
+  const [isListening, setIsListening] = useState(false);
   const chatContainerRef = useRef(null);
+  const recognitionRef = useRef(null);
+
+  // Initialize SpeechRecognition
+  useEffect(() => {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => setIsListening(true);
+      recognition.onend = () => setIsListening(false);
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setUserMessage(transcript);
+      };
+
+      recognitionRef.current = recognition;
+    } else {
+      console.error("Speech Recognition API is not supported in this browser.");
+    }
+  }, []);
+
+  const startListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.start();
+    }
+  };
 
   const sendMessage = async () => {
     if (!userMessage.trim()) return;
@@ -80,7 +113,7 @@ const ChatBot = () => {
           <input
             type="text"
             className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Type a message..."
+            placeholder="Type a message or use the mic..."
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && sendMessage()}
@@ -90,6 +123,14 @@ const ChatBot = () => {
             onClick={sendMessage}
           >
             Send
+          </button>
+          <button
+            className={`px-4 py-2 rounded-lg ${
+              isListening ? "bg-red-500 text-white" : "bg-gray-300 text-gray-800"
+            } hover:bg-gray-400`}
+            onClick={startListening}
+          >
+            🎤
           </button>
         </div>
       </div>
