@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Cards from "../../components/home/Cards";
 import { LuSettings2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
+import AIPopUp from './../../components/chatbot/AIPopUp';
 
 const Products = () => {
   const [product, setProduct] = useState([]);
@@ -11,6 +12,14 @@ const Products = () => {
   const [sortOption, setSortOption] = useState("default");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8);
+  const [showPopupButton, setShowPopupButton] = useState(false);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPopupButton(true), 10000); // Show button after 10 seconds
+    return () => clearTimeout(timer);
+  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -203,6 +212,8 @@ const Products = () => {
           </button>
         ))}
       </div>
+      {showPopupButton && <AIPopUp />}
+
     </div>
   );
 };

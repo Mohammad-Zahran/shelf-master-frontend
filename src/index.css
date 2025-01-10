@@ -231,13 +231,8 @@ input::-webkit-inner-spin-button {
 }
 
 .admin-hover:hover {
-  background-color: rgba(
-    112,
-    127,
-    221,
-    0.1
-  ); /* Background color with 10% opacity */
-  color: #5a6acf; /* Text color */
+  background-color: rgba(112, 127, 221, 0.1); /* Background color with 10% opacity */
+  color: #5A6ACF; /* Text color */
 }
 
 .gradient-01 {
@@ -258,5 +253,3 @@ input::-webkit-inner-spin-button {
   background: #5a6acf;
   filter: blur(190px);
 }
-
-

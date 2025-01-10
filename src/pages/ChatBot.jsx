@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { AuthContext } from "../contexts/AuthProvider"; // Import AuthContext
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import notificationSound from "../../public/assets/audios/notification.mp3"; // Import the audio file
+import { FaMicrophone } from "react-icons/fa";
 
 const ChatBot = () => {
   const { user } = useContext(AuthContext); // Access user from AuthContext
@@ -152,10 +153,18 @@ const ChatBot = () => {
 
   return (
     <div className="flex flex-col h-full bg-white">
+      {/* Banner */}
+      <div className="bg-steelBlue text-white py-4 text-center">
+        <h1 className="text-xl font-bold">Welcome to Your AI Assistant</h1>
+        <p className="text-sm">
+          Ask anything, and I'll try my best to help you!
+        </p>
+      </div>
+
       {/* Chat Section */}
       <div
         className="flex flex-col flex-1 w-full max-w-7xl mx-auto"
-        style={{ height: "calc(100vh - 120px)" }} // Adjust height based on your navbar
+        style={{ height: "calc(100vh - 120px)" }}
       >
         {/* Chat Display Area */}
         <div
@@ -226,26 +235,26 @@ const ChatBot = () => {
             onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           />
           <button
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"
+            className="px-4 py-2 bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue text-md"
             onClick={sendMessage}
           >
             Send
           </button>
           <button
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-3 rounded-lg ${
               isListening
                 ? "bg-red-500 text-white"
-                : "bg-gray-300 text-gray-800"
+                : "bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue "
             } hover:bg-gray-400 text-sm`}
             onClick={startListening}
           >
-            🎤
+            <FaMicrophone />
           </button>
           <button
             className={`px-4 py-2 rounded-lg ${
               isTtsEnabled
-                ? "bg-green-500 text-white"
-                : "bg-gray-300 text-gray-800"
+                ? "bg-white text-steelBlue hover:bg-steelBlue hover:text-white"
+                : "bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue"
             } hover:bg-gray-400 text-sm`}
             onClick={() => setIsTtsEnabled((prev) => !prev)}
           >
