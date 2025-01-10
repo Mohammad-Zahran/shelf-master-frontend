@@ -110,26 +110,36 @@ const ChatBot = () => {
   useEffect(() => {
     if (chatContainerRef.current?.lastElementChild) {
       const lastMessage = chatContainerRef.current.lastElementChild;
+
+      // Animate the last message
       gsap.fromTo(
         lastMessage,
         { scale: 0.8, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
       );
 
-      // Scroll to the bottom
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+      // Check if user is near bottom and scroll only if true
+      const isNearBottom =
+        chatContainerRef.current.scrollTop +
+          chatContainerRef.current.clientHeight >=
+        chatContainerRef.current.scrollHeight - 50;
+
+      if (isNearBottom) {
+        chatContainerRef.current.scrollTop =
+          chatContainerRef.current.scrollHeight;
+      }
     }
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="flex flex-col h-full max-h-screen bg-gray-100">
       {/* Chat Section */}
-      <div className="flex flex-col flex-1 w-full bg-gray-100">
+      <div className="flex flex-col flex-1">
         {/* Chat Display Area */}
         <div
           ref={chatContainerRef}
-          className="flex-1 overflow-y-auto p-4 space-y-4 bg-white rounded-lg shadow-lg mx-4 mt-4"
+          className="flex-1 overflow-y-auto p-4 space-y-4 bg-white rounded-lg shadow-lg mx-2 sm:mx-4 mt-2 sm:mt-4 custom-scrollbar"
+          style={{ maxHeight: "calc(100vh - 8rem)" }}
         >
           {messages.map((message, index) => (
             <div
@@ -141,9 +151,9 @@ const ChatBot = () => {
               <div className="flex items-center space-x-2">
                 {message.role === "assistant" && (
                   <img
-                    src="/assistant-avatar.png" // Replace with your avatar image
+                    src="/assistant-avatar.png"
                     alt="Assistant Avatar"
-                    className="w-8 h-8 rounded-full"
+                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full"
                   />
                 )}
                 <div
@@ -166,9 +176,9 @@ const ChatBot = () => {
                 </div>
                 {message.role === "user" && (
                   <img
-                    src="/user-avatar.png" // Replace with your avatar image
+                    src="/user-avatar.png"
                     alt="User Avatar"
-                    className="w-8 h-8 rounded-full"
+                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full"
                   />
                 )}
               </div>
@@ -180,7 +190,7 @@ const ChatBot = () => {
               <img
                 src="/assistant-avatar.png"
                 alt="Assistant Typing Avatar"
-                className="w-8 h-8 rounded-full"
+                className="w-6 h-6 sm:w-8 sm:h-8 rounded-full"
               />
               <div className="p-3 rounded-lg max-w-xs text-sm bg-gray-300 text-gray-800 shadow-md">
                 <span className="animate-pulse">...</span>
@@ -190,37 +200,37 @@ const ChatBot = () => {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 bg-gray-50 border-t flex items-center space-x-2 mx-4 mb-4 rounded-lg shadow-lg">
+        <div className="p-2 sm:p-4 bg-gray-50 border-t flex items-center space-x-2 mx-2 sm:mx-4 mb-2 sm:mb-4 rounded-lg shadow-lg">
           <input
             type="text"
-            className="flex-1 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200 text-lg"
+            className="flex-1 p-2 sm:p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200 text-sm sm:text-lg"
             placeholder="Type a message or use the mic..."
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           />
           <button
-            className="px-6 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            className="px-4 py-2 sm:px-6 sm:py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm sm:text-base"
             onClick={sendMessage}
           >
             Send
           </button>
           <button
-            className={`px-6 py-4 rounded-lg ${
+            className={`px-4 py-2 sm:px-6 sm:py-4 rounded-lg ${
               isListening
                 ? "bg-red-500 text-white"
                 : "bg-gray-300 text-gray-800"
-            } hover:bg-gray-400`}
+            } hover:bg-gray-400 text-sm sm:text-base`}
             onClick={startListening}
           >
             🎤
           </button>
           <button
-            className={`px-6 py-4 rounded-lg ${
+            className={`px-4 py-2 sm:px-6 sm:py-4 rounded-lg ${
               isTtsEnabled
                 ? "bg-green-500 text-white"
                 : "bg-gray-300 text-gray-800"
-            } hover:bg-gray-400`}
+            } hover:bg-gray-400 text-sm sm:text-base`}
             onClick={() => setIsTtsEnabled((prev) => !prev)}
           >
             {isTtsEnabled ? "TTS On" : "TTS Off"}
