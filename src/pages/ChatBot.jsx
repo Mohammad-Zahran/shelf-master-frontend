@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { gsap } from "gsap";
+import { AuthContext } from "../contexts/AuthProvider"; // Import AuthContext
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const ChatBot = () => {
+  const { user } = useContext(AuthContext); // Access user from AuthContext
   const axiosPublic = useAxiosPublic();
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
@@ -132,14 +134,17 @@ const ChatBot = () => {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-full max-h-screen bg-gray-100">
+    <div className="flex flex-col h-full bg-gray-100">
       {/* Chat Section */}
-      <div className="flex flex-col flex-1">
+      <div
+        className="flex flex-col flex-1 w-full max-w-7xl mx-auto"
+        style={{ height: "calc(100vh - 120px)" }} // Adjust height based on your navbar
+      >
         {/* Chat Display Area */}
         <div
           ref={chatContainerRef}
-          className="flex-1 overflow-y-auto p-4 space-y-4 bg-white rounded-lg shadow-lg mx-2 sm:mx-4 mt-2 sm:mt-4 custom-scrollbar"
-          style={{ maxHeight: "calc(100vh - 8rem)" }}
+          className="flex-1 overflow-y-auto p-4 space-y-4 bg-white rounded-lg shadow-lg mx-4 custom-scrollbar"
+          style={{ minHeight: "600px" }}
         >
           {messages.map((message, index) => (
             <div
@@ -153,7 +158,7 @@ const ChatBot = () => {
                   <img
                     src="/assistant-avatar.png"
                     alt="Assistant Avatar"
-                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full"
+                    className="w-6 h-6 rounded-full"
                   />
                 )}
                 <div
@@ -162,12 +167,6 @@ const ChatBot = () => {
                       ? "bg-blue-500 text-white"
                       : "bg-gray-300 text-gray-800"
                   }`}
-                  style={{
-                    background:
-                      message.role === "user"
-                        ? "linear-gradient(135deg, #6b8cff, #1a58ff)"
-                        : "linear-gradient(135deg, #e2e2e2, #c0c0c0)",
-                  }}
                 >
                   {message.content}
                   <div className="text-xs text-gray-500 mt-1 text-right">
@@ -176,9 +175,9 @@ const ChatBot = () => {
                 </div>
                 {message.role === "user" && (
                   <img
-                    src="/user-avatar.png"
+                    src={user?.photoURL || "/default-avatar.png"} // Display user photo or default
                     alt="User Avatar"
-                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full"
+                    className="w-6 h-6 rounded-full"
                   />
                 )}
               </div>
@@ -190,7 +189,7 @@ const ChatBot = () => {
               <img
                 src="/assistant-avatar.png"
                 alt="Assistant Typing Avatar"
-                className="w-6 h-6 sm:w-8 sm:h-8 rounded-full"
+                className="w-6 h-6 rounded-full"
               />
               <div className="p-3 rounded-lg max-w-xs text-sm bg-gray-300 text-gray-800 shadow-md">
                 <span className="animate-pulse">...</span>
@@ -200,37 +199,37 @@ const ChatBot = () => {
         </div>
 
         {/* Input Area */}
-        <div className="p-2 sm:p-4 bg-gray-50 border-t flex items-center space-x-2 mx-2 sm:mx-4 mb-2 sm:mb-4 rounded-lg shadow-lg">
+        <div className="p-2 bg-gray-50 border-t flex items-center space-x-2 mx-4 mb-4 rounded-lg shadow-lg">
           <input
             type="text"
-            className="flex-1 p-2 sm:p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200 text-sm sm:text-lg"
+            className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200 text-sm"
             placeholder="Type a message or use the mic..."
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           />
           <button
-            className="px-4 py-2 sm:px-6 sm:py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm sm:text-base"
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"
             onClick={sendMessage}
           >
             Send
           </button>
           <button
-            className={`px-4 py-2 sm:px-6 sm:py-4 rounded-lg ${
+            className={`px-4 py-2 rounded-lg ${
               isListening
                 ? "bg-red-500 text-white"
                 : "bg-gray-300 text-gray-800"
-            } hover:bg-gray-400 text-sm sm:text-base`}
+            } hover:bg-gray-400 text-sm`}
             onClick={startListening}
           >
             🎤
           </button>
           <button
-            className={`px-4 py-2 sm:px-6 sm:py-4 rounded-lg ${
+            className={`px-4 py-2 rounded-lg ${
               isTtsEnabled
                 ? "bg-green-500 text-white"
                 : "bg-gray-300 text-gray-800"
-            } hover:bg-gray-400 text-sm sm:text-base`}
+            } hover:bg-gray-400 text-sm`}
             onClick={() => setIsTtsEnabled((prev) => !prev)}
           >
             {isTtsEnabled ? "TTS On" : "TTS Off"}
