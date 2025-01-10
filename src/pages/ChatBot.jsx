@@ -8,6 +8,7 @@ const ChatBot = () => {
   const [userMessage, setUserMessage] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [isTtsEnabled, setIsTtsEnabled] = useState(false); // TTS toggle state
   const chatContainerRef = useRef(null);
   const recognitionRef = useRef(null);
 
@@ -42,6 +43,14 @@ const ChatBot = () => {
     }
   };
 
+  const speakText = (text) => {
+    if (!isTtsEnabled) return; // Exit if TTS is disabled
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    window.speechSynthesis.speak(utterance);
+  };
+
   const sendMessage = async () => {
     if (!userMessage.trim()) return;
 
@@ -73,19 +82,24 @@ const ChatBot = () => {
       };
 
       setMessages((prevMessages) => [...prevMessages, assistantMessage]);
+
+      // Speak the assistant's response
+      speakText(response.data.message);
     } catch (error) {
       console.error("Error communicating with chatbot API:", error);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          role: "assistant",
-          content: "Sorry, something went wrong.",
-          timestamp: new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-        },
-      ]);
+      const errorMessage = {
+        role: "assistant",
+        content: "Sorry, something went wrong.",
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
+
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+
+      // Speak the error message
+      speakText(errorMessage.content);
     }
 
     setIsTyping(false); // Hide typing indicator
@@ -200,6 +214,16 @@ const ChatBot = () => {
             onClick={startListening}
           >
             🎤
+          </button>
+          <button
+            className={`px-6 py-4 rounded-lg ${
+              isTtsEnabled
+                ? "bg-green-500 text-white"
+                : "bg-gray-300 text-gray-800"
+            } hover:bg-gray-400`}
+            onClick={() => setIsTtsEnabled((prev) => !prev)}
+          >
+            {isTtsEnabled ? "TTS On" : "TTS Off"}
           </button>
         </div>
       </div>
