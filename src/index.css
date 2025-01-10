@@ -231,11 +231,16 @@ input::-webkit-inner-spin-button {
 }
 
 .admin-hover:hover {
-  background-color: rgba(112, 127, 221, 0.1); /* Background color with 10% opacity */
-  color: #5A6ACF; /* Text color */
+  background-color: rgba(
+    112,
+    127,
+    221,
+    0.1
+  ); /* Background color with 10% opacity */
+  color: #5a6acf; /* Text color */
 }
 
-.gradient-01{
+.gradient-01 {
   position: absolute;
   width: 200px;
   height: 238px;
@@ -250,6 +255,7 @@ input::-webkit-inner-spin-button {
   height: 238px;
   top: -6rem;
   right: 0px;
-  background: #5A6ACF;
-  filter:blur(190px)
+  background: #5a6acf;
+  filter: blur(190px);
 }
+

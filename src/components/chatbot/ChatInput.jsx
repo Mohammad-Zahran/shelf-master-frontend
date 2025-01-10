@@ -1,4 +1,5 @@
 import React from "react";
+import { FaMicrophone } from "react-icons/fa";
 
 const ChatInput = ({ userMessage, setUserMessage, sendMessage, startListening, isListening }) => {
   return (
@@ -18,7 +19,8 @@ const ChatInput = ({ userMessage, setUserMessage, sendMessage, startListening, i
           isListening ? "bg-red-500 text-white" : "bg-gray-300 text-gray-800"
         }`}
       >
-        🎤
+        <FaMicrophone />
+
       </button>
 
       <img
