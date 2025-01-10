@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Cards from "../../components/home/Cards";
 import { LuSettings2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
-import AIPopUp from './../../components/chatbot/AIPopUp';
+import AIPopUp from "./../../components/chatbot/AIPopUp";
+import popupSoundFile from "../../../public/assets/audios/popup.mp3"; // Import the popup sound file
 
 const Products = () => {
   const [product, setProduct] = useState([]);
@@ -14,12 +15,25 @@ const Products = () => {
   const [itemsPerPage] = useState(8);
   const [showPopupButton, setShowPopupButton] = useState(false);
 
+  const popupSound = useRef(null); // Ref for the popup sound
 
+  // Initialize the popup sound
   useEffect(() => {
-    const timer = setTimeout(() => setShowPopupButton(true), 10000); // Show button after 10 seconds
-    return () => clearTimeout(timer);
+    popupSound.current = new Audio(popupSoundFile);
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopupButton(true);
+
+      // Play popup sound when the button spawns
+      if (popupSound.current) {
+        popupSound.current.play();
+      }
+    }, 10000); // Show button after 10 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -213,7 +227,6 @@ const Products = () => {
         ))}
       </div>
       {showPopupButton && <AIPopUp />}
-
     </div>
   );
 };
