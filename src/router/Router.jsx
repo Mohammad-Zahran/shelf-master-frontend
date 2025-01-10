@@ -23,6 +23,7 @@ import ManageOrders from "../pages/dashboard/admin/ManageOrders";
 import ReviewPage from "../pages/ReviewPage";
 import ContactUs from "../pages/ContactUs";
 import ManageReviews from "../pages/dashboard/admin/ManageReviews";
+import ChatBot from "../pages/ChatBot";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactUs />,
+      },
+      {
+        path: "/assistant-ai",
+        element: <ChatBot />,
       },
     ],
   },
