@@ -25,6 +25,7 @@ import ContactUs from "../pages/ContactUs";
 import ManageReviews from "../pages/dashboard/admin/ManageReviews";
 import ChatBot from "../pages/ChatBot";
 import AddModel from "../pages/dashboard/admin/AddModel";
+import ManageModel from "../pages/dashboard/admin/ManageModel";
 
 const router = createBrowserRouter([
   {
@@ -150,6 +151,10 @@ const router = createBrowserRouter([
       {
         path: "add-model",
         element: <AddModel />,
+      },
+      {
+        path: "manage-models",
+        element: <ManageModel />,
       },
     ],
   },
