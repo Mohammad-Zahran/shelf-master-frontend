@@ -33,7 +33,7 @@ const ManageModel = () => {
 
   const handleUpdate = (id) => {
     // Navigate to the update page
-    window.location.href = `/update-model/${id}`;
+    window.location.href = `/dashboard/update-model/${id}`;
   };
 
   if (loading) {
