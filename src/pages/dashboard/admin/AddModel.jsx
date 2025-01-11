@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { supabase } from "../../../supabase.js";
+import { supabase } from "../../../supabase/supabase.config.js";
 
 const AddModel = () => {
   const [name, setName] = useState("");
