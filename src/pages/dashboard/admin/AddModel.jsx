@@ -33,14 +33,35 @@ const AddModel = () => {
 
       if (modelError) throw modelError;
 
-      // Log the public URLs
-      const photoURL = supabase.storage.from("Images").getPublicUrl(photoPath).data.publicUrl;
-      const modelURL = supabase.storage.from("Models3d").getPublicUrl(modelPath).data.publicUrl;
+      // Get public URLs for uploaded files
+      const photoURL = supabase.storage.from("Images").getPublicUrl(photoPath)
+        .data.publicUrl;
+      const modelURL = supabase.storage.from("Models3d").getPublicUrl(modelPath)
+        .data.publicUrl;
 
       console.log("Photo URL:", photoURL);
       console.log("3D Model URL:", modelURL);
 
-      alert("Files uploaded successfully!");
+      // Send metadata to the backend
+      const response = await fetch("http://localhost:8080/3d", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          photo: photoURL,
+          model3D: modelURL,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error("Backend error:", result.message);
+        throw new Error(result.message);
+      }
+
+      console.log("Model saved to MongoDB:", result.data);
+      alert("3D model added successfully!");
     } catch (error) {
       console.error("Error uploading files:", error.message);
       alert("Error uploading files.");
