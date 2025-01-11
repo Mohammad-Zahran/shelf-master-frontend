@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaComment } from "react-icons/fa6";
 
 const AIPopUp = () => {
   const [isChatOpen, setIsChatOpen] = useState(false); // Toggle for mini chat
@@ -39,10 +40,10 @@ const AIPopUp = () => {
     <>
       {!isChatOpen && (
         <button
-          className="fixed bottom-8 right-8 bg-steelBlue text-white p-3 rounded-full shadow-lg hover:bg-blue-600"
+          className="fixed bottom-8 right-8 bg-steelBlue text-white p-3 rounded-full shadow-lg hover:bg-white hover:text-steelBlue"
           onClick={() => setIsChatOpen(true)}
         >
-          💬
+          <FaComment />
         </button>
       )}
 
