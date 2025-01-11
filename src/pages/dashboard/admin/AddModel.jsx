@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { supabase } from "../../../supabase/supabase.config.js";
+import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 
 const AddModel = () => {
   const [name, setName] = useState("");
   const [photo, setPhoto] = useState(null);
   const [model3D, setModel3D] = useState(null);
+  const axiosSecure = useAxiosSecure();
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -43,24 +45,13 @@ const AddModel = () => {
       console.log("3D Model URL:", modelURL);
 
       // Send metadata to the backend
-      const response = await fetch("http://localhost:8080/3d", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          photo: photoURL,
-          model3D: modelURL,
-        }),
+      const response = await axiosSecure.post("/3d", {
+        name,
+        photo: photoURL,
+        model3D: modelURL,
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        console.error("Backend error:", result.message);
-        throw new Error(result.message);
-      }
-
-      console.log("Model saved to MongoDB:", result.data);
+      console.log("Model saved to MongoDB:", response.data);
       alert("3D model added successfully!");
     } catch (error) {
       console.error("Error uploading files:", error.message);
@@ -75,7 +66,7 @@ const AddModel = () => {
         className="w-full max-w-md bg-white border border-gray-300 rounded-lg p-6"
       >
         <h2 className="text-center text-xl font-semibold text-gray-700 mb-4">
-          Add a <span className="text-steelBlue">3D Model</span>
+          Add a 3D Model
         </h2>
         <input
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
