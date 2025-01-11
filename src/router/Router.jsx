@@ -24,6 +24,7 @@ import ReviewPage from "../pages/ReviewPage";
 import ContactUs from "../pages/ContactUs";
 import ManageReviews from "../pages/dashboard/admin/ManageReviews";
 import ChatBot from "../pages/ChatBot";
+import AddModel from "../pages/dashboard/admin/AddModel";
 
 const router = createBrowserRouter([
   {
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
       {
         path: "manage-reviews",
         element: <ManageReviews />,
+      },
+      {
+        path: "add-model",
+        element: <AddModel />,
       },
     ],
   },
