@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { supabase } from "../../../supabase.js"; // Adjust the path based on your file structure
+import { supabase } from "../../../supabase.js";
 
 const AddModel = () => {
   const [name, setName] = useState("");
@@ -15,44 +15,34 @@ const AddModel = () => {
     }
 
     try {
-      // Upload photo to Supabase
+      // Upload photo to the "Images" bucket
       const photoExt = photo.name.split(".").pop();
       const photoPath = `photos/${Date.now()}.${photoExt}`;
       const { data: photoData, error: photoError } = await supabase.storage
-        .from("uploads")
+        .from("Images")
         .upload(photoPath, photo);
 
       if (photoError) throw photoError;
 
-      // Upload 3D model to Supabase
+      // Upload 3D model to the "Models3d" bucket
       const modelExt = model3D.name.split(".").pop();
       const modelPath = `models/${Date.now()}.${modelExt}`;
       const { data: modelData, error: modelError } = await supabase.storage
-        .from("uploads")
+        .from("Models3d")
         .upload(modelPath, model3D);
 
       if (modelError) throw modelError;
 
-      // Send the metadata to the backend
-      const response = await fetch("http://localhost:8080/3d", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          photo: supabase.storage.from("Images").getPublicUrl(photoPath).data.publicUrl,
-          model3D: supabase.storage.from("Models3d").getPublicUrl(modelPath).data.publicUrl,
-        }),
-      });
+      // Log the public URLs
+      const photoURL = supabase.storage.from("Images").getPublicUrl(photoPath).data.publicUrl;
+      const modelURL = supabase.storage.from("Models3d").getPublicUrl(modelPath).data.publicUrl;
 
-      const result = await response.json();
+      console.log("Photo URL:", photoURL);
+      console.log("3D Model URL:", modelURL);
 
-      if (!response.ok) {
-        throw new Error(result.message);
-      }
-
-      alert("3D model added successfully.");
+      alert("Files uploaded successfully!");
     } catch (error) {
-      console.error(error.message);
+      console.error("Error uploading files:", error.message);
       alert("Error uploading files.");
     }
   };
