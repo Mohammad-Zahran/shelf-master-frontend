@@ -69,30 +69,32 @@ const AddModel = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <form onSubmit={handleUpload} className="w-full max-w-md bg-white border border-gray-300 rounded-lg p-6">
-        <h2 className="text-center text-xl font-semibold text-gray-700 mb-4">Add a 3D Model</h2>
+    <div className="flex justify-center items-center h-screen">
+      <form
+        onSubmit={handleUpload}
+        className="w-full max-w-md bg-white border border-gray-300 rounded-lg p-6"
+      >
+        <h2 className="text-center text-xl font-semibold text-gray-700 mb-4">
+          Add a <span className="text-steelBlue">3D Model</span>
+        </h2>
         <input
-          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
           type="text"
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
-          className="w-full mb-4 file:px-4 file:py-2 file:border file:border-gray-300 file:rounded-md file:cursor-pointer"
+          className="w-full mb-4 file:px-4 file:py-2 file:border file:border-gray-300 file:bg-steelBlue file:text-white file:font-medium file:hover:bg-white file:hover:text-steelBlue file:rounded-md file:cursor-pointer"
           type="file"
           onChange={(e) => setPhoto(e.target.files[0])}
         />
         <input
-          className="w-full mb-4 file:px-4 file:py-2 file:border file:border-gray-300 file:rounded-md file:cursor-pointer"
+          className="w-full mb-4 file:px-4 file:py-2 file:border file:border-gray-300 file:bg-steelBlue file:text-white file:font-medium file:hover:bg-white file:hover:text-steelBlue file:rounded-md file:cursor-pointer"
           type="file"
           onChange={(e) => setModel3D(e.target.files[0])}
         />
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
+        <button type="submit" className="w-full py-2 btn normal">
           Upload Model
         </button>
       </form>
