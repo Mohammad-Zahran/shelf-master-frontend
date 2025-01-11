@@ -1,119 +1,74 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { supabase } from "../../../supabase.js"; // Adjust the path based on your file structure
 
 const AddModel = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    photo: null,
-    model3D: null,
-  });
+  const [name, setName] = useState("");
+  const [photo, setPhoto] = useState(null);
+  const [model3D, setModel3D] = useState(null);
 
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
-
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (files) {
-      setFormData({ ...formData, [name]: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleSubmit = async (e) => {
+  const handleUpload = async (e) => {
     e.preventDefault();
 
-    const formDataObj = new FormData();
-    formDataObj.append("name", formData.name);
-    formDataObj.append("photo", formData.photo);
-    formDataObj.append("model3D", formData.model3D);
+    if (!name || !photo || !model3D) {
+      alert("Please fill out all fields.");
+      return;
+    }
 
     try {
-      console.log("Submitting form with data:", formData);
-      const response = await axios.post("http://localhost:8080/3d", formDataObj, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      // Upload photo to Supabase
+      const photoExt = photo.name.split(".").pop();
+      const photoPath = `photos/${Date.now()}.${photoExt}`;
+      const { data: photoData, error: photoError } = await supabase.storage
+        .from("uploads")
+        .upload(photoPath, photo);
+
+      if (photoError) throw photoError;
+
+      // Upload 3D model to Supabase
+      const modelExt = model3D.name.split(".").pop();
+      const modelPath = `models/${Date.now()}.${modelExt}`;
+      const { data: modelData, error: modelError } = await supabase.storage
+        .from("uploads")
+        .upload(modelPath, model3D);
+
+      if (modelError) throw modelError;
+
+      // Send the metadata to the backend
+      const response = await fetch("http://localhost:8080/3d", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          photo: supabase.storage.from("Images").getPublicUrl(photoPath).data.publicUrl,
+          model3D: supabase.storage.from("Models3d").getPublicUrl(modelPath).data.publicUrl,
+        }),
       });
-      setMessage(response.data.message);
-      setError(null);
-      setFormData({ name: "", photo: null, model3D: null });
-    } catch (err) {
-      setError(err.response?.data?.message || "An error occurred");
-      setMessage(null);
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message);
+      }
+
+      alert("3D model added successfully.");
+    } catch (error) {
+      console.error(error.message);
+      alert("Error uploading files.");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6">Add 3D Model</h1>
-
-        {message && <p className="text-green-500 mb-4">{message}</p>}
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="photo"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Photo
-            </label>
-            <input
-              type="file"
-              id="photo"
-              name="photo"
-              onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="model3D"
-              className="block text-sm font-medium text-gray-700"
-            >
-              3D Model
-            </label>
-            <input
-              type="file"
-              id="model3D"
-              name="model3D"
-              onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-    </div>
+    <form onSubmit={handleUpload}>
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input type="file" onChange={(e) => setPhoto(e.target.files[0])} />
+      <input type="file" onChange={(e) => setModel3D(e.target.files[0])} />
+      <button type="submit">Upload Model</button>
+    </form>
   );
 };
 
