@@ -99,7 +99,9 @@ const ModelViewer = () => {
     >
       {/* Section Title */}
       <div className="text-center space-y-2">
-        <p className={`subtitle ${textColor}`}>Popular Shelves</p>
+        <p className={`subtitle ${textColor} text-left md:w-[520px] mx-auto`}>
+          Popular Shelves
+        </p>
         <h2 className={`title md:w-[520px] mx-auto ${textColor}`}>
           Best Shelves for Sale
         </h2>
@@ -108,11 +110,7 @@ const ModelViewer = () => {
       {/* 3D Model Viewer */}
       <div className="w-full h-[300px] md:h-[500px] lg:h-[600px]">
         <Canvas className="w-full h-full">
-          <PerspectiveCamera
-            makeDefault
-            position={[0, 0, 4]}
-            ref={cameraRef}
-          />
+          <PerspectiveCamera makeDefault position={[0, 0, 4]} ref={cameraRef} />
           <Lights />
           <OrbitControls
             ref={controlRef}
@@ -174,9 +172,7 @@ const ModelViewer = () => {
 
         <button
           onClick={() =>
-            setBackgroundColor((prev) =>
-              prev === "white" ? "black" : "white"
-            )
+            setBackgroundColor((prev) => (prev === "white" ? "black" : "white"))
           }
           className="btn round"
         >
@@ -203,6 +199,5 @@ const ModelViewer = () => {
     </div>
   );
 };
-
 
 export default ModelViewer;

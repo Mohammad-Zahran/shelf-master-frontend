@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import gsap from "gsap";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
 const FloatingModel = () => {
   const model = useGLTF("/assets/models/hero/scene.gltf"); // Ensure the path is correct
@@ -10,7 +11,7 @@ const FloatingModel = () => {
 
   // Animate hover effect for the model
   useFrame(({ clock }) => {
-    ref.current.position.y = Math.sin(clock.getElapsedTime()) * 0.5 - 2; // Floating effect
+    ref.current.position.y = Math.sin(clock.getElapsedTime()) * 0.5 - 2;
   });
 
   return (
@@ -36,6 +37,7 @@ const Hero = () => {
   const textRef = useRef(null);
   const buttonRef = useRef(null);
   const modelRef = useRef(null);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     // GSAP Animations for Text and Model
@@ -62,11 +64,15 @@ const Hero = () => {
       );
   }, []);
 
+  const handleButtonClick = () => {
+    navigate("/products"); // Replace with the route you want to navigate to
+  };
+
   return (
     <section className="flex flex-col-reverse lg:flex-row items-center justify-between px-6 md:px-12 lg:px-36 h-auto lg:h-[500px] space-y-6 lg:space-y-0">
       {/* Left Section: Text and Button */}
       <div className="flex-1 text-center lg:text-left space-y-4" ref={textRef}>
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal">
           Shelves for Sale Now
         </h1>
         <p className="text-base md:text-lg text-gray-600">
@@ -76,6 +82,7 @@ const Hero = () => {
         <button
           ref={buttonRef}
           className="btn round"
+          onClick={handleButtonClick} 
         >
           Shop Now
         </button>
