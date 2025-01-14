@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../../../supabase/supabase.config.js";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const UpdateModel = () => {
   const [name, setName] = useState("");
@@ -25,7 +26,11 @@ const UpdateModel = () => {
         setCurrentModel3D(model3D);
         setCurrentModel3DName(model3DName); // Set the model file name
       } catch (error) {
-        console.error("Error fetching model details:", error.message);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to fetch model details. Please try again.",
+        });
       }
     };
 
@@ -34,56 +39,65 @@ const UpdateModel = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-  
+
     if (!name && !photo && !model3D) {
-      alert("No changes to update.");
+      Swal.fire({
+        icon: "warning",
+        title: "No Changes",
+        text: "No changes detected. Please update at least one field.",
+      });
       return;
     }
-  
+
     try {
       let photoURL = currentPhoto;
       let modelURL = currentModel3D;
-  
+
       if (photo instanceof File) {
         const photoExt = photo.name.split(".").pop();
         const photoPath = `photos/${Date.now()}.${photoExt}`;
         const { error: photoError } = await supabase.storage
           .from("Images")
           .upload(photoPath, photo);
-  
+
         if (photoError) throw photoError;
-  
+
         photoURL = supabase.storage.from("Images").getPublicUrl(photoPath).data.publicUrl;
       }
-  
+
       if (model3D instanceof File) {
         const modelExt = model3D.name.split(".").pop();
         const modelPath = `models/${Date.now()}.${modelExt}`;
         const { error: modelError } = await supabase.storage
           .from("Models3d")
           .upload(modelPath, model3D);
-  
+
         if (modelError) throw modelError;
-  
+
         modelURL = supabase.storage.from("Models3d").getPublicUrl(modelPath).data.publicUrl;
       }
-  
+
       // Build the update payload dynamically
       const updatePayload = {};
       if (name !== "") updatePayload.name = name;
       if (photoURL !== currentPhoto) updatePayload.photo = photoURL;
       if (modelURL !== currentModel3D) updatePayload.model3D = modelURL;
-  
+
       const response = await axiosSecure.put(`/3d/${id}`, updatePayload);
-  
-      console.log("Model updated successfully:", response.data);
-      alert("3D model updated successfully!");
+
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "3D model updated successfully!",
+      });
     } catch (error) {
-      console.error("Error updating model:", error.message);
-      alert("Error updating model.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while updating the model. Please try again.",
+      });
     }
   };
-  
 
   return (
     <div className="flex justify-center items-center h-screen">
