@@ -13,10 +13,10 @@ const ChatBot = () => {
   const [userMessage, setUserMessage] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [isTtsEnabled, setIsTtsEnabled] = useState(false); // TTS toggle state
+  const [isTtsEnabled, setIsTtsEnabled] = useState(false); 
   const chatContainerRef = useRef(null);
   const recognitionRef = useRef(null);
-  const notificationAudio = useRef(null); // Ref to handle audio playback
+  const notificationAudio = useRef(null); 
 
   // Initialize notification audio
   useEffect(() => {

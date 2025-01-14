@@ -1,12 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { FaComment } from "react-icons/fa6";
+import { AuthContext } from "../../contexts/AuthProvider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import notificationSound from "../../../public/assets/audios/notification.mp3";
 
 const AIPopUp = () => {
   const [isChatOpen, setIsChatOpen] = useState(false); // Toggle for mini chat
   const [userMessage, setUserMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const { user } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
+  const notificationAudio = useRef(null);
 
-  const sendMessage = () => {
+  // Initialize notification sound
+  useEffect(() => {
+    notificationAudio.current = new Audio(notificationSound);
+  }, []);
+
+  const sendMessage = async () => {
+    if (!user) {
+      Swal.fire({
+        icon: "warning",
+        title: "Please Log In",
+        text: "You need to be logged in to use the AI chat.",
+        confirmButtonText: "Log In",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/login";
+        }
+      });
+      return;
+    }
+
     if (!userMessage.trim()) return;
 
     const newMessage = {
@@ -20,18 +46,44 @@ const AIPopUp = () => {
 
     setMessages((prev) => [...prev, newMessage]);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      const response = await axiosPublic.post("ai/ask", {
+        message: userMessage,
+      });
+
       const aiResponse = {
         role: "assistant",
-        content: "This is a response from AI.",
+        content: response.data.message,
         timestamp: new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
         }),
       };
+
       setMessages((prev) => [...prev, aiResponse]);
-    }, 1000);
+
+      // Play notification sound for AI response
+      if (notificationAudio.current) {
+        notificationAudio.current.play();
+      }
+    } catch (error) {
+      console.error("Error communicating with AI API:", error);
+      const errorMessage = {
+        role: "assistant",
+        content: "Sorry, something went wrong. Please try again later.",
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
+
+      setMessages((prev) => [...prev, errorMessage]);
+
+      // Play notification sound for error message
+      if (notificationAudio.current) {
+        notificationAudio.current.play();
+      }
+    }
 
     setUserMessage("");
   };
@@ -93,7 +145,7 @@ const AIPopUp = () => {
               onKeyPress={(e) => e.key === "Enter" && sendMessage()}
             />
             <button
-              className="ml-2 px-4 py-2 bg-steelBlue text-white rounded-lg hover:bg-blue-600 text-sm"
+              className="ml-2 px-4 py-2 bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue text-sm"
               onClick={sendMessage}
             >
               Send
@@ -101,7 +153,7 @@ const AIPopUp = () => {
           </div>
 
           <div className="text-xs text-gray-500 mt-2 text-center">
-            Voice & TTS available on the full AI page.
+            Full voice & TTS features available on the main AI page.
             <button
               className="text-steelBlue font-semibold ml-1 underline"
               onClick={() => (window.location.href = "/ai-page")}
