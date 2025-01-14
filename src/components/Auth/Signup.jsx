@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { gsap } from "gsap";
-import Modal from "./Modal";
-import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { AuthContext } from "../../contexts/AuthProvider";
-import useAxiosPublic from "./../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 const Signup = () => {
   const {
@@ -54,7 +52,7 @@ const Signup = () => {
         const userInfo = {
           name: data.name,
           email: data.email,
-          photoURL: data.photoURL || defaultPhotoURL, // Use default if not provided
+          photoURL: data.photoURL || defaultPhotoURL,
         };
 
         updateuserProfile({
@@ -79,7 +77,7 @@ const Signup = () => {
         const userInfo = {
           name: result.user.displayName,
           email: result.user.email,
-          photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
+          photoURL: result.user.photoURL || defaultPhotoURL,
         };
 
         axiosPublic.post("/users", userInfo).then(() => {
@@ -97,7 +95,7 @@ const Signup = () => {
         ref={leftSectionRef}
         className="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 md:px-10"
       >
-        <div className="w-full max-w-md" method="dialog">
+        <div className="w-full max-w-md">
           <h2 className="text-3xl font-bold text-charcoal mb-4 text-center lg:text-left">
             Get Started Now
           </h2>
@@ -109,27 +107,49 @@ const Signup = () => {
               type="text"
               placeholder="Name"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
-              {...register("name")}
+              {...register("name", { required: "Name is required" })}
             />
+            {errors.name && (
+              <p className="text-red-600 text-sm">{errors.name.message}</p>
+            )}
+
             <input
               type="email"
               placeholder="Email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
-              {...register("email")}
+              {...register("email", { required: "Email is required" })}
             />
+            {errors.email && (
+              <p className="text-red-600 text-sm">{errors.email.message}</p>
+            )}
+
             <input
               type="password"
               placeholder="Password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steelBlue"
-              {...register("password")}
+              {...register("password", { required: "Password is required" })}
             />
+            {errors.password && (
+              <p className="text-red-600 text-sm">{errors.password.message}</p>
+            )}
+
             <div className="flex items-center gap-2">
-              <input type="checkbox" id="terms" />
+              <input
+                type="checkbox"
+                id="terms"
+                {...register("terms", {
+                  required: "You must agree to the terms",
+                })}
+              />
               <label htmlFor="terms" className="text-sm text-black">
                 I agree to the terms & policy
               </label>
             </div>
-            <button type="submit" value="Login" className="btn w-full normal">
+            {errors.terms && (
+              <p className="text-red-600 text-sm">{errors.terms.message}</p>
+            )}
+
+            <button type="submit" value="Sign Up" className="btn w-full normal">
               Sign Up
             </button>
           </form>
@@ -154,20 +174,12 @@ const Signup = () => {
               />
               Sign in with Google
             </button>
-            <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
-              <img
-                src="/assets/images/facebook.png"
-                alt="Facebook"
-                className="w-5 h-5 mr-2"
-              />
-              Sign in with Facebook
-            </button>
           </div>
 
           {/* Centered Footer */}
           <div className="mt-6 text-center">
             <p className="text-sm text-black">
-              Have an Acocunt?{" "}
+              Have an account?{" "}
               <Link to="/login" className="text-blue-500 hover:underline">
                 Login
               </Link>
@@ -181,7 +193,6 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      <Modal />
 
       {/* Right Section: Image */}
       <div
