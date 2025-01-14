@@ -17,11 +17,6 @@ const Testimonials = () => {
         </h1>
       </div>
       <SwipeCards />
-      <div className="text-center mt-8">
-        <button className="btn round" onClick={handleReviewButtonClick}>
-          Review
-        </button>
-      </div>
     </div>
   );
 };
