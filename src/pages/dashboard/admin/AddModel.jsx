@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { supabase } from "../../../supabase/supabase.config.js";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
+import Swal from "sweetalert2";
 
 const AddModel = () => {
   const [name, setName] = useState("");
@@ -12,7 +13,11 @@ const AddModel = () => {
     e.preventDefault();
 
     if (!name || !photo || !model3D) {
-      alert("Please fill out all fields.");
+      Swal.fire({
+        icon: "warning",
+        title: "Missing Fields",
+        text: "Please fill out all fields before uploading.",
+      });
       return;
     }
 
@@ -52,10 +57,25 @@ const AddModel = () => {
       });
 
       console.log("Model saved to MongoDB:", response.data);
-      alert("3D model added successfully!");
+
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "3D model added successfully!",
+      });
+
+      // Clear the form
+      setName("");
+      setPhoto(null);
+      setModel3D(null);
     } catch (error) {
       console.error("Error uploading files:", error.message);
-      alert("Error uploading files.");
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while uploading files. Please try again.",
+      });
     }
   };
 
