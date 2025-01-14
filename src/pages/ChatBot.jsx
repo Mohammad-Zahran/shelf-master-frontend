@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { gsap } from "gsap";
-import { AuthContext } from "../contexts/AuthProvider"; // Import AuthContext
+import { AuthContext } from "../contexts/AuthProvider";
 import useAxiosPublic from "../hooks/useAxiosPublic";
-import notificationSound from "../../public/assets/audios/notification.mp3"; // Import the audio file
+import notificationSound from "../../public/assets/audios/notification.mp3";
 import { FaMicrophone } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const ChatBot = () => {
-  const { user } = useContext(AuthContext); // Access user from AuthContext
+  const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
@@ -54,7 +55,7 @@ const ChatBot = () => {
   };
 
   const speakText = (text) => {
-    if (!isTtsEnabled) return; // Exit if TTS is disabled
+    if (!isTtsEnabled) return;
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
@@ -62,6 +63,20 @@ const ChatBot = () => {
   };
 
   const sendMessage = async () => {
+    if (!user) {
+      Swal.fire({
+        icon: "warning",
+        title: "Please Log In",
+        text: "You need to be logged in to send a message.",
+        confirmButtonText: "Log In",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/login";
+        }
+      });
+      return;
+    }
+
     if (!userMessage.trim()) return;
 
     const newMessage = {
