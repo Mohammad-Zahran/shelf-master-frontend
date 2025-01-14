@@ -12,6 +12,8 @@ import useAuth from "../hooks/useAuth";
 import { FaRegEdit } from "react-icons/fa";
 import { FaClipboardList } from "react-icons/fa";
 import { FaCommentDots } from "react-icons/fa6";
+import { BsFillBadge3dFill } from "react-icons/bs";
+import { TbFile3D } from "react-icons/tb";
 
 const DashboardLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -91,6 +93,25 @@ const DashboardLayout = () => {
         >
           <FaCommentDots className="text-steelBlue" />
           <span>Manage Reviews</span>
+        </Link>
+      </li>
+
+      {/* Add 3dModel */}
+      <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+        <Link to="/dashboard/add-model" className="flex items-center space-x-2">
+          <TbFile3D className="text-steelBlue" />
+          <span>Add 3d Model</span>
+        </Link>
+      </li>
+
+      {/* Add 3dModel */}
+      <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+        <Link
+          to="/dashboard/manage-models"
+          className="flex items-center space-x-2"
+        >
+          <BsFillBadge3dFill className="text-steelBlue" />
+          <span>Manage 3d Model</span>
         </Link>
       </li>
     </>
@@ -204,6 +225,29 @@ const DashboardLayout = () => {
                       >
                         <FaCommentDots className="text-steelBlue" />
                         <span>Manage Reviews</span>
+                      </Link>
+                    </li>
+
+                    {/* Add Models */}
+                    <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+                      <Link
+                        to="/dashboard/add-model"
+                        className="flex items-center space-x-2"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <TbFile3D className="text-steelBlue" />
+                        <span>Add 3d Model</span>
+                      </Link>
+                    </li>
+
+                    {/* Add 3dModel */}
+                    <li className="text-lg text-[#273240] hover:text-[#5A6ACF]">
+                      <Link
+                        to="/dashboard/manage-models"
+                        className="flex items-center space-x-2"
+                      >
+                        <BsFillBadge3dFill className="text-steelBlue" />
+                        <span>Manage 3d Model</span>
                       </Link>
                     </li>
                   </ul>

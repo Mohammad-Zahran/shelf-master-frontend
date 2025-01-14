@@ -23,6 +23,10 @@ import ManageOrders from "../pages/dashboard/admin/ManageOrders";
 import ReviewPage from "../pages/ReviewPage";
 import ContactUs from "../pages/ContactUs";
 import ManageReviews from "../pages/dashboard/admin/ManageReviews";
+import ChatBot from "../pages/ChatBot";
+import AddModel from "../pages/dashboard/admin/AddModel";
+import ManageModel from "../pages/dashboard/admin/ManageModel";
+import UpdateModel from "../pages/dashboard/admin/UpdateModel";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +89,10 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <ContactUs />,
       },
+      {
+        path: "/assistant-ai",
+        element: <ChatBot />,
+      },
     ],
   },
   {
@@ -140,6 +148,18 @@ const router = createBrowserRouter([
       {
         path: "manage-reviews",
         element: <ManageReviews />,
+      },
+      {
+        path: "add-model",
+        element: <AddModel />,
+      },
+      {
+        path: "manage-models",
+        element: <ManageModel />,
+      },
+      {
+        path: "update-model/:id",
+        element: <UpdateModel />,
       },
     ],
   },

@@ -4,19 +4,23 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Cards from "../../components/home/Cards";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+import useAxiosPublic from "../../hooks/useAxiosPublic"; // Import the custom hook
 
 const Popular = () => {
   const [products, setProducts] = useState([]);
   const slider = useRef(null);
+  const axiosPublic = useAxiosPublic(); // Use the hook to get the axios instance
 
   useEffect(() => {
-    fetch("/product.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const specials = data.filter((item) => item.category === "Heavy-Duty");
-        setProducts(specials);
+    axiosPublic
+      .get("/products/popular") // Use axios to get data from the backend
+      .then((response) => {
+        setProducts(response.data); // Set products from the response
+      })
+      .catch((error) => {
+        console.error("Error fetching popular products:", error);
       });
-  }, []);
+  }, [axiosPublic]); // Add axiosPublic as a dependency to useEffect
 
   const settings = {
     dots: true,
@@ -46,15 +50,10 @@ const Popular = () => {
     arrows: false, // Disable default arrows
   };
 
-  // Custom arrow component
   const Arrow = ({ direction, onClick }) => (
     <button
       onClick={onClick}
-      className={`absolute top-1/2 transform -translate-y-1/2 ${
-        direction === "left"
-          ? "left-[-40px] md:left-[-60px] lg:left-[-80px]" // Move left arrow further outside
-          : "right-[-40px] md:right-[-60px] lg:right-[-70px]" // Move right arrow further outside
-      } p-3 rounded-full bg-steelBlue shadow-md hover:bg-white transition-colors z-10`}
+      className={`absolute top-1/2 transform -translate-y-1/2 ${direction === "left" ? "left-[-40px] md:left-[-60px] lg:left-[-80px]" : "right-[-40px] md:right-[-60px] lg:right-[-70px]"} p-3 rounded-full bg-steelBlue shadow-md hover:bg-white transition-colors z-10`}
       aria-label={`${direction === "left" ? "Previous" : "Next"} slide`}
     >
       {direction === "left" ? (
@@ -75,7 +74,6 @@ const Popular = () => {
 
       {/* Slider */}
       <div className="relative">
-        {/* Custom Navigation Buttons */}
         <Arrow direction="left" onClick={() => slider?.current?.slickPrev()} />
         <Arrow direction="right" onClick={() => slider?.current?.slickNext()} />
 
@@ -84,8 +82,8 @@ const Popular = () => {
             <div key={i} className="px-2">
               <Cards
                 item={item}
-                width="100%" // Adjusted for responsiveness
-                height="550px" // Maintain aspect ratio for images
+                width="100%"
+                height="550px"
                 imageRatio="70%"
                 buttonClass="btn normal"
                 onButtonClick={(item) => console.log("Clicked:", item)}

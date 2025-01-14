@@ -19,7 +19,7 @@ const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
 const Cards = ({
   item,
   width = "320px",
-  height = "420px",
+  height = "440px",
   imageRatio = "70%",
   buttonText = "Add to Cart",
   buttonClass = "bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue",
