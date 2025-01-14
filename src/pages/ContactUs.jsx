@@ -124,20 +124,20 @@ const ContactUs = () => {
                 <span className="material-icons">
                   <FaPhoneVolume />
                 </span>
-                <span>+1012 3456 789</span>
+                <span>+961 76 749 822</span>
               </li>
               <li className="flex items-center space-x-4 text-xl">
                 <span className="material-icons">
                   <MdEmail />
                 </span>
-                <span>demo@gmail.com</span>
+                <span>zahranmohammad30@gmail.com</span>
               </li>
               <li className="flex items-center space-x-4 text-xl">
                 <span className="material-icons mb-7">
                   <FaLocationDot />
                 </span>
                 <span>
-                  132 Dartmouth Street Boston, Massachusetts 02156 United States
+                  Beirut Lebanon, Jnah Sea Line in front of the 
                 </span>
               </li>
             </ul>

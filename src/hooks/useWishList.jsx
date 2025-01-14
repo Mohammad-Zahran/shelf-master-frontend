@@ -18,14 +18,14 @@ const useWishList = () => {
       const data = await res.json();
       return data;
     },
-    enabled: !!user?.email, // Ensure query runs only when user is logged in
+    enabled: !!user?.email, 
   });
 
   if (error) {
     console.error("Error fetching wishlist:", error);
   }
 
-  return [wishListData.wishlist || [], refetch]; // Access 'wishlist' key from the response
+  return [wishListData.wishlist || [], refetch]; 
 };
 
 export default useWishList;
