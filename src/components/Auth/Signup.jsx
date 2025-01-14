@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { gsap } from "gsap";
+import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
@@ -60,13 +61,27 @@ const Signup = () => {
           photoURL: userInfo.photoURL,
         }).then(() => {
           axiosPublic.post("/users", userInfo).then(() => {
-            alert("Account creation successfully done!");
-            navigate(from, { replace: true });
+            // SweetAlert for success
+            Swal.fire({
+              title: "Success!",
+              text: "Account creation successfully done!",
+              icon: "success",
+              confirmButtonText: "OK",
+            }).then(() => {
+              navigate(from, { replace: true });
+            });
           });
         });
       })
       .catch((error) => {
         console.error("Error creating user:", error.message);
+        // SweetAlert for error
+        Swal.fire({
+          title: "Error!",
+          text: error.message || "Something went wrong during signup.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
       });
   };
 
@@ -81,11 +96,25 @@ const Signup = () => {
         };
 
         axiosPublic.post("/users", userInfo).then(() => {
-          alert("Account creation successfully done!");
-          navigate("/");
+          Swal.fire({
+            title: "Success!",
+            text: "Account creation successfully done!",
+            icon: "success",
+            confirmButtonText: "OK",
+          }).then(() => {
+            navigate("/");
+          });
         });
       })
-      .catch((error) => console.error("Google sign-up error:", error));
+      .catch((error) => {
+        console.error("Google sign-up error:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Google sign-up failed. Please try again.",
+          icon: "error",
+          confirmButtonText: "Retry",
+        });
+      });
   };
 
   return (
