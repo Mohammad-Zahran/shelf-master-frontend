@@ -201,7 +201,7 @@ const Signup = () => {
                 alt="Google"
                 className="w-5 h-5 mr-2"
               />
-              Sign in with Google
+              Sign up with Google
             </button>
           </div>
 
@@ -209,7 +209,7 @@ const Signup = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-black">
               Have an account?{" "}
-              <Link to="/login" className="text-blue-500 hover:underline">
+              <Link to="/login" className="text-steelBlue hover:underline">
                 Login
               </Link>
             </p>
