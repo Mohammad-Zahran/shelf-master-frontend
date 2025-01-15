@@ -23,6 +23,22 @@ const ChatBot = () => {
     notificationAudio.current = new Audio(notificationSound);
   }, []);
 
+  // GSAP animation for rendering the ChatBot page
+  useEffect(() => {
+    const tl = gsap.timeline();
+    tl.fromTo(
+      ".chat-banner",
+      { y: -50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+    )
+      .fromTo(
+        ".chat-container",
+        { scale: 0.9, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" },
+        "-=0.5"
+      );
+  }, []);
+
   // Initialize SpeechRecognition
   useEffect(() => {
     const SpeechRecognition =
@@ -169,7 +185,7 @@ const ChatBot = () => {
   return (
     <div className="flex flex-col h-full bg-white">
       {/* Banner */}
-      <div className="bg-steelBlue text-white py-4 text-center">
+      <div className="chat-banner bg-steelBlue text-white py-4 text-center">
         <h1 className="text-xl font-bold">Welcome to Your AI Assistant</h1>
         <p className="text-sm">
           Ask anything, and I'll try my best to help you!
@@ -178,7 +194,7 @@ const ChatBot = () => {
 
       {/* Chat Section */}
       <div
-        className="flex flex-col flex-1 w-full max-w-7xl mx-auto"
+        className="chat-container flex flex-col flex-1 w-full max-w-7xl mx-auto"
         style={{ height: "calc(100vh - 120px)" }}
       >
         {/* Chat Display Area */}

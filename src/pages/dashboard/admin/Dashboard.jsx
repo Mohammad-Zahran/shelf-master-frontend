@@ -20,6 +20,8 @@ import {
 import { FaDollarSign, FaUsers, FaUtensils } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { GiTrophiesShelf } from "react-icons/gi";
+import { MdReviews } from "react-icons/md";
+import { BsBadge3dFill } from "react-icons/bs";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -106,40 +108,58 @@ const Dashboard = () => {
       </h2>
 
       <div className="stats stats-vertical w-full lg:stats-horizontal shadow">
-        <div className="stat bg-emerald-200">
-          <div className="stat-figure text-secondary text-3xl">
+        <div className="stat bg-steelBlue">
+          <div className="stat-figure text-white text-3xl">
             <FaDollarSign />
           </div>
-          <div className="stat-title">Revenue</div>
-          <div className="stat-value">{stats.revenue}</div>
-          <div className="stat-desc">Jan 1st - Feb 1st</div>
+          <div className="stat-title text-white">Revenue</div>
+          <div className="stat-value text-white">{stats.revenue}</div>
+          <div className="stat-desc text-white">Jan 1st - Feb 1st</div>
         </div>
 
-        <div className="stat bg-orange-200">
-          <div className="stat-figure text-secondary text-3xl">
+        <div className="stat bg-white">
+          <div className="stat-figure text-steelBlue text-3xl">
             <FaUsers />
           </div>
-          <div className="stat-title">Users</div>
-          <div className="stat-value">{stats.users}</div>
-          <div className="stat-desc">↗︎ 400 (22%)</div>
+          <div className="stat-title text-steelBlue">Users</div>
+          <div className="stat-value text-steelBlue">{stats.users}</div>
+          <div className="stat-desc  text-steelBlue">↗︎ 400 (22%)</div>
         </div>
 
-        <div className="stat bg-indigo-400">
-          <div className="stat-figure text-secondary text-3xl">
+        <div className="stat bg-steelBlue">
+          <div className="stat-figure text-white text-3xl">
             <GiTrophiesShelf />
           </div>
-          <div className="stat-title">Shelf Items</div>
-          <div className="stat-value">{stats.menuItems}</div>
-          <div className="stat-desc">↘︎ 90 (14%)</div>
+          <div className="stat-title text-white">Shelf Items</div>
+          <div className="stat-value text-white">{stats.shelfItems}</div>
+          <div className="stat-desc text-white">↘︎ 90 (14%)</div>
         </div>
 
-        <div className="stat bg-purple-300">
-          <div className="stat-figure text-secondary text-3xl">
+        <div className="stat bg-white">
+          <div className="stat-figure text-steelBlue text-3xl">
             <FaShoppingCart />
           </div>
-          <div className="stat-title">All Orders</div>
-          <div className="stat-value">{stats.orders}</div>
-          <div className="stat-desc">↘︎ 90 (14%)</div>
+          <div className="stat-title text-steelBlue">All Orders</div>
+          <div className="stat-value text-steelBlue">{stats.orders}</div>
+          <div className="stat-desc text-steelBlue">↘︎ 90 (14%)</div>
+        </div>
+
+        <div className="stat bg-steelBlue">
+          <div className="stat-figure text-white text-3xl">
+            <MdReviews />
+          </div>
+          <div className="stat-title text-white">All Testimonials</div>
+          <div className="stat-value text-white">{stats.testimonialCount}</div>
+          <div className="stat-desc text-white">↘︎ 90 (14%)</div>
+        </div>
+
+        <div className="stat bg-white">
+          <div className="stat-figure text-steelBlue text-3xl">
+            <BsBadge3dFill />
+          </div>
+          <div className="stat-title text-steelBlue">All 3D Models</div>
+          <div className="stat-value text-steelBlue">{stats.models}</div>
+          <div className="stat-desc text-steelBlue">↘︎ 90 (14%)</div>
         </div>
       </div>
 
