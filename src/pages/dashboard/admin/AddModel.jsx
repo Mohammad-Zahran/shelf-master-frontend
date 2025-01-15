@@ -95,11 +95,17 @@ const AddModel = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+        <label className="block text-gray-600 font-medium mb-2">
+          Upload an Image:
+        </label>
         <input
           className="w-full mb-4 file:px-4 file:py-2 file:border file:border-gray-300 file:bg-steelBlue file:text-white file:font-medium file:hover:bg-white file:hover:text-steelBlue file:rounded-md file:cursor-pointer"
           type="file"
           onChange={(e) => setPhoto(e.target.files[0])}
         />
+        <label className="block text-gray-600 font-medium mb-2">
+          Upload a 3D Model:
+        </label>
         <input
           className="w-full mb-4 file:px-4 file:py-2 file:border file:border-gray-300 file:bg-steelBlue file:text-white file:font-medium file:hover:bg-white file:hover:text-steelBlue file:rounded-md file:cursor-pointer"
           type="file"
