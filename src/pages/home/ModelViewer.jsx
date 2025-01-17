@@ -91,6 +91,12 @@ const ModelViewer = () => {
   const textColor =
     backgroundColor === "white" ? "text-charcoal" : "text-white";
 
+  const buttonClass = `btn round ${
+    backgroundColor === "white"
+      ? "bg-steelBlue text-white hover:bg-white hover:text-steelBlue hover:border-steelBlue"
+      : "bg-white text-steelBlue hover:bg-steelBlue hover:text-white hover:border-steelBlue"
+  }`;
+
   return (
     <div
       className={`flex flex-col items-center justify-center h-auto px-4 py-8 space-y-6 ${
@@ -98,12 +104,10 @@ const ModelViewer = () => {
       }`}
     >
       <div className="text-center space-y-2">
-        <p
-          className={`subtitle ${textColor} !important text-left md:w-[520px] mx-auto`}
-        >
+        <p className={`subtitle ${textColor} md:w-[520px] mx-auto`}>
           Popular Shelves
         </p>
-        <h2 className={`title ${textColor} !important md:w-[520px] mx-auto`}>
+        <h2 className={`title ${textColor} md:w-[520px] mx-auto`}>
           Best Shelves for Sale
         </h2>
       </div>
@@ -154,10 +158,7 @@ const ModelViewer = () => {
 
       {/* Actions */}
       <div className="flex flex-wrap items-center justify-center gap-4">
-        <button
-          onClick={() => setAutoRotate(!autoRotate)}
-          className="btn round"
-        >
+        <button onClick={() => setAutoRotate(!autoRotate)} className={buttonClass}>
           {autoRotate ? (
             <>
               <FaPause className="text-lg" />
@@ -175,7 +176,7 @@ const ModelViewer = () => {
           onClick={() =>
             setBackgroundColor((prev) => (prev === "white" ? "black" : "white"))
           }
-          className="btn round"
+          className={buttonClass}
         >
           {backgroundColor === "white" ? (
             <>
@@ -190,10 +191,10 @@ const ModelViewer = () => {
           )}
         </button>
 
-        <button onClick={() => handleZoom(true)} className="btn round">
+        <button onClick={() => handleZoom(true)} className={buttonClass}>
           Zoom In <MdOutlineZoomIn className="text-xl" />
         </button>
-        <button onClick={() => handleZoom(false)} className="btn round">
+        <button onClick={() => handleZoom(false)} className={buttonClass}>
           Zoom Out <MdOutlineZoomOut />
         </button>
       </div>

@@ -37,7 +37,7 @@ const Hero = () => {
   const textRef = useRef(null);
   const buttonRef = useRef(null);
   const modelRef = useRef(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     // GSAP Animations for Text and Model
@@ -81,8 +81,8 @@ const Hero = () => {
         </p>
         <button
           ref={buttonRef}
-          className="btn round"
-          onClick={handleButtonClick} 
+          className="btn round bg-steelBlue hover:bg-white text-white hover:text-steelBlue hover:border hover:border-steelBlue"
+          onClick={handleButtonClick}
         >
           Shop Now
         </button>
