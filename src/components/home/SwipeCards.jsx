@@ -9,7 +9,9 @@ import { IoReload } from "react-icons/io5";
 const SwipeCards = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showArrow, setShowArrow] = useState(true); // Control arrow visibility
   const cardsRef = useRef([]);
+  const arrowRef = useRef(null); // Ref for the arrow animation
   const sectionRef = useRef(null);
   const { observe, entries } = useIntersectionObserver({ threshold: 0.3 });
   const axiosPublic = useAxiosPublic();
@@ -89,11 +91,45 @@ const SwipeCards = () => {
     }
   }, [reviews]);
 
+  // Arrow animation
+  useEffect(() => {
+    if (showArrow && arrowRef.current) {
+      gsap.fromTo(
+        arrowRef.current,
+        { x: 0, opacity: 1 },
+        {
+          x: 20,
+          duration: 1,
+          repeat: -1,
+          yoyo: true,
+          ease: "power2.inOut",
+        }
+      );
+
+      // Hide arrow after 7 seconds
+      const timer = setTimeout(() => {
+        setShowArrow(false);
+      }, 7000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showArrow]);
+
   return (
     <div
       ref={sectionRef}
-      className="flex flex-col items-center w-full bg-white px-4 md:px-8"
+      className="flex flex-col items-center w-full bg-white px-4 md:px-8 relative"
     >
+      {showArrow && (
+        <div
+          ref={arrowRef}
+          className="absolute top-[100px] left-[50px] flex items-center space-x-2 text-steelBlue"
+        >
+          <span className="text-lg font-bold">Swipe Right</span>
+          <motion.div className="w-8 h-8 border-t-4 border-r-4 border-steelBlue transform rotate-45"></motion.div>
+        </div>
+      )}
+
       <div className="grid h-[500px] w-full place-items-center">
         {loading ? (
           <p className="text-center text-gray-500">Loading...</p>
