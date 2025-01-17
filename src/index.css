@@ -138,7 +138,7 @@ nav {
 }
 
 .title {
-  @apply text-4xl text-charcoal md:text-5xl md:leading-snug  font-bold my-2;
+  @apply text-4xl md:text-5xl md:leading-snug font-bold my-2;
 }
 
 .subtitle {
@@ -231,8 +231,13 @@ input::-webkit-inner-spin-button {
 }
 
 .admin-hover:hover {
-  background-color: rgba(112, 127, 221, 0.1); /* Background color with 10% opacity */
-  color: #5A6ACF; /* Text color */
+  background-color: rgba(
+    112,
+    127,
+    221,
+    0.1
+  ); /* Background color with 10% opacity */
+  color: #5a6acf; /* Text color */
 }
 
 .gradient-01 {

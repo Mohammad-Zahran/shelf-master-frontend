@@ -97,12 +97,13 @@ const ModelViewer = () => {
         backgroundColor === "white" ? "bg-white" : "bg-black"
       }`}
     >
-      {/* Section Title */}
       <div className="text-center space-y-2">
-        <p className={`subtitle ${textColor} text-left md:w-[520px] mx-auto`}>
+        <p
+          className={`subtitle ${textColor} !important text-left md:w-[520px] mx-auto`}
+        >
           Popular Shelves
         </p>
-        <h2 className={`title md:w-[520px] mx-auto ${textColor}`}>
+        <h2 className={`title ${textColor} !important md:w-[520px] mx-auto`}>
           Best Shelves for Sale
         </h2>
       </div>
