@@ -1,28 +1,32 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import gsap from "gsap";
-import useIntersectionObserver from "../../hooks/useIntersectionObserver"; 
-import useAxiosPublic from "../../hooks/useAxiosPublic"; 
+import useIntersectionObserver from "../../hooks/useIntersectionObserver";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import swipeAudioFile from "../../../public/assets/audios/swipe-236674.mp3";
 
 const SwipeCards = () => {
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(false);
   const cardsRef = useRef([]);
   const sectionRef = useRef(null);
   const { observe, entries } = useIntersectionObserver({ threshold: 0.3 });
   const axiosPublic = useAxiosPublic();
 
   // Fetch reviews from the backend
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axiosPublic.get("/testimonials/all"); 
-        setReviews(response.data);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-      }
-    };
+  const fetchReviews = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosPublic.get("/testimonials/all");
+      setReviews(response.data);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchReviews();
   }, [axiosPublic]);
 
@@ -57,19 +61,31 @@ const SwipeCards = () => {
   return (
     <div
       ref={sectionRef}
-      className="grid h-[500px] w-full place-items-center bg-white px-4 md:px-8"
+      className="flex flex-col items-center w-full bg-white px-4 md:px-8"
     >
-      {reviews.length > 0 ? (
-        reviews.map((review, index) => (
-          <Card
-            key={review._id || index}
-            {...review}
-            ref={(el) => (cardsRef.current[index] = el)}
-          />
-        ))
-      ) : (
-        <p className="text-center text-gray-500">No reviews available.</p>
-      )}
+      <div className="grid h-[500px] w-full place-items-center">
+        {loading ? (
+          <p className="text-center text-gray-500">Loading...</p>
+        ) : reviews.length > 0 ? (
+          reviews.map((review, index) => (
+            <Card
+              key={review._id || index}
+              {...review}
+              ref={(el) => (cardsRef.current[index] = el)}
+            />
+          ))
+        ) : (
+          <p className="text-center text-gray-500 mb-4">No reviews available.</p>
+        )}
+      </div>
+
+      {/* Reload Button */}
+      <button
+        onClick={fetchReviews}
+        className="mt-6 px-4 py-2 bg-steelBlue text-white rounded-md hover:bg-darkBlue"
+      >
+        Reload Reviews
+      </button>
     </div>
   );
 };
