@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { IoSearchOutline } from "react-icons/io5";
+import { FaFilePdf, FaTrashAlt } from "react-icons/fa";
 import { useSearch } from "../../../hooks/useSearch";
 import { usePagination } from "../../../hooks/usePagination";
 import gsap from "gsap";
 import { usePDFExport } from "../../../hooks/usePDFExport";
-import { FaFilePdf } from "react-icons/fa";
 
 const ManageModel = () => {
   const [models, setModels] = useState([]);
@@ -138,7 +138,8 @@ const ManageModel = () => {
               <th>Photo</th>
               <th>Name</th>
               <th>Model3D</th>
-              <th>Actions</th>
+              <th>Update</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -166,20 +167,20 @@ const ManageModel = () => {
                   </a>
                 </td>
                 <td>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleUpdate(model._id)}
-                      className="btn btn-sm bg-blue-500 text-white hover:bg-blue-600"
-                    >
-                      Update
-                    </button>
-                    <button
-                      onClick={() => handleDelete(model._id)}
-                      className="btn btn-sm bg-red-500 text-white hover:bg-red-600"
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => handleUpdate(model._id)}
+                    className="btn btn-sm bg-steelBlue text-white hover:bg-white hover:text-steelBlue"
+                  >
+                    Update
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(model._id)}
+                    className="btn btn-ghost btn-sm text-red-500 hover:text-red-600"
+                  >
+                    <FaTrashAlt />
+                  </button>
                 </td>
               </tr>
             ))}
