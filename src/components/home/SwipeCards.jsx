@@ -4,6 +4,7 @@ import gsap from "gsap";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import swipeAudioFile from "../../../public/assets/audios/swipe-236674.mp3";
+import { IoReload } from "react-icons/io5";
 
 const SwipeCards = () => {
   const [reviews, setReviews] = useState([]);
@@ -75,16 +76,18 @@ const SwipeCards = () => {
             />
           ))
         ) : (
-          <p className="text-center text-gray-500 mb-4">No reviews available.</p>
+          <p className="text-center text-gray-500 mb-4">
+            No reviews available.
+          </p>
         )}
       </div>
 
       {/* Reload Button */}
       <button
         onClick={fetchReviews}
-        className="mt-6 px-4 py-2 bg-steelBlue text-white rounded-md hover:bg-darkBlue"
+        className="btn round bg-steelBlue hover:bg-white text-white hover:text-steelBlue hover:border hover:border-steelBlue"
       >
-        Reload Reviews
+        <IoReload /> Reload Reviews
       </button>
     </div>
   );
