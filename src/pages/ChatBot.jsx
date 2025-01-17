@@ -5,6 +5,9 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 import notificationSound from "../../public/assets/audios/notification.mp3";
 import { FaMicrophone } from "react-icons/fa";
 import gsap from "gsap";
+import { SlSpeech } from "react-icons/sl";
+import { LuSpeech } from "react-icons/lu";
+import { GoPaperAirplane } from "react-icons/go";
 
 const ChatBot = () => {
   const { user } = useContext(AuthContext);
@@ -180,7 +183,7 @@ const ChatBot = () => {
     <div className="flex flex-col h-full bg-white">
       {/* Banner */}
       <div className="chat-banner bg-steelBlue text-white py-4 text-center">
-        <h1 className="text-xl font-bold">Welcome to Your AI Assistant</h1>
+        <h1 className="text-xl font-bold">Welcome to Shelfie!</h1>
         <p className="text-sm">
           Ask anything, and I'll try my best to help you!
         </p>
@@ -260,10 +263,10 @@ const ChatBot = () => {
             onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           />
           <button
-            className="px-4 py-2 bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue text-md"
+            className="px-4 py-3 bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue text-md"
             onClick={sendMessage}
           >
-            Send
+            <GoPaperAirplane />
           </button>
           <button
             className={`px-4 py-3 rounded-lg ${
@@ -276,14 +279,14 @@ const ChatBot = () => {
             <FaMicrophone />
           </button>
           <button
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-3 rounded-lg ${
               isTtsEnabled
                 ? "bg-white text-steelBlue hover:bg-steelBlue hover:text-white"
                 : "bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue"
             } hover:bg-gray-400 text-sm`}
             onClick={() => setIsTtsEnabled((prev) => !prev)}
           >
-            {isTtsEnabled ? "TTS On" : "TTS Off"}
+            {isTtsEnabled ? <SlSpeech /> : <LuSpeech />}
           </button>
         </div>
       </div>
