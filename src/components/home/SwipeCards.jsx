@@ -59,6 +59,36 @@ const SwipeCards = () => {
     });
   }, [entries]);
 
+  // GSAP swipe guide animation
+  useEffect(() => {
+    if (cardsRef.current.length > 0) {
+      const firstCard = cardsRef.current[0];
+      if (firstCard) {
+        const tl = gsap.timeline({ repeat: 2, repeatDelay: 1 });
+        tl.to(firstCard, {
+          x: 50,
+          duration: 0.5,
+          ease: "power2.inOut",
+        })
+          .to(firstCard, {
+            x: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+          })
+          .to(firstCard, {
+            x: 50,
+            duration: 0.5,
+            ease: "power2.inOut",
+          })
+          .to(firstCard, {
+            x: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+          });
+      }
+    }
+  }, [reviews]);
+
   return (
     <div
       ref={sectionRef}
