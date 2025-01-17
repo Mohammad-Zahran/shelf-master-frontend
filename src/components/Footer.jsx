@@ -110,7 +110,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-r-md text-white w-full md:w-auto"
+                className="bg-blue-300 text-white hover:bg-blue-500  px-4 py-2 rounded-r-md w-full md:w-auto"
               >
                 →
               </button>
