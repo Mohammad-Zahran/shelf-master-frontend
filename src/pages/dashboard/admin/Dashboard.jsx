@@ -228,8 +228,10 @@ const Dashboard = () => {
 
       {/* Most Ordered Products */}
       <div className="mt-16">
-        <h3 className="text-lg font-semibold mb-4">Most Ordered Products</h3>
-        <div style={{ width: "100%", height: 300 }}>
+        <h3 className="text-lg font-semibold ml-20 mb-4">
+          Most Ordered <span className="text-steelBlue">Products</span>
+        </h3>
+        <div style={{ width: "100%", height: 400 }} className="mr-4">
           <ResponsiveContainer>
             <BarChart
               data={mostOrderedProducts}
@@ -247,8 +249,11 @@ const Dashboard = () => {
               <XAxis
                 dataKey="name"
                 tick={{ fontSize: 12, fill: "#666" }}
-                interval={0} // Ensures all labels are shown
+                interval={0}
+                angle={-45}
+                textAnchor="end"
               />
+
               <YAxis tick={{ fontSize: 12, fill: "#666" }} />
 
               {/* Custom Tooltip */}

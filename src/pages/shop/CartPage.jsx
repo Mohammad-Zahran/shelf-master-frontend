@@ -9,7 +9,6 @@ import { FaMoneyBillTransfer } from "react-icons/fa6";
 const CartPage = () => {
   const [cart, refetch] = useCart();
   const { user } = useContext(AuthContext);
-  const [cartItems, setCartItems] = useState([]);
   const [exchangeRate, setExchangeRate] = useState(null); // State to store exchange rate
   const [currency, setCurrency] = useState("USD"); // Default currency
 
@@ -29,18 +28,38 @@ const CartPage = () => {
     }
   };
 
-  // Convert USD to LBP
-  const convertCurrency = (price) => {
-    if (currency === "LBP" && exchangeRate) {
-      return (price * exchangeRate).toFixed(2);
-    }
-    return price.toFixed(2);
-  };
-
   // Calculate the total price for each item in the cart
   const calculateTotalPrice = (item) => {
-    return convertCurrency(item.price) * item.quantity;
+    const price = parseFloat(item.price) || 0; // Ensure price is a valid number
+    const quantity = parseInt(item.quantity, 10) || 0; // Ensure quantity is a valid number
+    const total = price * quantity;
+
+    if (currency === "LBP" && exchangeRate) {
+      // For LBP, format with commas and no decimals
+      return (total * exchangeRate).toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      });
+    }
+
+    // For USD, keep decimals
+    return total.toFixed(2);
   };
+
+  // Calculate the cart subtotal
+  const cartSubtotal = cart.reduce((total, item) => {
+    const itemTotal = parseFloat(calculateTotalPrice(item).replace(/,/g, "")) || 0; // Ensure numeric calculation
+    return total + itemTotal;
+  }, 0);
+
+  // Format the subtotal for display
+  const formattedCartSubtotal =
+    currency === "LBP"
+      ? cartSubtotal.toLocaleString("en-US", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        })
+      : cartSubtotal.toFixed(2);
 
   const handleIncrease = async (item) => {
     try {
@@ -101,15 +120,7 @@ const CartPage = () => {
     }
   };
 
-  // Calculate the cart subtotal
-  const cartSubtotal = cart.reduce((total, item) => {
-    return total + calculateTotalPrice(item);
-  }, 0);
-
-  // Calculate the order total
-  const orderTotal = cartSubtotal;
-
-  // handledelete btn
+  // handle delete button
   const handleDelete = (item) => {
     Swal.fire({
       title: "Are you sure?",
@@ -210,7 +221,7 @@ const CartPage = () => {
                 <div className="absolute sm:static top-0 right-0 sm:right-auto">
                   <p className="text-lg font-medium">
                     {currency === "USD" ? "$" : "LBP"}
-                    {convertCurrency(item.price * item.quantity)}
+                    {calculateTotalPrice(item)}
                   </p>
                 </div>
               </div>
@@ -226,7 +237,7 @@ const CartPage = () => {
               <span>Subtotal:</span>
               <span className="font-medium">
                 {currency === "USD" ? "$" : "LBP"}
-                {cartSubtotal.toFixed(2)}
+                {formattedCartSubtotal}
               </span>
             </p>
             <p className="flex justify-between">
@@ -239,7 +250,7 @@ const CartPage = () => {
               <span>Total:</span>
               <span>
                 {currency === "USD" ? "$" : "LBP"}
-                {cartSubtotal.toFixed(2)}
+                {formattedCartSubtotal}
               </span>
             </p>
           </div>
@@ -260,4 +271,5 @@ const CartPage = () => {
     </div>
   );
 };
+
 export default CartPage;

@@ -5,12 +5,14 @@
     "previewImagePath": "/assets/images/image.png"
   },
   {
-    "name": "Shel2f",
-    "modelPath": "/assets/models/floor-planner/store_shelves.glb"
+    "name": "Industrial Shelf",
+    "modelPath": "/assets/models/floor-planner/store_shelves.glb",
+    "previewImagePath": "/assets/images/industrial.png"
   },
   {
     "name": "RoomShelf",
-    "modelPath": "/assets/models/floor-planner/shelves.glb"
+    "modelPath": "/assets/models/floor-planner/shelves.glb",
+    "previewImagePath": "/assets/images/wood_shelf.png"
   },
   {
     "name": "Super Market",
