@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import notificationSound from "../../../public/assets/audios/notification.mp3";
 
 const AIPopUp = () => {
-  const [isChatOpen, setIsChatOpen] = useState(false); // Toggle for mini chat
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const { user } = useContext(AuthContext);
