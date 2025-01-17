@@ -12,6 +12,7 @@ const ManageModel = () => {
   const [models, setModels] = useState([]);
   const axiosSecure = useAxiosSecure();
   const containerRef = useRef(null);
+  const tableRef = useRef(null);
 
   // PDF Export Hook
   const { exportToPDF } = usePDFExport(
@@ -48,13 +49,23 @@ const ManageModel = () => {
 
   // GSAP Animation
   useEffect(() => {
+    const rows = tableRef.current.querySelectorAll("tbody tr");
     gsap.set(containerRef.current, { opacity: 0, scale: 0.9 });
+    gsap.set(rows, { opacity: 0, x: -50 });
 
     setTimeout(() => {
       gsap.to(containerRef.current, {
         opacity: 1,
         scale: 1,
         duration: 1,
+        ease: "power3.out",
+      });
+
+      gsap.to(rows, {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        stagger: 0.1,
         ease: "power3.out",
       });
     }, 100);
@@ -93,70 +104,87 @@ const ManageModel = () => {
   };
 
   return (
-    <div ref={containerRef} className="w-full md:w-[1250px] px-4 mx-auto">
-      <h2 className="text-2xl font-semibold my-4">
-        Manage <span className="text-steelBlue">3D Models</span>
-      </h2>
-
-      {/* Control Panel */}
+    <div ref={containerRef}>
       <div className="flex flex-col md:flex-row items-center justify-between mx-4 my-4 gap-4">
-        <button
-          onClick={exportToPDF}
-          className="btn normal btn-outline flex items-center gap-2"
-        >
-          <FaFilePdf className="text-red-500" />
-          Download PDF
-        </button>
-        <div className="relative w-full md:w-auto">
-          <input
-            type="text"
-            placeholder="Search by Name"
-            className="input input-bordered pr-10 w-full md:w-auto"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <IoSearchOutline className="absolute top-2/4 right-3 -translate-y-2/4 text-gray-500 text-xl" />
+        <h2 className="text-2xl font-semibold my-4">
+          Manage <span className="text-steelBlue">3D Models</span>
+        </h2>
+        <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
+          <button
+            onClick={exportToPDF}
+            className="btn normal btn-outline flex items-center gap-2 w-full md:w-auto"
+          >
+            <FaFilePdf className="text-red-500" />
+            Download PDF
+          </button>
+          <div className="relative w-full md:w-auto">
+            <input
+              type="text"
+              placeholder="Search"
+              className="input input-bordered pr-10 w-full md:w-auto"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <IoSearchOutline className="absolute top-2/4 right-3 -translate-y-2/4 text-gray-500 text-xl" />
+          </div>
         </div>
       </div>
 
-      {/* Models Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {paginatedData.map((model) => (
-          <div
-            key={model._id}
-            className="flex flex-col bg-[#FAFAFA] rounded-lg p-4"
-          >
-            {/* Header */}
-            <div className="flex items-start">
-              <img
-                src={model.photo}
-                alt={model.name}
-                className="h-20 w-20 object-cover rounded"
-              />
-              <div className="ml-4 flex-1">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-lg font-semibold">{model.name}</h3>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="mt-4 flex justify-between">
-              <button
-                onClick={() => handleUpdate(model._id)}
-                className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600"
-              >
-                Update
-              </button>
-              <button
-                onClick={() => handleDelete(model._id)}
-                className="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="table table-zebra" ref={tableRef}>
+          <thead>
+            <tr>
+              <th>Photo</th>
+              <th>Name</th>
+              <th>Model3D</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedData.map((model) => (
+              <tr key={model._id}>
+                <td>
+                  <div className="avatar">
+                    <div className="mask mask-squircle h-12 w-12">
+                      <img
+                        alt={model.name}
+                        src={model.photo || "https://via.placeholder.com/150"}
+                      />
+                    </div>
+                  </div>
+                </td>
+                <td>{model.name}</td>
+                <td>
+                  <a
+                    href={model.model3D}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    View Model
+                  </a>
+                </td>
+                <td>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleUpdate(model._id)}
+                      className="btn btn-sm bg-blue-500 text-white hover:bg-blue-600"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleDelete(model._id)}
+                      className="btn btn-sm bg-red-500 text-white hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Pagination */}
