@@ -36,6 +36,7 @@ const Modal = () => {
           text: "You have successfully logged in.",
           icon: "success",
           confirmButtonText: "OK",
+          confirmButtonColor: "#4682B4",
         });
 
         document.getElementById("my_modal_5").close();
@@ -51,6 +52,7 @@ const Modal = () => {
           text: "Please provide a correct email and password.",
           icon: "error",
           confirmButtonText: "Retry",
+          confirmButtonColor: "#4682B4",
         });
       });
   };

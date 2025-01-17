@@ -67,6 +67,7 @@ const Signup = () => {
               text: "Account creation successfully done!",
               icon: "success",
               confirmButtonText: "OK",
+              confirmButtonColor: "#4682B4",
             }).then(() => {
               navigate(from, { replace: true });
             });
@@ -81,6 +82,7 @@ const Signup = () => {
           text: error.message || "Something went wrong during signup.",
           icon: "error",
           confirmButtonText: "Try Again",
+          confirmButtonColor: "#4682B4",
         });
       });
   };
