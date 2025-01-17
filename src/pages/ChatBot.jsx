@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { gsap } from "gsap";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import Swal from "sweetalert2";
 import { AuthContext } from "../contexts/AuthProvider";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import notificationSound from "../../public/assets/audios/notification.mp3";
 import { FaMicrophone } from "react-icons/fa";
-import Swal from "sweetalert2";
+import gsap from "gsap";
 
 const ChatBot = () => {
   const { user } = useContext(AuthContext);
@@ -13,30 +13,14 @@ const ChatBot = () => {
   const [userMessage, setUserMessage] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [isTtsEnabled, setIsTtsEnabled] = useState(false); 
+  const [isTtsEnabled, setIsTtsEnabled] = useState(false); // TTS toggle
   const chatContainerRef = useRef(null);
   const recognitionRef = useRef(null);
-  const notificationAudio = useRef(null); 
+  const notificationAudio = useRef(null);
 
   // Initialize notification audio
   useEffect(() => {
     notificationAudio.current = new Audio(notificationSound);
-  }, []);
-
-  // GSAP animation for rendering the ChatBot page
-  useEffect(() => {
-    const tl = gsap.timeline();
-    tl.fromTo(
-      ".chat-banner",
-      { y: -50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
-    )
-      .fromTo(
-        ".chat-container",
-        { scale: 0.9, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" },
-        "-=0.5"
-      );
   }, []);
 
   // Initialize SpeechRecognition
@@ -157,7 +141,7 @@ const ChatBot = () => {
     setUserMessage("");
   };
 
-  // GSAP animation for the last message
+  // Auto-scroll and GSAP animation for the last message
   useEffect(() => {
     if (chatContainerRef.current?.lastElementChild) {
       const lastMessage = chatContainerRef.current.lastElementChild;
@@ -181,6 +165,16 @@ const ChatBot = () => {
       }
     }
   }, [messages]);
+
+  const renderMessageContent = (message) => {
+    // Regex to replace markdown-style links `[this link](URL)` with proper HTML anchor tags
+    const sanitizedContent = message.content.replace(
+      /\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">$1</a>'
+    );
+
+    return <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />;
+  };
 
   return (
     <div className="flex flex-col h-full bg-white">
@@ -225,8 +219,8 @@ const ChatBot = () => {
                       : "bg-gray-300 text-gray-800"
                   }`}
                 >
-                  {message.content}
-                  <div className="text-xs text-white mt-1 text-right">
+                  {renderMessageContent(message)}
+                  <div className="text-xs text-gray-500 mt-1 text-right">
                     {message.timestamp}
                   </div>
                 </div>
@@ -275,7 +269,7 @@ const ChatBot = () => {
             className={`px-4 py-3 rounded-lg ${
               isListening
                 ? "bg-red-500 text-white"
-                : "bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue "
+                : "bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue"
             } hover:bg-gray-400 text-sm`}
             onClick={startListening}
           >
