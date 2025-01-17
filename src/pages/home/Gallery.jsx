@@ -8,13 +8,9 @@ import { UI } from "../../components/home/UI";
 const Gallery = () => {
   return (
     <div className="mt-5">
-      <div className="text-center space-y-2">
-        <p className="text-steelBlue text-lg">
-          See our latest models of the shelves
-        </p>
-        <h1 className="text-4xl md:text-5xl font-bold text-charcoal">
-          Shelves Gallery
-        </h1>
+      <div className="section-container my-20 relative px-4 md:px-8 lg:px-16">
+        <p className="subtitle">Customer Favorites</p>
+        <h2 className="title md:w-[520px] text-charcoal">Popular Shelves</h2>
       </div>
       {/* Book section */}
       <div className="relative w-full h-[70vh] flex items-center justify-center mb-8">
@@ -35,8 +31,7 @@ const Gallery = () => {
       >
         <UI />
       </section>
-      </div>
-    
+    </div>
   );
 };
 

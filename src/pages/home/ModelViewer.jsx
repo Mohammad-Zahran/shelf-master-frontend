@@ -15,6 +15,7 @@ import { FaPlay, FaPause, FaMoon } from "react-icons/fa";
 import { IoMdSunny } from "react-icons/io";
 import { MdOutlineZoomIn } from "react-icons/md";
 import { MdOutlineZoomOut } from "react-icons/md";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Model = ({ path, scale, position, rotation }) => {
   const { scene } = useGLTF(path);
@@ -99,15 +100,13 @@ const ModelViewer = () => {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center h-auto px-4 py-8 space-y-6 ${
+      className={`section-container my-20 relative px-4 md:px-8 lg:px-16 ${
         backgroundColor === "white" ? "bg-white" : "bg-black"
       }`}
     >
-      <div className="text-center space-y-2">
-        <p className={`subtitle ${textColor} md:w-[520px] mx-auto`}>
-          Popular Shelves
-        </p>
-        <h2 className={`title ${textColor} md:w-[520px] mx-auto`}>
+      <div className="text-left mr mb-8">
+        <p className="subtitle">Popular Shelves</p>
+        <h2 className={`title ${textColor} md:w-[520px]`}>
           Best Shelves for Sale
         </h2>
       </div>
@@ -126,8 +125,8 @@ const ModelViewer = () => {
           />
           <Suspense
             fallback={
-              <Html>
-                <div>Loading</div>
+              <Html center>
+                <LoadingSpinner />
               </Html>
             }
           >
@@ -158,7 +157,10 @@ const ModelViewer = () => {
 
       {/* Actions */}
       <div className="flex flex-wrap items-center justify-center gap-4">
-        <button onClick={() => setAutoRotate(!autoRotate)} className={buttonClass}>
+        <button
+          onClick={() => setAutoRotate(!autoRotate)}
+          className={buttonClass}
+        >
           {autoRotate ? (
             <>
               <FaPause className="text-lg" />

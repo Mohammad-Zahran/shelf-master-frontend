@@ -156,7 +156,7 @@ const Navbar = () => {
                 onClick={() =>
                   document.getElementById("my_modal_5").showModal()
                 }
-                className="btn round"
+                className="btn round bg-steelBlue hover:bg-white text-white hover:text-steelBlue hover:border hover:border-steelBlue"
               >
                 <FaRegUser /> Login
               </button>

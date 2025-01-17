@@ -69,7 +69,7 @@ const Popular = () => {
       {/* Section Title */}
       <div className="text-left mr mb-8">
         <p className="subtitle">Customer Favorites</p>
-        <h2 className="title md:w-[520px]">Popular Shelves</h2>
+        <h2 className="title md:w-[520px] text-charcoal">Popular Shelves</h2>
       </div>
 
       {/* Slider */}
