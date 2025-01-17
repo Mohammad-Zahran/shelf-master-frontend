@@ -9,7 +9,7 @@ import { IoReload } from "react-icons/io5";
 const SwipeCards = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showArrow, setShowArrow] = useState(true); // Control arrow visibility
+  const [showArrow, setShowArrow] = useState(false); // Arrow visibility controlled by intersection
   const cardsRef = useRef([]);
   const arrowRef = useRef(null); // Ref for the arrow animation
   const sectionRef = useRef(null);
@@ -33,87 +33,74 @@ const SwipeCards = () => {
     fetchReviews();
   }, [axiosPublic]);
 
-  // Observe cards when the section comes into view
+  // Observe the section and trigger animations when it comes into view
   useEffect(() => {
     if (sectionRef.current) {
-      const cardElements = Array.from(cardsRef.current);
-      observe(cardElements);
+      observe([sectionRef.current]); // Observe the section container
+    }
+    if (arrowRef.current) {
+      observe([arrowRef.current]); // Observe the arrow element
     }
   }, [observe]);
 
-  // Trigger animations when cards are in view
+  // Trigger animations when the section is in view
   useEffect(() => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
+    entries.forEach((entry) => {
+      if (entry.target === sectionRef.current && entry.isIntersecting) {
+        setShowArrow(true);
+
+        // Trigger card animations
+        if (cardsRef.current.length > 0) {
+          const firstCard = cardsRef.current[0];
+          if (firstCard) {
+            const tl = gsap.timeline({ repeat: 2, repeatDelay: 1 });
+            tl.to(firstCard, {
+              x: 50,
+              duration: 0.5,
+              ease: "power2.inOut",
+            })
+              .to(firstCard, {
+                x: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+              })
+              .to(firstCard, {
+                x: 50,
+                duration: 0.5,
+                ease: "power2.inOut",
+              })
+              .to(firstCard, {
+                x: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+              });
+          }
+        }
+
+        // Hide arrow after 7 seconds
+        const timer = setTimeout(() => {
+          setShowArrow(false);
+        }, 7000);
+
+        return () => clearTimeout(timer);
+      }
+
+      if (entry.target === arrowRef.current && entry.isIntersecting) {
+        // Trigger arrow animation
         gsap.fromTo(
-          entry.target,
-          { y: 30, opacity: 0, scale: 0.9 },
+          arrowRef.current,
+          { x: 0, opacity: 1 },
           {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.6,
-            delay: index * 0.15,
-            ease: "power2.out",
+            x: 20,
+            duration: 1,
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut",
           }
         );
       }
     });
   }, [entries]);
-
-  // GSAP swipe guide animation
-  useEffect(() => {
-    if (cardsRef.current.length > 0) {
-      const firstCard = cardsRef.current[0];
-      if (firstCard) {
-        const tl = gsap.timeline({ repeat: 2, repeatDelay: 1 });
-        tl.to(firstCard, {
-          x: 50,
-          duration: 0.5,
-          ease: "power2.inOut",
-        })
-          .to(firstCard, {
-            x: 0,
-            duration: 0.5,
-            ease: "power2.inOut",
-          })
-          .to(firstCard, {
-            x: 50,
-            duration: 0.5,
-            ease: "power2.inOut",
-          })
-          .to(firstCard, {
-            x: 0,
-            duration: 0.5,
-            ease: "power2.inOut",
-          });
-      }
-    }
-  }, [reviews]);
-
-  // Arrow animation
-  useEffect(() => {
-    if (showArrow && arrowRef.current) {
-      gsap.fromTo(
-        arrowRef.current,
-        { x: 0, opacity: 1 },
-        {
-          x: 20,
-          duration: 1,
-          repeat: -1,
-          yoyo: true,
-          ease: "power2.inOut",
-        }
-      );
-
-      // Hide arrow after 7 seconds
-      const timer = setTimeout(() => {
-        setShowArrow(false);
-      }, 7000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [showArrow]);
 
   return (
     <div
