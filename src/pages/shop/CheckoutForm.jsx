@@ -52,8 +52,7 @@ const CheckoutForm = ({ price, cart }) => {
       console.log("[error]", error);
       setCardError(error.message);
     } else {
-      setCardError("success!");
-      //console.log("[PaymentMethod]", paymentMethod);
+      setCardError("Payment processing...");
     }
 
     const userEmail = user?.email || "unknown@example.com";
@@ -74,11 +73,11 @@ const CheckoutForm = ({ price, cart }) => {
     console.log(paymentIntent);
     if (paymentIntent.status === "succeeded") {
       console.log(paymentIntent.id);
-      setCardError(`Your transactionId is ${paymentIntent.id}`);
+      // Do not show the transactionId anymore
+      setCardError("Payment successful!");
       // payment info
       const paymentInfo = {
         email: user.email,
-        transitionId: paymentIntent.id,
         price,
         quantity: cart.length,
         status: "Order pending",
@@ -101,7 +100,7 @@ const CheckoutForm = ({ price, cart }) => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate('/order')
+        navigate("/order");
       });
     }
   };
@@ -143,7 +142,7 @@ const CheckoutForm = ({ price, cart }) => {
             Pay
           </button>
         </form>
-        {cardError ? <p className="text-red-500">{cardError}</p> : ""}
+        {cardError && <p className="text-red-500">{cardError}</p>}
         {/* paypal */}
         <div className="mt-5 text-center">
           <hr />
