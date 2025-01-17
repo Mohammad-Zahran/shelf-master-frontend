@@ -156,7 +156,7 @@ const AIPopUp = () => {
             Full voice & TTS features available on the main AI page.
             <button
               className="text-steelBlue font-semibold ml-1 underline"
-              onClick={() => (window.location.href = "/ai-page")}
+              onClick={() => (window.location.href = "/assistant-ai")}
             >
               Go to AI Page
             </button>
