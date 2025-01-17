@@ -20,7 +20,7 @@ const ManageItems = () => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#4682B4",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
@@ -44,7 +44,7 @@ const ManageItems = () => {
       showCancelButton: true,
       confirmButtonText: "Update",
       cancelButtonText: "Delete",
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#4682B4",
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
