@@ -124,7 +124,7 @@ const Cards = ({
         text: "You need to log in to wishlist items.",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#4682B4",
+        confirmButtonColor: "#4682B4", // SteelBlue color
         cancelButtonColor: "#d33",
         confirmButtonText: "Login Now",
       }).then((result) => {
@@ -168,7 +168,12 @@ const Cards = ({
 
         const message = isLiked ? "Removed from wishlist" : "Added to wishlist";
         refetch1();
-        Swal.fire("Success", message, "success");
+        Swal.fire({
+          title: "Success",
+          text: message,
+          icon: "success",
+          confirmButtonColor: "#4682B4", // SteelBlue color
+        });
       } else {
         console.error("Failed to toggle wishlist:", data.message);
       }
