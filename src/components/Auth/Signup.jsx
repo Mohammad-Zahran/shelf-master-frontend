@@ -103,6 +103,7 @@ const Signup = () => {
             text: "Account creation successfully done!",
             icon: "success",
             confirmButtonText: "OK",
+            confirmButtonColor: "#4682B4",
           }).then(() => {
             navigate("/");
           });

@@ -27,6 +27,7 @@ const ControlsPanel = () => {
       text: "Your design has been saved locally!",
       icon: "success",
       confirmButtonText: "OK",
+      confirmButtonColor: "#4682B4",
     });
   };
 
@@ -42,6 +43,7 @@ const ControlsPanel = () => {
         text: "Your design has been loaded!",
         icon: "success",
         confirmButtonText: "OK",
+        confirmButtonColor: "#4682B4",
       });
     } else {
       Swal.fire({
@@ -49,6 +51,7 @@ const ControlsPanel = () => {
         text: "No saved design found!",
         icon: "error",
         confirmButtonText: "Retry",
+        confirmButtonColor: "#4682B4",
       });
     }
   };
@@ -71,6 +74,7 @@ const ControlsPanel = () => {
           text: "Your 3D model has been exported!",
           icon: "success",
           confirmButtonText: "OK",
+          confirmButtonColor: "#4682B4",
         });
       },
       { binary: false }
@@ -91,6 +95,7 @@ const ControlsPanel = () => {
         text: "Your design has been exported as an image!",
         icon: "success",
         confirmButtonText: "OK",
+        confirmButtonColor: "#4682B4",
       });
     } else {
       Swal.fire({
@@ -98,6 +103,7 @@ const ControlsPanel = () => {
         text: "Failed to export the image. Canvas not found!",
         icon: "error",
         confirmButtonText: "Retry",
+        confirmButtonColor: "#4682B4",
       });
     }
   };
