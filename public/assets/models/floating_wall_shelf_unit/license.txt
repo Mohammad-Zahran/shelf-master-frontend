@@ -1,0 +1,11 @@
+Model Information:
+* title:	Floating Wall Shelf Unit
+* source:	https://sketchfab.com/3d-models/floating-wall-shelf-unit-31b378d7ebd0494bb90109d7dd38b3f8
+* author:	Render at Night (https://sketchfab.com/Render_at_Night)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Floating Wall Shelf Unit" (https://sketchfab.com/3d-models/floating-wall-shelf-unit-31b378d7ebd0494bb90109d7dd38b3f8) by Render at Night (https://sketchfab.com/Render_at_Night) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
