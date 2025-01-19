@@ -57,6 +57,7 @@ const Login = () => {
         text: "You have successfully logged in.",
         icon: "success",
         confirmButtonText: "OK",
+        confirmButtonColor: "#4682B4",
       });
 
       navigate(from, { replace: true });
@@ -74,6 +75,7 @@ const Login = () => {
         text: "Please check your credentials and try again.",
         icon: "error",
         confirmButtonText: "Retry",
+        confirmButtonColor: "#4682B4",
       });
     }
   };
@@ -95,6 +97,7 @@ const Login = () => {
             text: "You have successfully logged in with Google.",
             icon: "success",
             confirmButtonText: "OK",
+            confirmButtonColor: "#4682B4",
           });
 
           navigate(from, { replace: true });
@@ -109,6 +112,7 @@ const Login = () => {
           text: "An error occurred while signing in with Google.",
           icon: "error",
           confirmButtonText: "Retry",
+          confirmButtonColor: "#4682B4",
         });
       });
   };
@@ -186,7 +190,7 @@ const Login = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-black">
               Don’t have an account?{" "}
-              <Link to="/signup" className="text-blue-500 hover:underline">
+              <Link to="/signup" className="text-steelBlue hover:underline">
                 Sign Up
               </Link>
             </p>

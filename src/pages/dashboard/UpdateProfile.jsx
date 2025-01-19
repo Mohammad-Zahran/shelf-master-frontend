@@ -1,29 +1,50 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../contexts/AuthProvider";
+import axios from "axios";
 
 const UpdateProfile = () => {
-  const { updateuserProfile } = useContext(AuthContext);
+  const { updateuserProfile, user } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const name = data.name;
     const photoURL = data.photoURL;
 
-    console.log("Form Data Submitted:", data); // Debug: Log form data
+    try {
+      await updateuserProfile({ name, photoURL });
+      console.log("Firebase profile successfully updated!");
 
-    updateuserProfile({ name, photoURL })
-      .then(() => {
-        console.log("Profile successfully updated!"); // Success log
-      })
-      .catch((error) => {
-        console.error("Error updating profile:", error); // Error log
+      const response = await axios.put("http://localhost:8080/users", {
+        email: user.email,
+        name,
+        photoURL,
       });
+      console.log("MongoDB profile successfully updated:", response.data);
+
+      Swal.fire({
+        title: "Success!",
+        text: "Your profile has been updated successfully!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    } catch (error) {
+      console.error("Error updating profile:", error);
+
+      Swal.fire({
+        title: "Error!",
+        text:
+          error.response?.data?.message ||
+          "Failed to update profile. Try again!",
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
+    }
   };
 
   return (
@@ -36,26 +57,28 @@ const UpdateProfile = () => {
               <span className="label-text">Name</span>
             </label>
             <input
-              {...register("name")}
+              {...register("name", { required: "Name is required" })}
               type="text"
-              placeholder="your name"
+              placeholder="Your name"
               className="input input-bordered"
-              required
             />
+            {errors.name && (
+              <p className="text-red-600 text-sm">{errors.name.message}</p>
+            )}
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Upload Photo</span>
+              <span className="label-text">Photo URL</span>
             </label>
             <input
-              {...register("photoURL")}
+              {...register("photoURL", { required: "Photo URL is required" })}
               type="text"
-              placeholder="photoURL"
+              placeholder="Photo URL"
               className="input input-bordered"
-              required
             />
-            {/* Upload Image will be done later */}
-            {/* <input type="file" className="file-input w-full max-w-xs" /> */}
+            {errors.photoURL && (
+              <p className="text-red-600 text-sm">{errors.photoURL.message}</p>
+            )}
           </div>
           <div className="form-control mt-6">
             <button className="btn normal">Update</button>

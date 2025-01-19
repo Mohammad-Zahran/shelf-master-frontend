@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { gsap } from "gsap";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import Swal from "sweetalert2";
 import { AuthContext } from "../contexts/AuthProvider";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import notificationSound from "../../public/assets/audios/notification.mp3";
 import { FaMicrophone } from "react-icons/fa";
-import Swal from "sweetalert2";
+import gsap from "gsap";
+import { SlSpeech } from "react-icons/sl";
+import { LuSpeech } from "react-icons/lu";
+import { GoPaperAirplane } from "react-icons/go";
 
 const ChatBot = () => {
   const { user } = useContext(AuthContext);
@@ -13,10 +16,10 @@ const ChatBot = () => {
   const [userMessage, setUserMessage] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [isTtsEnabled, setIsTtsEnabled] = useState(false); 
+  const [isTtsEnabled, setIsTtsEnabled] = useState(false); // TTS toggle
   const chatContainerRef = useRef(null);
   const recognitionRef = useRef(null);
-  const notificationAudio = useRef(null); 
+  const notificationAudio = useRef(null);
 
   // Initialize notification audio
   useEffect(() => {
@@ -141,7 +144,7 @@ const ChatBot = () => {
     setUserMessage("");
   };
 
-  // GSAP animation for the last message
+  // Auto-scroll and GSAP animation for the last message
   useEffect(() => {
     if (chatContainerRef.current?.lastElementChild) {
       const lastMessage = chatContainerRef.current.lastElementChild;
@@ -166,11 +169,21 @@ const ChatBot = () => {
     }
   }, [messages]);
 
+  const renderMessageContent = (message) => {
+    // Regex to replace markdown-style links `[this link](URL)` with proper HTML anchor tags
+    const sanitizedContent = message.content.replace(
+      /\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">$1</a>'
+    );
+
+    return <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />;
+  };
+
   return (
     <div className="flex flex-col h-full bg-white">
       {/* Banner */}
-      <div className="bg-steelBlue text-white py-4 text-center">
-        <h1 className="text-xl font-bold">Welcome to Your AI Assistant</h1>
+      <div className="chat-banner bg-steelBlue text-white py-4 text-center">
+        <h1 className="text-xl font-bold">Welcome to Shelfie!</h1>
         <p className="text-sm">
           Ask anything, and I'll try my best to help you!
         </p>
@@ -178,7 +191,7 @@ const ChatBot = () => {
 
       {/* Chat Section */}
       <div
-        className="flex flex-col flex-1 w-full max-w-7xl mx-auto"
+        className="chat-container flex flex-col flex-1 w-full max-w-7xl mx-auto"
         style={{ height: "calc(100vh - 120px)" }}
       >
         {/* Chat Display Area */}
@@ -209,8 +222,8 @@ const ChatBot = () => {
                       : "bg-gray-300 text-gray-800"
                   }`}
                 >
-                  {message.content}
-                  <div className="text-xs text-white mt-1 text-right">
+                  {renderMessageContent(message)}
+                  <div className="text-xs text-gray-500 mt-1 text-right">
                     {message.timestamp}
                   </div>
                 </div>
@@ -250,30 +263,30 @@ const ChatBot = () => {
             onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           />
           <button
-            className="px-4 py-2 bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue text-md"
+            className="px-4 py-3 bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue text-md"
             onClick={sendMessage}
           >
-            Send
+            <GoPaperAirplane />
           </button>
           <button
             className={`px-4 py-3 rounded-lg ${
               isListening
                 ? "bg-red-500 text-white"
-                : "bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue "
+                : "bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue"
             } hover:bg-gray-400 text-sm`}
             onClick={startListening}
           >
             <FaMicrophone />
           </button>
           <button
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-3 rounded-lg ${
               isTtsEnabled
                 ? "bg-white text-steelBlue hover:bg-steelBlue hover:text-white"
                 : "bg-steelBlue text-white rounded-lg hover:bg-white hover:text-steelBlue"
             } hover:bg-gray-400 text-sm`}
             onClick={() => setIsTtsEnabled((prev) => !prev)}
           >
-            {isTtsEnabled ? "TTS On" : "TTS Off"}
+            {isTtsEnabled ? <SlSpeech /> : <LuSpeech />}
           </button>
         </div>
       </div>

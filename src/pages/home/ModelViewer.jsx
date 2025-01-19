@@ -15,6 +15,7 @@ import { FaPlay, FaPause, FaMoon } from "react-icons/fa";
 import { IoMdSunny } from "react-icons/io";
 import { MdOutlineZoomIn } from "react-icons/md";
 import { MdOutlineZoomOut } from "react-icons/md";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Model = ({ path, scale, position, rotation }) => {
   const { scene } = useGLTF(path);
@@ -91,16 +92,21 @@ const ModelViewer = () => {
   const textColor =
     backgroundColor === "white" ? "text-charcoal" : "text-white";
 
+  const buttonClass = `btn round ${
+    backgroundColor === "white"
+      ? "bg-steelBlue text-white hover:bg-white hover:text-steelBlue hover:border-steelBlue"
+      : "bg-white text-steelBlue hover:bg-steelBlue hover:text-white hover:border-steelBlue"
+  }`;
+
   return (
     <div
-      className={`flex flex-col items-center justify-center h-auto px-4 py-8 space-y-6 ${
+      className={`section-container my-20 relative px-4 md:px-8 lg:px-16 ${
         backgroundColor === "white" ? "bg-white" : "bg-black"
       }`}
     >
-      {/* Section Title */}
-      <div className="text-center space-y-2">
-        <p className={`subtitle ${textColor}`}>Popular Shelves</p>
-        <h2 className={`title md:w-[520px] mx-auto ${textColor}`}>
+      <div className="text-left mr mb-8">
+        <p className="subtitle">Popular Shelves</p>
+        <h2 className={`title ${textColor} md:w-[520px]`}>
           Best Shelves for Sale
         </h2>
       </div>
@@ -108,11 +114,7 @@ const ModelViewer = () => {
       {/* 3D Model Viewer */}
       <div className="w-full h-[300px] md:h-[500px] lg:h-[600px]">
         <Canvas className="w-full h-full">
-          <PerspectiveCamera
-            makeDefault
-            position={[0, 0, 4]}
-            ref={cameraRef}
-          />
+          <PerspectiveCamera makeDefault position={[0, 0, 4]} ref={cameraRef} />
           <Lights />
           <OrbitControls
             ref={controlRef}
@@ -123,8 +125,8 @@ const ModelViewer = () => {
           />
           <Suspense
             fallback={
-              <Html>
-                <div>Loading</div>
+              <Html center>
+                <LoadingSpinner />
               </Html>
             }
           >
@@ -157,7 +159,7 @@ const ModelViewer = () => {
       <div className="flex flex-wrap items-center justify-center gap-4">
         <button
           onClick={() => setAutoRotate(!autoRotate)}
-          className="btn round"
+          className={buttonClass}
         >
           {autoRotate ? (
             <>
@@ -174,11 +176,9 @@ const ModelViewer = () => {
 
         <button
           onClick={() =>
-            setBackgroundColor((prev) =>
-              prev === "white" ? "black" : "white"
-            )
+            setBackgroundColor((prev) => (prev === "white" ? "black" : "white"))
           }
-          className="btn round"
+          className={buttonClass}
         >
           {backgroundColor === "white" ? (
             <>
@@ -193,16 +193,15 @@ const ModelViewer = () => {
           )}
         </button>
 
-        <button onClick={() => handleZoom(true)} className="btn round">
+        <button onClick={() => handleZoom(true)} className={buttonClass}>
           Zoom In <MdOutlineZoomIn className="text-xl" />
         </button>
-        <button onClick={() => handleZoom(false)} className="btn round">
+        <button onClick={() => handleZoom(false)} className={buttonClass}>
           Zoom Out <MdOutlineZoomOut />
         </button>
       </div>
     </div>
   );
 };
-
 
 export default ModelViewer;

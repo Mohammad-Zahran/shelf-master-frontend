@@ -50,7 +50,7 @@ const Cards = ({
           text: "This item is already in your cart.",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
+          confirmButtonColor: "#4682B4",
           cancelButtonColor: "#d33",
           confirmButtonText: "Go to Cart",
         }).then((result) => {
@@ -105,7 +105,7 @@ const Cards = ({
         text: "You need to log in to add items to the cart.",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#4682B4",
         cancelButtonColor: "#d33",
         confirmButtonText: "Login Now",
       }).then((result) => {
@@ -119,11 +119,19 @@ const Cards = ({
   // Handle toggling the wishlist
   const handleToggleWishlist = async () => {
     if (!user || !user.email) {
-      Swal.fire(
-        "Login Required",
-        "Please login to manage your wishlist",
-        "warning"
-      );
+      Swal.fire({
+        title: "Authentication Required",
+        text: "You need to log in to wishlist items.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#4682B4", // SteelBlue color
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login Now",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login", { state: { from: location } });
+        }
+      });
       return;
     }
 
@@ -160,7 +168,12 @@ const Cards = ({
 
         const message = isLiked ? "Removed from wishlist" : "Added to wishlist";
         refetch1();
-        Swal.fire("Success", message, "success");
+        Swal.fire({
+          title: "Success",
+          text: message,
+          icon: "success",
+          confirmButtonColor: "#4682B4", // SteelBlue color
+        });
       } else {
         console.error("Failed to toggle wishlist:", data.message);
       }

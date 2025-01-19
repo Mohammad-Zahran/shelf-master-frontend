@@ -2,26 +2,18 @@ import React from "react";
 import SwipeCards from "../../components/home/SwipeCards";
 
 const Testimonials = () => {
-  const handleReviewButtonClick = () => {
-    alert("Review button clicked!");
-  };
-
   return (
     <div>
-      <div className="text-center py-8">
-        <p className="text-steelBlue text-lg">
-          See what our customers have to say about us
-        </p>
-        <h1 className="text-4xl md:text-5xl font-bold text-charcoal">
-          Testimonials
-        </h1>
+      <div className="section-container my-20 relative px-4 md:px-8 lg:px-16">
+        <div className="text-left mr mb-8">
+          <p className="subtitle">
+            See what our customers have to say about us
+          </p>
+          <h2 className="title md:w-[520px] text-charcoal">Testimonials</h2>
+        </div>
       </div>
+
       <SwipeCards />
-      <div className="text-center mt-8">
-        <button className="btn round" onClick={handleReviewButtonClick}>
-          Review
-        </button>
-      </div>
     </div>
   );
 };

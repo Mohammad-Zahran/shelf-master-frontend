@@ -46,6 +46,7 @@ export const UI = () => {
   return (
     <section className="bg-white flex flex-col items-center justify-between py-4">
       <div className="z-10 flex flex-col items-center">
+        {/* Logo */}
         <a className="pointer-events-auto mb-4">
           <img
             className="w-16 sm:w-20"
@@ -53,23 +54,27 @@ export const UI = () => {
             alt="Logo"
           />
         </a>
+
+        {/* Pagination */}
         <div className="w-full flex justify-center">
           <div className="flex flex-wrap items-center gap-2 sm:gap-4 max-w-full px-2 sm:px-4">
-            {[...pages].map((_, index) => (
+            {Array.from({ length: pages.length + 1 }, (_, index) => (
               <button
                 key={index}
-                className="btn round text-sm sm:text-base"
                 onClick={() => setPage(index)}
+                className={`btn round text-sm sm:text-base ${
+                  page === index
+                    ? "bg-white text-steelBlue border border-steelBlue hover:text-white hover:bg-steelBlue"
+                    : "bg-steelBlue text-white hover:bg-white hover:text-steelBlue hover:border hover:border-steelBlue"
+                }`}
               >
-                {index === 0 ? "Cover" : `${index}`}
+                {index === 0
+                  ? "Cover"
+                  : index === pages.length
+                  ? "Back"
+                  : index}
               </button>
             ))}
-            <button
-              className="btn round text-sm sm:text-base"
-              onClick={() => setPage(pages.length)}
-            >
-              Back Cover
-            </button>
           </div>
         </div>
       </div>

@@ -60,7 +60,7 @@ const FAQ = () => {
         <p className="subtitle">
           See the most asked questions in the community
         </p>
-        <h2 className="title md:w-[800px]">Frequentley Asked Questions</h2>
+        <h2 className="title md:w-[800px] text-charcoal">Frequentley Asked Questions</h2>
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-2 gap-6 relative">

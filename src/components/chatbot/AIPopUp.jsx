@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import notificationSound from "../../../public/assets/audios/notification.mp3";
 
 const AIPopUp = () => {
-  const [isChatOpen, setIsChatOpen] = useState(false); // Toggle for mini chat
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const { user } = useContext(AuthContext);
@@ -156,7 +156,7 @@ const AIPopUp = () => {
             Full voice & TTS features available on the main AI page.
             <button
               className="text-steelBlue font-semibold ml-1 underline"
-              onClick={() => (window.location.href = "/ai-page")}
+              onClick={() => (window.location.href = "/assistant-ai")}
             >
               Go to AI Page
             </button>

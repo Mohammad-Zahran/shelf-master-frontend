@@ -125,8 +125,9 @@ canvas {
 }
 
 .round {
-  @apply px-5 py-2 rounded-3xl bg-steelBlue my-5 text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue;
+  @apply px-5 py-2 rounded-3xl my-5; /* Keep padding and rounding */
 }
+
 
 .normal {
   @apply bg-steelBlue text-white hover:bg-transparent border border-transparent hover:border hover:text-steelBlue hover:border-steelBlue;
@@ -138,7 +139,7 @@ nav {
 }
 
 .title {
-  @apply text-4xl text-charcoal md:text-5xl md:leading-snug  font-bold my-2;
+  @apply text-4xl md:text-5xl md:leading-snug font-bold my-2;
 }
 
 .subtitle {
@@ -231,8 +232,13 @@ input::-webkit-inner-spin-button {
 }
 
 .admin-hover:hover {
-  background-color: rgba(112, 127, 221, 0.1); /* Background color with 10% opacity */
-  color: #5A6ACF; /* Text color */
+  background-color: rgba(
+    112,
+    127,
+    221,
+    0.1
+  ); /* Background color with 10% opacity */
+  color: #5a6acf; /* Text color */
 }
 
 .gradient-01 {
@@ -252,4 +258,18 @@ input::-webkit-inner-spin-button {
   right: 0px;
   background: #5a6acf;
   filter: blur(190px);
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: steelBlue;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
 }

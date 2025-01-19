@@ -1,53 +1,101 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import gsap from "gsap";
-import useIntersectionObserver from "../../hooks/useIntersectionObserver"; 
-import useAxiosPublic from "../../hooks/useAxiosPublic"; 
+import useIntersectionObserver from "../../hooks/useIntersectionObserver";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import swipeAudioFile from "../../../public/assets/audios/swipe-236674.mp3";
+import { IoReload } from "react-icons/io5";
 
 const SwipeCards = () => {
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showArrow, setShowArrow] = useState(false); // Arrow visibility controlled by intersection
   const cardsRef = useRef([]);
+  const arrowRef = useRef(null); // Ref for the arrow animation
   const sectionRef = useRef(null);
   const { observe, entries } = useIntersectionObserver({ threshold: 0.3 });
   const axiosPublic = useAxiosPublic();
 
   // Fetch reviews from the backend
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axiosPublic.get("/testimonials/all"); 
-        setReviews(response.data);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-      }
-    };
+  const fetchReviews = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosPublic.get("/testimonials/all");
+      setReviews(response.data);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchReviews();
   }, [axiosPublic]);
 
-  // Observe cards when the section comes into view
+  // Observe the section and trigger animations when it comes into view
   useEffect(() => {
     if (sectionRef.current) {
-      const cardElements = Array.from(cardsRef.current);
-      observe(cardElements);
+      observe([sectionRef.current]); // Observe the section container
+    }
+    if (arrowRef.current) {
+      observe([arrowRef.current]); // Observe the arrow element
     }
   }, [observe]);
 
-  // Trigger animations when cards are in view
+  // Trigger animations when the section is in view
   useEffect(() => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
+    entries.forEach((entry) => {
+      if (entry.target === sectionRef.current && entry.isIntersecting) {
+        setShowArrow(true);
+
+        // Trigger card animations
+        if (cardsRef.current.length > 0) {
+          const firstCard = cardsRef.current[0];
+          if (firstCard) {
+            const tl = gsap.timeline({ repeat: 2, repeatDelay: 1 });
+            tl.to(firstCard, {
+              x: 50,
+              duration: 0.5,
+              ease: "power2.inOut",
+            })
+              .to(firstCard, {
+                x: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+              })
+              .to(firstCard, {
+                x: 50,
+                duration: 0.5,
+                ease: "power2.inOut",
+              })
+              .to(firstCard, {
+                x: 0,
+                duration: 0.5,
+                ease: "power2.inOut",
+              });
+          }
+        }
+
+        // Hide arrow after 7 seconds
+        const timer = setTimeout(() => {
+          setShowArrow(false);
+        }, 7000);
+
+        return () => clearTimeout(timer);
+      }
+
+      if (entry.target === arrowRef.current && entry.isIntersecting) {
+        // Trigger arrow animation
         gsap.fromTo(
-          entry.target,
-          { y: 30, opacity: 0, scale: 0.9 },
+          arrowRef.current,
+          { x: 0, opacity: 1 },
           {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.6,
-            delay: index * 0.15,
-            ease: "power2.out",
+            x: 20,
+            duration: 1,
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut",
           }
         );
       }
@@ -57,19 +105,43 @@ const SwipeCards = () => {
   return (
     <div
       ref={sectionRef}
-      className="grid h-[500px] w-full place-items-center bg-white px-4 md:px-8"
+      className="flex flex-col items-center w-full bg-white px-4 md:px-8 relative"
     >
-      {reviews.length > 0 ? (
-        reviews.map((review, index) => (
-          <Card
-            key={review._id || index}
-            {...review}
-            ref={(el) => (cardsRef.current[index] = el)}
-          />
-        ))
-      ) : (
-        <p className="text-center text-gray-500">No reviews available.</p>
+      {showArrow && (
+        <div
+          ref={arrowRef}
+          className="absolute top-[100px] left-[50px] flex items-center space-x-2 text-steelBlue"
+        >
+          <span className="text-lg font-bold">Swipe Right</span>
+          <motion.div className="w-8 h-8 border-t-4 border-r-4 border-steelBlue transform rotate-45"></motion.div>
+        </div>
       )}
+
+      <div className="grid h-[500px] w-full place-items-center">
+        {loading ? (
+          <p className="text-center text-gray-500">Loading...</p>
+        ) : reviews.length > 0 ? (
+          reviews.map((review, index) => (
+            <Card
+              key={review._id || index}
+              {...review}
+              ref={(el) => (cardsRef.current[index] = el)}
+            />
+          ))
+        ) : (
+          <p className="text-center text-gray-500 mb-4">
+            No reviews available.
+          </p>
+        )}
+      </div>
+
+      {/* Reload Button */}
+      <button
+        onClick={fetchReviews}
+        className="btn round bg-steelBlue hover:bg-white text-white hover:text-steelBlue hover:border hover:border-steelBlue"
+      >
+        <IoReload /> Reload Reviews
+      </button>
     </div>
   );
 };

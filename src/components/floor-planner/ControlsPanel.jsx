@@ -2,6 +2,7 @@ import React from "react";
 import { GLTFExporter } from "three/examples/jsm/exporters/GLTFExporter";
 import { useFloorPlanner } from "../../contexts/FloorPlannerContext";
 import { FaSave, FaDownload, FaCamera, FaFileExport } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const ControlsPanel = () => {
   const {
@@ -21,7 +22,13 @@ const ControlsPanel = () => {
       furnitureItems,
     };
     localStorage.setItem("floorPlanDesign", JSON.stringify(design));
-    alert("Design saved locally!");
+    Swal.fire({
+      title: "Success!",
+      text: "Your design has been saved locally!",
+      icon: "success",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#4682B4",
+    });
   };
 
   // Load design locally
@@ -31,9 +38,21 @@ const ControlsPanel = () => {
       setWidth(savedDesign.width);
       setHeight(savedDesign.height);
       setFurnitureItems(savedDesign.furnitureItems);
-      alert("Design loaded!");
+      Swal.fire({
+        title: "Success!",
+        text: "Your design has been loaded!",
+        icon: "success",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#4682B4",
+      });
     } else {
-      alert("No saved design found!");
+      Swal.fire({
+        title: "Error!",
+        text: "No saved design found!",
+        icon: "error",
+        confirmButtonText: "Retry",
+        confirmButtonColor: "#4682B4",
+      });
     }
   };
 
@@ -50,6 +69,13 @@ const ControlsPanel = () => {
         link.href = URL.createObjectURL(blob);
         link.download = "floor-plan.gltf";
         link.click();
+        Swal.fire({
+          title: "Success!",
+          text: "Your 3D model has been exported!",
+          icon: "success",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#4682B4",
+        });
       },
       { binary: false }
     );
@@ -58,11 +84,28 @@ const ControlsPanel = () => {
   // Export as Image
   const handleExportImage = () => {
     const canvas = document.querySelector("canvas");
-    const image = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = "floor-plan.png";
-    link.click();
+    if (canvas) {
+      const image = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = image;
+      link.download = "floor-plan.png";
+      link.click();
+      Swal.fire({
+        title: "Success!",
+        text: "Your design has been exported as an image!",
+        icon: "success",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#4682B4",
+      });
+    } else {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to export the image. Canvas not found!",
+        icon: "error",
+        confirmButtonText: "Retry",
+        confirmButtonColor: "#4682B4",
+      });
+    }
   };
 
   return (

@@ -68,6 +68,8 @@ const ProductDetails = () => {
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Login Now",
+        confirmButtonColor: "#4682B4",
+        cancelButtonColor: "#d33",
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/login");
@@ -91,11 +93,11 @@ const ProductDetails = () => {
       if (response.status === 201 || response.status === 200) {
         refetch();
         Swal.fire({
+          position: "center",
           icon: "success",
-          title: "Added to Cart",
-          text: "The item has been added to your cart.",
-          timer: 1500,
+          title: "Item added to cart successfully!",
           showConfirmButton: false,
+          timer: 1500,
         });
       } else {
         throw new Error("Failed to add item to cart.");
@@ -106,6 +108,7 @@ const ProductDetails = () => {
         icon: "error",
         title: "Error",
         text: error.response?.data?.message || "Could not add item to cart.",
+        confirmButtonColor: "#4682B4",
       });
     }
   };
@@ -118,6 +121,8 @@ const ProductDetails = () => {
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Login Now",
+        confirmButtonColor: "#4682B4",
+        cancelButtonColor: "#d33",
       });
       return;
     }
@@ -132,7 +137,13 @@ const ProductDetails = () => {
         setIsLiked(!isLiked);
         refetch1();
         const message = isLiked ? "Removed from wishlist" : "Added to wishlist";
-        Swal.fire("Success", message, "success");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       console.error("Error toggling wishlist:", error);
@@ -170,19 +181,25 @@ const ProductDetails = () => {
       const response = await axiosPublic.post(`/reviews/${id}`, reviewData);
 
       if (response.status === 201) {
-        Swal.fire("Success", "Review submitted successfully!", "success");
+        Swal.fire({
+          title: "Success",
+          text: "Review submitted successfully!",
+          icon: "success",
+          confirmButtonColor: "#4682B4",
+        });
         setReviews((prevReviews) => [...prevReviews, response.data.review]);
-        setEmail(user?.email || ""); // Reset email to logged-in user or empty
+        setEmail(user?.email || "");
         setRating(0);
         setComment("");
       }
     } catch (error) {
       console.error("Error submitting review:", error);
-      Swal.fire(
-        "Error",
-        error.response?.data?.message || "Could not submit review.",
-        "error"
-      );
+      Swal.fire({
+        title: "Error",
+        text: error.response?.data?.message || "Could not submit review.",
+        icon: "error",
+        confirmButtonColor: "#4682B4",
+      });
     } finally {
       setIsSubmitting(false);
     }

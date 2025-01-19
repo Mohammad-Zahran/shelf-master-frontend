@@ -36,6 +36,7 @@ const Modal = () => {
           text: "You have successfully logged in.",
           icon: "success",
           confirmButtonText: "OK",
+          confirmButtonColor: "#4682B4",
         });
 
         document.getElementById("my_modal_5").close();
@@ -51,6 +52,7 @@ const Modal = () => {
           text: "Please provide a correct email and password.",
           icon: "error",
           confirmButtonText: "Retry",
+          confirmButtonColor: "#4682B4",
         });
       });
   };
@@ -134,7 +136,10 @@ const Modal = () => {
 
             <button
               htmlFor="my_modal_5"
-              onClick={() => document.getElementById("my_modal_5").close()}
+              onClick={(event) => {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById("my_modal_5").close();
+              }}
               className="btn normal btn-sm btn-circle btn-ghost absolute right-2 top-2"
             >
               ✕
