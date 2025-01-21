@@ -6,8 +6,10 @@ import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Modal = () => {
+  const axiosPublic = useAxiosPublic(); // Use centralized Axios instance
   const {
     register,
     handleSubmit,
@@ -66,7 +68,7 @@ const Modal = () => {
           email: result?.user?.email,
           photoURL: result.user.photoURL || defaultPhotoURL, // Use Google photo or default
         };
-        axios.post("http://localhost:8000/users", userInfo).then((response) => {
+        axiosPublic.post("/users", userInfo).then((response) => {
           alert("Login successful!");
           navigate(from, { replace: true });
         });
