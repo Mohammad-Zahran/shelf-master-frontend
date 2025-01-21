@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import axios from "axios";
 import {
   FaFacebookF,
   FaGithub,
@@ -9,8 +8,11 @@ import {
 } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const ContactUs = () => {
+  const axiosPublic = useAxiosPublic(); // Use the custom Axios instance
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -67,10 +69,7 @@ const ContactUs = () => {
 
     try {
       setStatus("Sending...");
-      const response = await axios.post(
-        "http://localhost:8080/send-email",
-        emailData
-      );
+      const response = await axiosPublic.post("/send-email", emailData); // Use axiosPublic
       if (response.data.success) {
         setStatus("Email sent successfully!");
         setFormData({
@@ -102,7 +101,7 @@ const ContactUs = () => {
         ref={titleRef}
         className="text-xl font-semibold text-center mb-12 text-[#717171]"
       >
-        Any question or remarks? Just write us a message!{" "}
+        Any question or remarks? Just write us a message!
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Contact Information Section */}
@@ -118,31 +117,27 @@ const ContactUs = () => {
           <p className="mb-6 text-xl text-[#C9C9C9]">
             Say something to start a live chat!
           </p>
-          <div className="mt-36">
-            <ul className="space-y-12">
-              <li className="flex items-center space-x-4 text-xl">
-                <span className="material-icons">
-                  <FaPhoneVolume />
-                </span>
-                <span>+961 76 749 822</span>
-              </li>
-              <li className="flex items-center space-x-4 text-xl">
-                <span className="material-icons">
-                  <MdEmail />
-                </span>
-                <span>zahranmohammad30@gmail.com</span>
-              </li>
-              <li className="flex items-center space-x-4 text-xl">
-                <span className="material-icons mb-7">
-                  <FaLocationDot />
-                </span>
-                <span>
-                  Beirut Lebanon, Jnah Sea Line in front of the 
-                </span>
-              </li>
-            </ul>
-          </div>
-          <div className="mt-36 flex justify-start gap-5 ">
+          <ul className="space-y-12">
+            <li className="flex items-center space-x-4 text-xl">
+              <span className="material-icons">
+                <FaPhoneVolume />
+              </span>
+              <span>+961 76 749 822</span>
+            </li>
+            <li className="flex items-center space-x-4 text-xl">
+              <span className="material-icons">
+                <MdEmail />
+              </span>
+              <span>zahranmohammad30@gmail.com</span>
+            </li>
+            <li className="flex items-center space-x-4 text-xl">
+              <span className="material-icons">
+                <FaLocationDot />
+              </span>
+              <span>Beirut Lebanon, Jnah Sea Line in front of the</span>
+            </li>
+          </ul>
+          <div className="mt-12 flex justify-start gap-5">
             <button className="rounded-full border border-white p-2">
               <FaGoogle />
             </button>

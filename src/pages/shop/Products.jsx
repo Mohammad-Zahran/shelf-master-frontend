@@ -4,8 +4,10 @@ import { LuSettings2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 import AIPopUp from "./../../components/chatbot/AIPopUp";
 import popupSoundFile from "../../../public/assets/audios/popup.mp3"; // Import the popup sound file
+import useAxiosPublic from "../../hooks/useAxiosPublic"; // Import custom Axios hook
 
 const Products = () => {
+  const axiosPublic = useAxiosPublic(); // Use centralized Axios instance
   const [product, setProduct] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,16 +40,15 @@ const Products = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/products");
-        const data = await response.json();
-        setProduct(data);
-        setFilteredItems(data);
+        const response = await axiosPublic.get("/products"); // Use Axios instance
+        setProduct(response.data);
+        setFilteredItems(response.data);
       } catch (error) {
-        console.log("Error fetching the products", error);
+        console.error("Error fetching the products", error);
       }
     };
     fetchData();
-  }, []);
+  }, [axiosPublic]);
 
   const filterItems = (category) => {
     const filtered =

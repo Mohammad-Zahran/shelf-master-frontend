@@ -9,7 +9,7 @@ const useWishList = () => {
     queryKey: ["wishlists", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:8080/wishlists?email=${user?.email}`
+        `http://localhost:8000/wishlists?email=${user?.email}`
       );
       if (!res.ok) {
         console.error("Failed to fetch wishlist data");

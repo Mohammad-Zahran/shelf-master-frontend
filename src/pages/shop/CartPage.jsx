@@ -5,10 +5,12 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Link } from "react-router-dom";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const CartPage = () => {
   const [cart, refetch] = useCart();
   const { user } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic(); // Use centralized Axios instance
   const [exchangeRate, setExchangeRate] = useState(null); // State to store exchange rate
   const [currency, setCurrency] = useState("USD"); // Default currency
 
@@ -18,41 +20,35 @@ const CartPage = () => {
 
   const fetchExchangeRate = async () => {
     try {
-      const response = await fetch(
+      const response = await axiosPublic.get(
         "https://api.exchangerate-api.com/v4/latest/USD"
       );
-      const data = await response.json();
-      setExchangeRate(data.rates.LBP); // Assuming LBP is the desired currency
+      setExchangeRate(response.data.rates.LBP); // Assuming LBP is the desired currency
     } catch (error) {
       console.error("Error fetching exchange rate:", error);
     }
   };
 
-  // Calculate the total price for each item in the cart
   const calculateTotalPrice = (item) => {
     const price = parseFloat(item.price) || 0; // Ensure price is a valid number
     const quantity = parseInt(item.quantity, 10) || 0; // Ensure quantity is a valid number
     const total = price * quantity;
 
     if (currency === "LBP" && exchangeRate) {
-      // For LBP, format with commas and no decimals
       return (total * exchangeRate).toLocaleString("en-US", {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
       });
     }
 
-    // For USD, keep decimals
     return total.toFixed(2);
   };
 
-  // Calculate the cart subtotal
   const cartSubtotal = cart.reduce((total, item) => {
-    const itemTotal = parseFloat(calculateTotalPrice(item).replace(/,/g, "")) || 0; // Ensure numeric calculation
+    const itemTotal = parseFloat(calculateTotalPrice(item).replace(/,/g, "")) || 0;
     return total + itemTotal;
   }, 0);
 
-  // Format the subtotal for display
   const formattedCartSubtotal =
     currency === "LBP"
       ? cartSubtotal.toLocaleString("en-US", {
@@ -63,21 +59,17 @@ const CartPage = () => {
 
   const handleIncrease = async (item) => {
     try {
-      const response = await fetch(`http://localhost:8080/carts/${item._id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: item.productId,
-          name: item.name,
-          images: item.images,
-          material: item.material,
-          price: item.price,
-          quantity: item.quantity + 1,
-          email: user.email,
-        }),
+      const response = await axiosPublic.put(`/carts/${item._id}`, {
+        productId: item.productId,
+        name: item.name,
+        images: item.images,
+        material: item.material,
+        price: item.price,
+        quantity: item.quantity + 1,
+        email: user.email,
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         refetch();
       } else {
         console.error("Failed to update quantity");
@@ -90,24 +82,17 @@ const CartPage = () => {
   const handleDecrease = async (item) => {
     if (item.quantity > 1) {
       try {
-        const response = await fetch(
-          `http://localhost:8080/carts/${item._id}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              productId: item.productId,
-              name: item.name,
-              images: item.images,
-              material: item.material,
-              price: item.price,
-              quantity: item.quantity - 1, // Decrease quantity
-              email: user.email,
-            }),
-          }
-        );
+        const response = await axiosPublic.put(`/carts/${item._id}`, {
+          productId: item.productId,
+          name: item.name,
+          images: item.images,
+          material: item.material,
+          price: item.price,
+          quantity: item.quantity - 1,
+          email: user.email,
+        });
 
-        if (response.ok) {
+        if (response.status === 200) {
           refetch();
         } else {
           console.error("Failed to decrease quantity");
@@ -120,7 +105,6 @@ const CartPage = () => {
     }
   };
 
-  // handle delete button
   const handleDelete = (item) => {
     Swal.fire({
       title: "Are you sure?",
@@ -130,35 +114,31 @@ const CartPage = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:8080/carts/${item._id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.success) {
-              refetch();
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success",
-              });
-            } else {
-              Swal.fire({
-                title: "Error!",
-                text: data.message || "Failed to delete the item.",
-                icon: "error",
-              });
-            }
-          })
-          .catch((err) => {
+        try {
+          const response = await axiosPublic.delete(`/carts/${item._id}`);
+          if (response.data.success) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your item has been deleted.",
+              icon: "success",
+            });
+          } else {
             Swal.fire({
               title: "Error!",
-              text: "Something went wrong.",
+              text: response.data.message || "Failed to delete the item.",
               icon: "error",
             });
+          }
+        } catch (error) {
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong.",
+            icon: "error",
           });
+        }
       }
     });
   };
@@ -186,13 +166,10 @@ const CartPage = () => {
                   className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded"
                 />
                 <div className="flex-1">
-                  {/* Name and Material */}
                   <h3 className="font-medium text-lg">{item.name}</h3>
                   <p className="text-gray-500 mb-4">
                     Material: {item.material}
                   </p>
-
-                  {/* Incrementer and Remove */}
                   <div className="flex items-center">
                     <div className="flex items-center border rounded p-1">
                       <button
@@ -217,7 +194,6 @@ const CartPage = () => {
                     </button>
                   </div>
                 </div>
-                {/* Price */}
                 <div className="absolute sm:static top-0 right-0 sm:right-auto">
                   <p className="text-lg font-medium">
                     {currency === "USD" ? "$" : "LBP"}

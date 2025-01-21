@@ -71,7 +71,7 @@ const Cards = ({
         email: user.email,
       };
 
-      fetch("http://localhost:8080/carts", {
+      fetch("http://localhost:8000/carts", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -136,7 +136,7 @@ const Cards = ({
     }
 
     try {
-      const response = await fetch("http://localhost:8080/wishlists/toggle", {
+      const response = await fetch("http://localhost:8000/wishlists/toggle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

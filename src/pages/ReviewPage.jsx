@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const ReviewPage = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
   const [reviewData, setReviewData] = useState({
     name: "",
     email: user ? user.email : "",
@@ -52,10 +53,7 @@ const ReviewPage = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/testimonials",
-        reviewData
-      );
+      const response = await axiosPublic.post("/testimonials", reviewData);
       console.log("Review added:", response.data);
       Swal.fire({
         title: "Review Added!",
@@ -71,7 +69,7 @@ const ReviewPage = () => {
         comment: "",
       });
     } catch (error) {
-      console.error("Error adding review:", error.response.data);
+      console.error("Error adding review:", error.response?.data);
       Swal.fire({
         title: "Error!",
         text: "Failed to add review. Please try again later.",
