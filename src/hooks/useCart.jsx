@@ -1,28 +1,28 @@
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure"; // Import the secure Axios hook
 
 const useCart = () => {
   const { user } = useContext(AuthContext);
-  const token = localStorage.getItem("access-token");
-  const { refetch, data: cartData = { cart: [] } } = useQuery({
+  const axiosSecure = useAxiosSecure(); // Use Axios Secure for authenticated requests
+
+  const {
+    refetch,
+    data: cartData = { cart: [] },
+    error,
+  } = useQuery({
     queryKey: ["carts", user?.email],
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:8000/carts?email=${user?.email}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!res.ok) {
-        throw new Error("Failed to fetch wishlist data");
-      }
-      return res.json();
+      const response = await axiosSecure.get(`/carts?email=${user?.email}`);
+      return response.data; // Return the Axios response data
     },
-    enabled: !!user?.email, // Ensure query runs only when user is logged in
+    enabled: !!user?.email, // Ensure the query runs only when the user is logged in
   });
+
+  if (error) {
+    console.error("Error fetching cart:", error);
+  }
 
   return [cartData.cart || [], refetch]; // Access 'cart' key from the response
 };
