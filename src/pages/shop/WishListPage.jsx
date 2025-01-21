@@ -4,8 +4,10 @@ import useCart from "../../hooks/useCart";
 import { AuthContext } from "../../contexts/AuthProvider";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic"; // Import the custom Axios hook
 
 const WishListPage = () => {
+  const axiosPublic = useAxiosPublic(); // Use centralized Axios instance
   const { user } = useContext(AuthContext);
   const [wishlist, refetchWishlist] = useWishList();
   const [cart, refetchCart] = useCart();
@@ -24,37 +26,35 @@ const WishListPage = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:8080/wishlists/${item._id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.success) {
-              refetchWishlist();
-              setLocalWishlist((prev) =>
-                prev.filter((wishlistItem) => wishlistItem._id !== item._id)
-              );
-              Swal.fire(
-                "Deleted!",
-                "Item removed from your wishlist.",
-                "success"
-              );
-            } else {
-              Swal.fire(
-                "Error!",
-                data.message || "Failed to delete the item.",
-                "error"
-              );
-            }
-          })
-          .catch(() => Swal.fire("Error!", "Something went wrong.", "error"));
+        try {
+          const response = await axiosPublic.delete(`/wishlists/${item._id}`);
+          if (response.data.success) {
+            refetchWishlist();
+            setLocalWishlist((prev) =>
+              prev.filter((wishlistItem) => wishlistItem._id !== item._id)
+            );
+            Swal.fire(
+              "Deleted!",
+              "Item removed from your wishlist.",
+              "success"
+            );
+          } else {
+            Swal.fire(
+              "Error!",
+              response.data.message || "Failed to delete the item.",
+              "error"
+            );
+          }
+        } catch (error) {
+          Swal.fire("Error!", "Something went wrong.", "error");
+        }
       }
     });
   };
 
-  const handleAddToCart = (item) => {
+  const handleAddToCart = async (item) => {
     if (!user || !user.email) {
       Swal.fire(
         "Login Required",
@@ -74,25 +74,21 @@ const WishListPage = () => {
       email: user.email,
     };
 
-    fetch("http://localhost:8080/carts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(cartItem),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        refetchCart();
-        if (data?.cart) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Item added to cart successfully!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      })
-      .catch(() => Swal.fire("Error!", "Something went wrong.", "error"));
+    try {
+      const response = await axiosPublic.post("/carts", cartItem);
+      refetchCart();
+      if (response.data?.cart) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Item added to cart successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      Swal.fire("Error!", "Something went wrong.", "error");
+    }
   };
 
   const isItemInCart = (itemId) => {
