@@ -12,6 +12,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import Swal from "sweetalert2";
 import useCart from "../../hooks/useCart";
 import useWishList from "../../hooks/useWishList";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const ROTATION_RANGE = 20;
 const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
@@ -33,6 +34,7 @@ const Cards = ({
   const { user } = useContext(AuthContext);
   const [cart, refetch] = useCart();
   const [wishlist, refetch1] = useWishList();
+  const axiosSecure = useAxiosSecure();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -71,34 +73,26 @@ const Cards = ({
         email: user.email,
       };
 
-      fetch("http://localhost:8000/carts", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(cartItem),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          refetch();
-          if (data?.cart) {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Item added to cart successfully!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        })
-        .catch((error) => {
-          console.error("Error adding to cart:", error);
+      try {
+        const response = await axiosSecure.post("/carts", cartItem);
+        refetch();
+        if (response.data?.cart) {
           Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong! Please try again later.",
+            position: "center",
+            icon: "success",
+            title: "Item added to cart successfully!",
+            showConfirmButton: false,
+            timer: 1500,
           });
+        }
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong! Please try again later.",
         });
+      }
     } else {
       Swal.fire({
         title: "Authentication Required",
@@ -136,19 +130,15 @@ const Cards = ({
     }
 
     try {
-      const response = await fetch("http://localhost:8000/wishlists/toggle", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user.email,
-          product: { _id, name, images, material, price },
-        }),
+      const response = await axiosSecure.post("/wishlists/toggle", {
+        email: user.email,
+        product: { _id, name, images, material, price },
       });
 
-      const data = await response.json();
+      const data = response.data;
       console.log("Wishlist Toggle Response:", data);
 
-      if (response.ok) {
+      if (response.status === 200) {
         setIsLiked((prev) => !prev);
 
         // Update localStorage
@@ -179,6 +169,11 @@ const Cards = ({
       }
     } catch (error) {
       console.error("Error toggling wishlist:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong! Please try again later.",
+      });
     }
   };
 
