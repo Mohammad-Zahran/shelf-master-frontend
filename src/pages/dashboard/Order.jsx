@@ -3,7 +3,8 @@ import useAuth from "./../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { FaEnvelope, FaFilePdf } from "react-icons/fa";
-import axios from "axios";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useSearch } from "./../../hooks/useSearch";
 import { useFilter } from "./../../hooks/useFilter";
 import { usePagination } from "./../../hooks/usePagination";
@@ -11,7 +12,8 @@ import { usePDFExport } from "./../../hooks/usePDFExport";
 
 const Order = () => {
   const { user } = useAuth();
-  const token = localStorage.getItem("access-token");
+  const axiosPublic = useAxiosPublic(); // Public Axios instance
+  const axiosSecure = useAxiosSecure(); // Secure Axios instance
 
   const [currency, setCurrency] = useState("USD");
   const [exchangeRate, setExchangeRate] = useState(null);
@@ -22,7 +24,7 @@ const Order = () => {
 
   const fetchExchangeRate = async () => {
     try {
-      const response = await axios.get(
+      const response = await axiosPublic.get(
         "https://api.exchangerate-api.com/v4/latest/USD"
       );
       setExchangeRate(response.data.rates.LBP);
@@ -41,15 +43,8 @@ const Order = () => {
   const { refetch, data: orders = [] } = useQuery({
     queryKey: ["orders", user?.email],
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:8080/payments?email=${user?.email}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return res.json();
+      const response = await axiosSecure.get(`/payments?email=${user?.email}`);
+      return response.data;
     },
   });
 
