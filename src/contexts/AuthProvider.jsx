@@ -10,13 +10,14 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
-import axios from "axios";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
+  const axiosPublic = useAxiosPublic();
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -37,18 +38,17 @@ const AuthProvider = ({ children }) => {
   };
 
   // Logout
-  const logOut = () => {
-    setLoading(true); // Start loading
-    return signOut(auth)
-      .then(() => {
-        setUser(null); // Clear the user
-      })
-      .catch((error) => {
-        console.error("Logout failed:", error);
-      })
-      .finally(() => {
-        setLoading(false); // End loading
-      });
+  const logOut = async () => {
+    setLoading(true);
+    try {
+      await signOut(auth);
+      setUser(null);
+      localStorage.removeItem("access-token");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Update profile
@@ -61,23 +61,29 @@ const AuthProvider = ({ children }) => {
 
   // Check signed-in user
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setLoading(true);
       setUser(currentUser);
+
       if (currentUser) {
         const userInfo = { email: currentUser.email };
-        axios.post("http://localhost:8000/jwt", userInfo).then((response) => {
-          // console.log(response.data.token);
+        try {
+          const response = await axiosPublic.post("/jwt", userInfo);
           if (response.data.token) {
             localStorage.setItem("access-token", response.data.token);
           }
-        });
+        } catch (error) {
+          console.error("Failed to retrieve JWT token:", error);
+        }
       } else {
-        localStorage.removeItem("access-token")
+        localStorage.removeItem("access-token");
       }
+
       setLoading(false);
     });
+
     return () => unsubscribe();
-  }, []);
+  }, [axiosPublic]);
 
   const authInfo = {
     user,
