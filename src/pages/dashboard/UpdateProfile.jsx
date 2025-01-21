@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../contexts/AuthProvider";
-import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure"; // Import secure Axios hook
 
 const UpdateProfile = () => {
   const { updateuserProfile, user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure(); // Use secure Axios instance
   const {
     register,
     handleSubmit,
@@ -13,14 +14,26 @@ const UpdateProfile = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    if (!user || !user.email) {
+      Swal.fire({
+        title: "Authentication Required",
+        text: "You must be logged in to update your profile.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
     const name = data.name;
     const photoURL = data.photoURL;
 
     try {
+      // Update profile in Firebase
       await updateuserProfile({ name, photoURL });
       console.log("Firebase profile successfully updated!");
 
-      const response = await axios.put("http://localhost:8080/users", {
+      // Update profile in MongoDB
+      const response = await axiosSecure.put("/users", {
         email: user.email,
         name,
         photoURL,
@@ -40,7 +53,7 @@ const UpdateProfile = () => {
         title: "Error!",
         text:
           error.response?.data?.message ||
-          "Failed to update profile. Try again!",
+          "Failed to update profile. Please try again later.",
         icon: "error",
         confirmButtonText: "Retry",
       });
@@ -61,6 +74,7 @@ const UpdateProfile = () => {
               type="text"
               placeholder="Your name"
               className="input input-bordered"
+              defaultValue={user?.displayName || ""}
             />
             {errors.name && (
               <p className="text-red-600 text-sm">{errors.name.message}</p>
@@ -75,6 +89,7 @@ const UpdateProfile = () => {
               type="text"
               placeholder="Photo URL"
               className="input input-bordered"
+              defaultValue={user?.photoURL || ""}
             />
             {errors.photoURL && (
               <p className="text-red-600 text-sm">{errors.photoURL.message}</p>
